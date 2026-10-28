@@ -1,0 +1,8 @@
+[ INPUT ] ---> ( Input-Output Prompting ) ---> [ OUTPUT ]
+       
+       [ INPUT ] ---> ( Chain of Thought: CoT ) ----> [ OUTPUT ]
+                        |-> Step-by-Step Logic
+                        
+       [ INPUT ] ---> ( Tree of Thoughts: ToT ) ----> [ OUTPUT ]
+                        |-> Branch 1 (Hypothesis A) --x (Evaluated: Low)
+                        |-> Branch 2 (Hypothesis B) ---> (Selected: High)

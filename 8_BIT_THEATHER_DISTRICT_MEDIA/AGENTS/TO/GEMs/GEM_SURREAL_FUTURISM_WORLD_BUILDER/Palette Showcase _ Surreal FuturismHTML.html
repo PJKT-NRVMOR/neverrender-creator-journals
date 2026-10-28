@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palette Showcase | Surreal Futurism</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        body {
+            background-color: #FBFBFB;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+        }
+        .font-serif-custom { font-family: 'Playfair Display', serif; }
+        .font-mono-custom { font-family: 'JetBrains Mono', monospace; }
+        
+        .swatch-card:hover .copy-tooltip {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen px-6 py-12 md:px-20 lg:px-32">
+
+    <!-- Header Section -->
+    <header class="mb-20 text-center md:text-left">
+        <h1 class="font-serif-custom text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-6 italic">
+            surreal-futurism
+        </h1>
+        <div class="max-w-3xl">
+            <img src="https://opal.google/board/blobs/b4f50138-2cff-4eba-8387-038dee0c4a3b" alt="Aesthetic Inspiration" class="w-full h-64 object-cover rounded-2xl shadow-xl mb-8 border border-gray-100">
+            <p class="text-lg md:text-xl text-gray-600 font-light leading-relaxed">
+                An exploration of high-contrast, atmospheric tones bridging the gap between digital dreamscapes and grounded textures. 
+                A curated palette designed for the future of visual storytelling.
+            </p>
+        </div>
+    </header>
+
+    <!-- Complementary Section -->
+    <section class="mb-24">
+        <h2 class="font-serif-custom text-3xl font-bold mb-2">Complementary Colors</h2>
+        <p class="text-sm uppercase tracking-widest text-gray-400 mb-10 italic">Dynamic vibrations and high-energy pairings</p>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <!-- Colors: #5A189A, #F72585, #CCFF00, #BDB2FF, #03045E, #390099 -->
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#5A189A')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#5A189A]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#5A189A</div>
+            </div>
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#F72585')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#F72585]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#F72585</div>
+            </div>
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#CCFF00')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#CCFF00]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#CCFF00</div>
+            </div>
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#BDB2FF')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#BDB2FF]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#BDB2FF</div>
+            </div>
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#03045E')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#03045E]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#03045E</div>
+            </div>
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#390099')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#390099]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#390099</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contrasting Section -->
+    <section class="mb-24">
+        <h2 class="font-serif-custom text-3xl font-bold mb-2">Contrasting Colors</h2>
+        <p class="text-sm uppercase tracking-widest text-gray-400 mb-10 italic">Earth tones meeting raw, organic structures</p>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <!-- Colors: #8B4513, #6B8E23, #A0522D, #D2B48C, #B8860B, #5C4033 -->
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#8B4513')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#8B4513]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#8B4513</div>
+            </div>
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#6B8E23')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#6B8E23]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#6B8E23</div>
+            </div>
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#A0522D')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#A0522D]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#A0522D</div>
+            </div>
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#D2B48C')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#D2B48C]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#D2B48C</div>
+            </div>
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#B8860B')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#B8860B]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#B8860B</div>
+            </div>
+            <div class="swatch-card group relative cursor-pointer" onclick="copyToClipboard('#5C4033')">
+                <div class="h-64 rounded-xl shadow-sm border border-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 bg-[#5C4033]"></div>
+                <div class="mt-3 bg-white p-2 rounded-lg text-center font-mono-custom text-xs font-semibold shadow-sm border border-gray-100">#5C4033</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Copy feedback overlay -->
+    <div id="toast" class="fixed bottom-10 right-10 bg-black text-white px-6 py-3 rounded-full opacity-0 transition-opacity duration-300 pointer-events-none font-medium">
+        Copied to clipboard!
+    </div>
+
+    <script>
+        function copyToClipboard(hex) {
+            navigator.clipboard.writeText(hex).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

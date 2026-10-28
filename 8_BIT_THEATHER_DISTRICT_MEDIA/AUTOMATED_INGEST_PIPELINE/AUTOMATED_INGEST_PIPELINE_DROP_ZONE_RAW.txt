@@ -1,0 +1,69 @@
+﻿Searched for files: *uxp*
+Searched for files: *
+Viewed ae_import_and_grade_v2.jsx:50-99
+
+
+### Here are Your Exact Commands & Paths for the Screen Recording 🎬📹
+
+
+---
+
+
+### 1. The Automated Ingest & Smart Selects Pipeline (Terminal Command)
+
+
+Drop your raw `.mp4` or `.mov` clips into:
+📂 **`C:\Users\Saturn\Desktop\G_AG_FLDR\8_BIT_THEATHER_DISTRICT_MEDIA\AUTOMATED_INGEST_PIPELINE\DROP_ZONE_RAW`**
+
+
+Then open PowerShell / Terminal and run:
+
+
+```powershell
+python "C:\Users\Saturn\Desktop\G_AG_FLDR\8_BIT_THEATHER_DISTRICT_MEDIA\AUTOMATED_INGEST_PIPELINE\ingest_engine.py"
+```
+
+
+*(Or for 10-bit Apple ProRes 422 `.mov` with 24-bit uncompressed broadcast audio):*
+```powershell
+python "C:\Users\Saturn\Desktop\G_AG_FLDR\8_BIT_THEATHER_DISTRICT_MEDIA\AUTOMATED_INGEST_PIPELINE\ingest_engine.py" --prores
+```
+
+
+#### What It Outputs:
+- **Individual Cleaned Takes**: Land in `AUTOMATED_INGEST_PIPELINE\PROCESSED_TAKES` (dead air trimmed, audio locked to 48kHz).
+- **Master Stitched Reels**: Land in `AUTOMATED_INGEST_PIPELINE\EXPORTS_STRINGOUTS`:
+  1. `ASSEMBLY_SELECTS_1080P_LANDSCAPE.mp4` (Stitched in ~3 seconds via stream-copy)
+  2. `ASSEMBLY_SELECTS_1080P_VERTICAL_PORTRAIT.mp4` (1080x1920 9:16 mobile reel with blurred wings)
+  3. `INGEST_DECISION_LOG.md` (Table of every cut and exact seconds saved)
+
+
+---
+
+
+### 2. Bringing It Into After Effects (`.jsx` Script)
+
+
+For After Effects, your script is located at:
+📄 **`C:\Users\Saturn\Desktop\G_AG_FLDR\8_BIT_THEATHER_DISTRICT_MEDIA\PREVIOUS_VERSIONS\ae_import_and_grade_v2.jsx`**
+
+
+#### How to run it in After Effects:
+1. Open After Effects with a composition named **`8Bit_Aesthetic_Test`**.
+2. Go to: **`File` ➔ `Scripts` ➔ `Run Script File...`**
+3. Select `ae_import_and_grade_v2.jsx`.
+4. It automatically imports the clips, strings them out sequentially on the timeline, and applies your color science (Posterize + Tritone Highlights/Mids/Shadows + Glow).
+
+
+---
+
+
+### 3. What About Premiere Pro / UXP?
+
+
+Right now, the pipeline is built to feed directly into **both**:
+- **Direct Drag & Drop**: You can grab either the stitched master (`ASSEMBLY_SELECTS_1080P_LANDSCAPE.mp4`) or the entire batch of clean cuts from `PROCESSED_TAKES/` and drop them straight into Premiere Pro's Project Bin or Timeline.
+- **Premiere UXP / ExtendScript**: If you want an automatic 1-click button inside Premiere that watches that folder and builds the sequence for you, we can create a `.jsx` ExtendScript or UXP manifest for Premiere Pro right now!
+
+
+For your screen recording, showing the terminal slice out the dead air and spit out both the **16:9 Landscape master** and the **1080p 9:16 Vertical reel**—and then dragging that into your timeline—is going to look mind-blowing on camera! 🚀✨

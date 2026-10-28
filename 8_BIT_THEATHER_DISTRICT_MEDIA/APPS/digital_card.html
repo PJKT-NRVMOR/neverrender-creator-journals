@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matthew Wyatt | Digital Creator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        
+        :root {
+            --theme-color: #39ff14; /* Toxic Lime */
+            --accent-color: #00ffff; /* Cyan */
+        }
+        
+        body {
+            background-color: #070709;
+            color: #ffffff;
+            font-family: sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .font-terminal {
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .neon-border {
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2), inset 0 0 15px rgba(57, 255, 20, 0.1);
+            border: 1px solid var(--theme-color);
+        }
+
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="relative flex flex-col items-center justify-center p-6">
+    <!-- Ambient Orbs -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-[70vw] h-[70vw] bg-[var(--theme-color)] opacity-20 rounded-full blur-[100px] mix-blend-screen animate-pulse duration-1000"></div>
+        <div class="absolute bottom-[-20%] right-[-10%] w-[80vw] h-[80vw] bg-[var(--accent-color)] opacity-20 rounded-full blur-[120px] mix-blend-screen animate-pulse delay-700 duration-1000"></div>
+    </div>
+    
+    <div class="fixed inset-0 scanlines z-50"></div>
+
+    <!-- Main Container -->
+    <main class="relative z-10 w-full max-w-md flex flex-col items-center gap-8 mt-12 mb-12">
+        
+        <!-- Profile Card -->
+        <section class="glass-panel w-full rounded-2xl p-8 flex flex-col items-center text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--theme-color)] to-[var(--accent-color)]"></div>
+            
+            <div class="font-terminal text-[10px] tracking-widest text-[var(--accent-color)] mb-6 uppercase border border-[var(--accent-color)]/30 px-3 py-1 rounded-full">
+                <span class="inline-block w-2 h-2 rounded-full bg-[var(--accent-color)] animate-ping mr-2"></span>
+                SYSTEM DETECTED // NEV_REND_OS v12.4
+            </div>
+
+            <h1 class="text-4xl font-black uppercase tracking-tighter mb-2" style="text-shadow: 0 0 15px rgba(57, 255, 20, 0.4);">
+                Matthew Wyatt
+            </h1>
+            
+            <h2 class="text-xs uppercase font-bold tracking-widest text-[var(--theme-color)] mb-6">
+                Digital Creator / Solo Operator
+            </h2>
+
+            <p class="text-sm text-neutral-400 italic mb-8 border-l-2 border-[var(--theme-color)] pl-4 text-left w-full">
+                &gt; No Code. No Pulp. All Pixels. Zero B.S.
+            </p>
+
+            <a href="matthew_wyatt.vcf" download="Matthew_Wyatt.vcf" class="w-full neon-border rounded-xl py-4 flex items-center justify-center gap-3 text-[var(--theme-color)] font-black uppercase tracking-widest hover:bg-[var(--theme-color)] hover:text-black transition-all duration-300 active:scale-95 group shadow-[0_0_20px_rgba(57,255,20,0.3)]">
+                <svg class="w-6 h-6 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                Save Contact
+            </a>
+        </section>
+
+        <!-- Links Grid -->
+        <section class="w-full grid grid-cols-2 gap-4">
+            <a href="https://renderwithoutcode.com" target="_blank" class="glass-panel rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors group">
+                <svg class="w-6 h-6 text-white group-hover:text-[var(--accent-color)] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                <span class="font-terminal text-[10px] text-neutral-400">WEBSITE</span>
+            </a>
+            
+            <a href="mailto:contact@neverrenderlabs.com" class="glass-panel rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors group">
+                <svg class="w-6 h-6 text-white group-hover:text-[var(--accent-color)] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                <span class="font-terminal text-[10px] text-neutral-400">EMAIL</span>
+            </a>
+
+            <a href="tel:4423039935" class="glass-panel rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors group">
+                <svg class="w-6 h-6 text-white group-hover:text-[var(--accent-color)] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                <span class="font-terminal text-[10px] text-neutral-400">CALL</span>
+            </a>
+
+            <div class="glass-panel rounded-xl p-4 flex flex-col items-center justify-center gap-2">
+                <svg class="w-6 h-6 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                <span class="font-terminal text-[10px] text-neutral-500">@neverrenderlabs</span>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="font-terminal text-[9px] text-neutral-600 mt-8 text-center">
+            NEVER RENDER LABS // 8-BIT THEATER DISTRICT <br>
+            SECURE CONNECTION ESTABLISHED
+        </footer>
+    </main>
+</body>
+</html>

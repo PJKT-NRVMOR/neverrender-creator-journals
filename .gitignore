@@ -1,0 +1,80 @@
+# Environment & Secrets
+.env
+*.env
+.env.*
+!.env.example
+
+# Python Virtual Environments, Node Modules & Cache
+.venv/
+venv/
+**/node_modules/
+.tmp.driveupload/
+__pycache__/
+*.py[cod]
+*$py.class
+*.pytest_cache/
+
+# Nested Independent Git Repositories & Backups
+NEVERRENDER_LABS_WEBSITE/
+PROJECT_CHIPTRACK/
+WEBSITE_RAW_ARCHIVES_BACKUP/
+project-marshall-college/
+scratch/
+8_BIT_THEATHER_DISTRICT_MEDIA/01a_AGENTS_EYES_ONLY/
+8_BIT_THEATHER_DISTRICT_MEDIA/.antigravity/
+8_BIT_THEATHER_DISTRICT_MEDIA/AGENTS/TO/WHITEPAPERS_RESEARCH_ETC/*BULIDING_NEVERRENDER_LABS_NOTEBOOK_PROTON_GUIDE*.pdf
+*.aac
+
+# Heavy Media, Video, Audio & Binaries
+*.exe
+*.dll
+*.mp4
+*.webm
+*.mp3
+*.m4a
+*.wav
+*.avi
+*.mov
+*.prproj
+*.prin
+**/Adobe Premiere Pro*
+**/TEST_CLIPS/
+**/FOLEY_ASSETS/
+**/GRADED_PHOTOS/
+**/PREVIOUS_VERSIONS/
+dreambeans_frames/
+
+# Client Drafts, Local Audits & Temporary Captures
+.agents/skills/melissa-tone-copywriter/
+build_tcc_docx_suite.py
+*.description
+check_french_step.py
+check_pages.py
+compare_inv_shop.py
+deep_search_chat.py
+find_*.py
+inspect_inventory_links.py
+inspect_media.py
+print_transcript_lucky.py
+scratch_recon.py
+search_*.py
+targeted_search_v4.py
+*Chapman*
+*tcc-*
+*the-chapman-collection*
+*interfaith_audit*
+*combined_audit*
+*lol_wtf_is_that_dog*
+*DELIVERY_BRIEFING*
+*Delete conflict*
+*Edit conflict*
+*.png
+*.jpg
+*.jpeg
+*.webp
+!nrl_master_pfp_stacked.jpg
+
+# OS & Editor Files
+.DS_Store
+Thumbs.db
+desktop.ini

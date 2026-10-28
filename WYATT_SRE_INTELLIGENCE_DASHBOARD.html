@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WYATT SRE LEGAL & WHISTLEBLOWER INTELLIGENCE CONSOLE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #08040d;
+            --bg-surface: #10081c;
+            --bg-card: #180e2b;
+            --bg-card-hover: #22143d;
+            --border-dim: #2d184d;
+            --border-bright: #4e2882;
+            --text-main: #f5f3fc;
+            --text-muted: #a39cb8;
+            --neon-pink: #FF0055;
+            --neon-pink-glow: rgba(255, 0, 85, 0.35);
+            --cyber-cyan: #00F0FF;
+            --cyber-cyan-glow: rgba(0, 240, 255, 0.3);
+            --laser-amber: #FFB300;
+            --laser-amber-glow: rgba(255, 179, 0, 0.3);
+            --acid-green: #00FFAA;
+            --acid-green-glow: rgba(0, 255, 170, 0.3);
+            --midnight-purple: #1A0A2A;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            padding: 24px 32px;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(255, 0, 85, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(0, 240, 255, 0.05) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--border-bright);
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .brand-block { display: flex; align-items: center; gap: 16px; }
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--neon-pink), var(--cyber-cyan));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 0 20px var(--neon-pink-glow);
+        }
+        .brand-text h1 {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        .brand-text h1 span { color: var(--neon-pink); }
+        .brand-text p {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-live {
+            background: rgba(0, 255, 170, 0.15);
+            color: var(--acid-green);
+            border: 1px solid var(--acid-green);
+            box-shadow: 0 0 10px var(--acid-green-glow);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .badge-live::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--acid-green);
+            animation: pulse 1.5s infinite;
+        }
+        .badge-pink { background: rgba(255, 0, 85, 0.15); color: var(--neon-pink); border: 1px solid var(--neon-pink); }
+        .badge-cyan { background: rgba(0, 240, 255, 0.15); color: var(--cyber-cyan); border: 1px solid var(--cyber-cyan); }
+        .badge-amber { background: rgba(255, 179, 0, 0.15); color: var(--laser-amber); border: 1px solid var(--laser-amber); }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        /* KPI STATS ROW */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .kpi-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-dim);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-bright);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+        }
+        .kpi-card.pink::before { background: var(--neon-pink); }
+        .kpi-card.cyan::before { background: var(--cyber-cyan); }
+        .kpi-card.amber::before { background: var(--laser-amber); }
+        .kpi-card.green::before { background: var(--acid-green); }
+
+        .kpi-label { font-size: 11px; text-transform: uppercase; font-family: var(--font-mono); color: var(--text-muted); }
+        .kpi-val { font-size: 26px; font-weight: 800; color: #fff; margin: 4px 0 2px; }
+        .kpi-sub { font-size: 12px; color: var(--text-muted); }
+
+        /* TABS NAVIGATION */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-dim);
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.03); }
+        .tab-btn.active {
+            color: var(--cyber-cyan);
+            background: var(--bg-surface);
+            border-top: 2px solid var(--cyber-cyan);
+        }
+
+        /* TAB PANELS */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* CARDS & CONTAINERS */
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 24px; }
+        .panel-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-dim);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .panel-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-dim);
+        }
+        .panel-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* TABLES */
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 12px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: left;
+        }
+        th {
+            background: var(--bg-card);
+            color: var(--cyber-cyan);
+            padding: 12px 14px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+            border-bottom: 2px solid var(--border-bright);
+        }
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border-dim);
+            color: var(--text-main);
+        }
+        tr:hover td { background: var(--bg-card-hover); }
+        .amt-highlight { font-family: var(--font-mono); font-weight: 700; color: var(--acid-green); }
+
+        /* SEARCH BAR */
+        .search-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #fff;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-input:focus {
+            border-color: var(--cyber-cyan);
+            box-shadow: 0 0 12px var(--cyber-cyan-glow);
+        }
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: var(--font-mono);
+            transition: all 0.2s;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--border-bright);
+            color: #fff;
+            border-color: var(--cyber-cyan);
+        }
+
+        /* TIMELINE STREAM */
+        .timeline-stream {
+            position: relative;
+            padding-left: 28px;
+        }
+        .timeline-stream::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 8px; width: 2px; height: 100%;
+            background: var(--border-bright);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            border-radius: 10px;
+            padding: 16px 20px;
+            transition: all 0.2s;
+        }
+        .timeline-item:hover {
+            border-color: var(--neon-pink);
+            transform: translateX(4px);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 20px; left: -26px; width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--neon-pink);
+            border: 2px solid var(--bg-base);
+            box-shadow: 0 0 8px var(--neon-pink);
+        }
+        .timeline-date {
+            font-size: 12px;
+            font-family: var(--font-mono);
+            color: var(--laser-amber);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .timeline-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+        .timeline-body {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* TRANSMITTAL CARDS */
+        .transmittal-box {
+            background: var(--midnight-purple);
+            border: 1px solid var(--border-bright);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .copy-btn {
+            background: var(--neon-pink);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            float: right;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: #ff2a75;
+            box-shadow: 0 0 12px var(--neon-pink-glow);
+        }
+        pre.code-block {
+            background: #0d0617;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: #e0daf5;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            margin-top: 12px;
+            border: 1px solid var(--border-dim);
+        }
+
+        /* TOAST */
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--acid-green);
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            display: none;
+            z-index: 10000;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 16px; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-block">
+            <div class="brand-logo">🦾</div>
+            <div class="brand-text">
+                <h1>WYATT <span>SRE</span> LEGAL & FORENSIC CONSOLE</h1>
+                <p>SOCIOECONOMIC RELIABILITY ENGINEERING // TRINITY MASTER GRID</p>
+            </div>
+        </div>
+        <div class="header-meta">
+            <div class="badge badge-live">LIVE TELEMETRY SYNCED</div>
+            <div class="badge badge-pink">118 SHA-256 VAULT FILES</div>
+            <div class="badge badge-cyan">DMHC EXPEDITED STAGE 2</div>
+            <div class="badge badge-amber">PC § 1001.36 DIVERSION</div>
+        </div>
+    </header>
+
+    <!-- TOP KPI METRICS -->
+    <div class="kpi-grid">
+        <div class="kpi-card pink">
+            <div class="kpi-label">Total Actionable Valuation</div>
+            <div class="kpi-val">$2.41M – $6.15M</div>
+            <div class="kpi-sub">Qui Tam, Civil Rights & Punitive Damages</div>
+        </div>
+        <div class="kpi-card cyan">
+            <div class="kpi-label">Immediate Disgorgement Due</div>
+            <div class="kpi-val">$3,353.99</div>
+            <div class="kpi-sub">$308.53 Room Swipe + $3,045.46 Motel Bridge</div>
+        </div>
+        <div class="kpi-card amber">
+            <div class="kpi-label">Withheld CalAIM Subsidies</div>
+            <div class="kpi-val">$77,237.00+</div>
+            <div class="kpi-sub">Modera Melrose $429 + 6-Mo Rent + Lifetime Cap</div>
+        </div>
+        <div class="kpi-card green">
+            <div class="kpi-label">Active State & Police Dockets</div>
+            <div class="kpi-val">7 Jurisdictions</div>
+            <div class="kpi-sub">DMHC (3), Superior Ct, CA DOJ, HHS-OIG, OPD</div>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('overview')">📊 Executive Summary & Damages</button>
+        <button class="tab-btn" onclick="switchTab('timeline')">⏱️ Master Forensic Timeline</button>
+        <button class="tab-btn" onclick="switchTab('entities')">📇 101 Entities Directory</button>
+        <button class="tab-btn" onclick="switchTab('vault')">📁 Evidentiary Vault & Exhibits</button>
+        <button class="tab-btn" onclick="switchTab('transmittals')">📑 1-Click State Briefs</button>
+    </div>
+
+    <!-- TAB 1: EXECUTIVE & DAMAGES -->
+    <div id="tab-overview" class="tab-panel active">
+        <div class="grid-2">
+            <div class="panel-card">
+                <div class="panel-card-header">
+                    <div class="panel-card-title">🛡️ Beneficiary & Clinical Profiles</div>
+                    <span class="badge badge-pink">IMMUTABLE TRUTH</span>
+                </div>
+                <p><strong>Matthew Cole Wyatt</strong> (Molina ID: <code>90621533F</code> | Auth #<code>26175R200187</code>)</p>
+                <p style="color: var(--text-muted); font-size: 13px; margin: 4px 0 12px;">
+                    • <strong>Sobriety:</strong> 10+ Years Certified Sobriety (Dr. Mitesh Patel, MD - VCC July 21, 2026 cert).<br>
+                    • <strong>Judicial Standing:</strong> 1-Yr Mental Health Diversion (PC § 1001.36, SD Superior Court Case <code>CN471572</code>, Judge Campagna).<br>
+                    • <strong>Clinical Restrictions:</strong> Strict &lt; 5 lbs lifting limit (<1mm spinal cord fluid buffer at C4–C6, 2-level disc replacement surgery under Dr. Arvin Wali at UCSD).
+                </p>
+                <p><strong>Sandra Arlene Wyatt (Age 79)</strong> (Kaiser MRN: <code>000026754939</code> | Auth #<code>11962620260703</code>)</p>
+                <p style="color: var(--text-muted); font-size: 13px; margin: 4px 0;">
+                    • <strong>Stroke Survivor:</strong> Right-side hemiparesis, right foot drop, cerebral amyloid angiopathy, wheelchair dependent.<br>
+                    • <strong>Thermoregulation Failure:</strong> Lethal stroke risk at ambient temperatures &gt; 78°F (NWS 105°F Heat Advisory).<br>
+                    • <strong>Verified Income:</strong> $2,300.00/mo ($1,743 SSA + $527 Spousal Pension) — 100% rent sustainable.
+                </p>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-card-header">
+                    <div class="panel-card-title">⚖️ Active Regulatory & Judicial Dockets</div>
+                    <span class="badge badge-cyan">ENFORCEMENT</span>
+                </div>
+                <ul style="list-style: none; font-size: 13px;">
+                    <li style="margin-bottom: 8px;">🏛️ <strong>DMHC Help Center:</strong> Case Nos. <code>1432899</code> (Sandra), <code>1433498</code> (Matthew - EXPEDITED), <code>1432897</code> (Surgical Emergency) — Lead Analyst Rue.</li>
+                    <li style="margin-bottom: 8px;">⚖️ <strong>San Diego Superior Court:</strong> Case No. <code>CN471572</code> (PC § 1001.36 Diversion Integrity, Officer Jennifer Quinonez).</li>
+                    <li style="margin-bottom: 8px;">🚨 <strong>CA DOJ DMFEA:</strong> Submission No. <code>36333021</code> (Criminal Elder Neglect W&I § 15610.07 & False Claims).</li>
+                    <li style="margin-bottom: 8px;">🏛️ <strong>U.S. HHS-OIG:</strong> Claim Control ID <code>262252010237</code> (Ghost billing for Aug 6 flood date).</li>
+                    <li style="margin-bottom: 8px;">🚔 <strong>Oceanside Police Dept:</strong> Incident #<code>2600089654</code> (Felony Elder Endangerment PC § 368 naming Serene & GM Neil).</li>
+                    <li>🏢 <strong>Assurant Insurance:</strong> Claim #<code>00300140291</code> ($5,000.00 Coverage D Loss of Use).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-card">
+            <div class="panel-card-header">
+                <div class="panel-card-title">💰 Comprehensive SRE Statutory & Damages Valuation Model</div>
+                <span class="badge badge-amber">FULL ACCOUNTING</span>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Damages Category</th>
+                            <th>Statutory Basis / Calculation Mechanism</th>
+                            <th>Direct Amount</th>
+                            <th>Multiplier / Recovery Range</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Immediate Out-of-Pocket Disgorgement</strong></td>
+                            <td>Extended Stay America Room 130 swipe ($308.53) + Motel 6 interim lodging ($3,045.46)</td>
+                            <td class="amt-highlight">$3,353.99</td>
+                            <td>Immediate Direct Disgorgement Order</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Withheld CalAIM Housing Subsidies</strong></td>
+                            <td>Modera Melrose deposit ($429) + 6-Mo Transitional Rent ($11,808) + Lifetime Allowance ($15,000) + Lost PSH Unit ($50K+)</td>
+                            <td class="amt-highlight">$77,237.00+</td>
+                            <td>Contractual & Statutory Benefit Value</td>
+                        </tr>
+                        <tr>
+                            <td><strong>False Claims Act Civil Penalties & Treble</strong></td>
+                            <td>31 U.S.C. § 3729 / Cal. Gov Code § 12651: Claim ID 262252010237 ($120/day ghost bill) + 3x Treble + Statutory Penalty</td>
+                            <td class="amt-highlight">$43,508.00 – $57,018.00</td>
+                            <td>15% to 30% Relator Share: <strong>$15,000 – $30,000+</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tenant Protection Act Retaliation (SB 567)</strong></td>
+                            <td>Cal. Civ. Code § 1946.2(h) / § 1947.12(k): Unlawful blacklisting and constructive eviction</td>
+                            <td class="amt-highlight">$50,000.00+</td>
+                            <td>Treble Damages + Mandatory Attorney's Fees</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Elder Abuse & Tortious Neglect (W&I § 15610.07)</strong></td>
+                            <td>Willful abandonment during 105°F Heat Advisory, severe pain & distress, enhanced civil remedies under W&I § 15657</td>
+                            <td class="amt-highlight">$500,000.00 – $1,000,000.00</td>
+                            <td>Statutory Attorney's Fees & Punitive Exposure</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EHR Tampering, IIED & Defamation Per Se</strong></td>
+                            <td>Aug 20 manual injection of F10.10/F19.10 to corrupt judicial diversion (PC § 1001.36) and coerce sectarian shelter entry</td>
+                            <td class="amt-highlight">$1,000,000.00 – $3,000,000.00</td>
+                            <td>Cal. Civ. Code § 3294 Exemplary / Punitive Damages</td>
+                        </tr>
+                        <tr style="background: rgba(0, 255, 170, 0.08); font-weight: 800;">
+                            <td colspan="2" style="color: #fff; font-size: 14px;">TOTAL CONSOLIDATED LITIGATION & RECOVERY EXPOSURE</td>
+                            <td colspan="2" style="color: var(--acid-green); font-size: 16px; font-family: var(--font-mono);">$2,410,365.23 – $6,147,400.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: MASTER TIMELINE -->
+    <div id="tab-timeline" class="tab-panel">
+        <div class="search-controls">
+            <input type="text" id="timeline-search" class="search-input" placeholder="Search timeline (e.g. 'Silvia', 'August 20', 'Molina', 'Dr. Patel', 'Receipt')..." oninput="filterTimeline()">
+            <button class="filter-btn active" onclick="filterTimelineCategory('all')">All Events</button>
+            <button class="filter-btn" onclick="filterTimelineCategory('urgent')">⚡ Critical August 2026</button>
+            <button class="filter-btn" onclick="filterTimelineCategory('regulatory')">🏛️ Regulatory & Court</button>
+            <button class="filter-btn" onclick="filterTimelineCategory('medical')">💊 Clinical & Medical</button>
+            <button class="filter-btn" onclick="filterTimelineCategory('fraud')">👻 Fraud & Tampering</button>
+        </div>
+
+        <div class="timeline-stream" id="timeline-container">
+            <div class="timeline-item" data-cat="fraud urgent">
+                <div class="timeline-date">SATURDAY, AUGUST 29, 2026 @ 03:10 AM PDT</div>
+                <div class="timeline-title">🚨 Molina Mainframe Audit Reveals Retaliatory EHR Code Injection & Zero Service Plan</div>
+                <div class="timeline-body">
+                    Matthew pulls the live Molina ICP Report. Discovers Serene Health manually injected false active addiction codes (<code>F10.10</code>, <code>F19.10</code>, <code>F17.200</code>) on August 20th to discredit grievances and force sectarian placement. Page 5 confirms: <em>"Service Plan: No Service Plan"</em> despite 1-year active authorization.
+                </div>
+            </div>
+
+            <div class="timeline-item" data-cat="urgent regulatory">
+                <div class="timeline-date">SATURDAY, AUGUST 29, 2026 @ 04:02 AM - 08:50 AM PDT</div>
+                <div class="timeline-title">🌋 160-Page Master Burn Notice & Legal Notice Deployed; City of Vista Auto-Receipts</div>
+                <div class="timeline-body">
+                    160-page encrypted multi-docket payload dropped to DMHC, CA DOJ, Molina CMO, Presidium Health, and press. Subsequent 8:50 AM legal notice triggers automated delivery receipts from Jonathan Lung (<code>jlung@vista.gov</code>) and Kathy Valdez, creating unbreakable delivery proof.
+                </div>
+            </div>
+
+            <div class="timeline-item" data-cat="urgent fraud">
+                <div class="timeline-date">FRIDAY, AUGUST 28, 2026 @ 08:34 AM - 10:50 AM PDT</div>
+                <div class="timeline-title">🤡 Silvia Jimenez Dial-Evasion & Matthew Fronts $308.53 Room Swipe</div>
+                <div class="timeline-body">
+                    Silvia Jimenez dials generic Kaiser retail line (<code>866-551-9214</code>) instead of dedicated CalAIM line to burn clock to 11:00 AM, then executes Care Flight. Matthew fronts <strong>$308.53</strong> on Mastercard <code>*0084</code> (Approval Code <code>027938</code>) to shield 79yo Sandra from 105°F heatwave.
+                </div>
+            </div>
+
+            <div class="timeline-item" data-cat="regulatory urgent">
+                <div class="timeline-date">THURSDAY, AUGUST 27, 2026 @ 12:12 PM PDT</div>
+                <div class="timeline-title">🎙️ Recorded Conference with COO Lisa McFan: Wheelchair Authorized & Systemic Failure Admitted</div>
+                <div class="timeline-body">
+                    Lisa McFan formally admits Serene's operations are a <em>"fragmented, hot mess"</em> and gives binding verbal authorization for Sandra's medical wheelchair (<em>"Yeah, we can take care of that for you"</em>). Assurant issues $3,370.50 Coverage D advance.
+                </div>
+            </div>
+
+            <div class="timeline-item" data-cat="regulatory urgent">
+                <div class="timeline-date">WEDNESDAY, AUGUST 26, 2026 @ 03:03 PM - 05:30 PM PDT</div>
+                <div class="timeline-title">🚔 Oceanside Police Incident #2600089654 & Physical Welfare Check</div>
+                <div class="timeline-body">
+                    OPD accepts Felony Elder Endangerment complaint (W&I § 15610.07 / PC § 368). Andrea Christopher flees recorded call upon hearing police dispatch. Two OPD officers arrive in Room 130, verify Sandra's stroke disability and heat hazard, and issue municipal Incident Card.
+                </div>
+            </div>
+
+            <div class="timeline-item" data-cat="medical regulatory">
+                <div class="timeline-date">MONDAY, AUGUST 24, 2026 @ 01:30 PM - 04:35 PM PDT</div>
+                <div class="timeline-title">⚡ UCSD McGrath EMG/NCS Testing & The 137-Minute Compliance Ripple</div>
+                <div class="timeline-body">
+                    Matthew completes EMG/NCS with Dr. Wali Qayoumi. Uploads clinical brief to DMHC at 2:18 PM. Exactly 137 minutes later, Andrea calls in panic attempting application probe; Matthew shuts her down with Pronto portal glitch facts.
+                </div>
+            </div>
+
+            <div class="timeline-item" data-cat="fraud">
+                <div class="timeline-date">THURSDAY, AUGUST 13, 2026 (JULIAN DATE 26225)</div>
+                <div class="timeline-title">👻 Serene Health Submits Fraudulent Claim ID 262252010237 During Care Blackout</div>
+                <div class="timeline-body">
+                    Serene Health bills Medi-Cal $120.00/day for HCPCS T1016 (Housing Navigation) for service date August 6 (flooding day) while maintaining a total 13-day communication blackout. Paid by Molina on August 17/18.
+                </div>
+            </div>
+
+            <div class="timeline-item" data-cat="regulatory">
+                <div class="timeline-date">FRIDAY, JUNE 12, 2026</div>
+                <div class="timeline-title">⚖️ San Diego Superior Court Grants PC § 1001.36 Mental Health Diversion</div>
+                <div class="timeline-body">
+                    Judge Anthony Campagna grants 1-year court-ordered diversion in Case No. <code>CN471572</code> (Dept N-20), anchored by Dr. Mitesh Patel's certified continuous psychiatric stability and verified sobriety.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: ENTITIES DIRECTORY -->
+    <div id="tab-entities" class="tab-panel">
+        <div class="search-controls">
+            <input type="text" id="entity-search" class="search-input" placeholder="Search 101 entities (e.g. 'Jorge Medina', 'Analyst Rue', 'Quinonez', 'Kaiser', 'Molina')..." oninput="filterEntities()">
+        </div>
+
+        <div class="grid-2" id="entities-container">
+            <!-- SERENE HEALTH ROW -->
+            <div class="panel-card entity-card" data-text="serene health jorge medina lisa mcfan federico carreon silvia jimenez andrea christopher ashley meza ashley ratcliff geovanna borunda reynaldo cacho">
+                <div class="panel-card-header">
+                    <div class="panel-card-title">🏢 Serene Health Group LLC (Target Delegate)</div>
+                    <span class="badge badge-pink">PRIMARY DEFENDANT</span>
+                </div>
+                <ul style="list-style: none; font-size: 13px;">
+                    <li style="margin-bottom: 6px;"><strong>Jorge Medina</strong> (Executive Director) — <a href="mailto:jorgemedina@serenehealth.com" style="color: var(--cyber-cyan);">jorgemedina@serenehealth.com</a></li>
+                    <li style="margin-bottom: 6px;"><strong>Lisa McFan</strong> (COO) — <a href="mailto:lisamcfann@serenehealth.com" style="color: var(--cyber-cyan);">lisamcfann@serenehealth.com</a> | Admitted "hot mess" & authorized wheelchair</li>
+                    <li style="margin-bottom: 6px;"><strong>Federico Carreon</strong> (Operations Director) — <a href="mailto:federicocarreon@serenehealth.com" style="color: var(--cyber-cyan);">federicocarreon@serenehealth.com</a> | Held 35-file Life Ring portfolio</li>
+                    <li style="margin-bottom: 6px;"><strong>Silvia Jimenez</strong> (Clinical Supervisor) — <a href="mailto:silvia@serenehealth.com" style="color: var(--cyber-cyan);">silvia@serenehealth.com</a> | (619) 642-2173 | Executed Kaiser dial-evasion</li>
+                    <li style="margin-bottom: 6px;"><strong>Andrea Christopher, LCSW</strong> (Lead Care Manager) — <a href="mailto:andreachristopher@serenehealth.com" style="color: var(--cyber-cyan);">andreachristopher@serenehealth.com</a> | Fled recorded call Aug 26</li>
+                    <li style="margin-bottom: 6px;"><strong>Ashley Meza</strong> (Housing Deposits Sup) — <a href="mailto:ashleymeza@serenehealth.com" style="color: var(--cyber-cyan);">ashleymeza@serenehealth.com</a> | Admitted Sandra 100% verified</li>
+                    <li style="margin-bottom: 6px;"><strong>Ashley Ratcliff</strong> (Housing Specialist) — <a href="mailto:ashleyratcliff@serenehealth.com" style="color: var(--cyber-cyan);">ashleyratcliff@serenehealth.com</a> | Flooded with 200+ vetted leads</li>
+                    <li><strong>Geovanna Borunda</strong> (Former Housing Navigator) — <a href="mailto:geovannaborunda@serenehealth.com" style="color: var(--cyber-cyan);">geovannaborunda@serenehealth.com</a> | Ignored July 20 blacklist warning</li>
+                </ul>
+            </div>
+
+            <!-- REGULATORY & JUDICIAL ROW -->
+            <div class="panel-card entity-card" data-text="dmhc state analyst rue kylie ca doj dmfea hhs-oig superior court judge anthony campagna jennifer quinonez oceanside police">
+                <div class="panel-card-header">
+                    <div class="panel-card-title">🏛️ State Regulators, Courts & Law Enforcement</div>
+                    <span class="badge badge-cyan">ACTIVE OVERSIGHT</span>
+                </div>
+                <ul style="list-style: none; font-size: 13px;">
+                    <li style="margin-bottom: 6px;"><strong>State Regulatory Analyst Rue</strong> (DMHC Help Center) — <a href="mailto:caseinfo@dmhc.ca.gov" style="color: var(--cyber-cyan);">caseinfo@dmhc.ca.gov</a> | Lead for Cases 1432899, 1433498, 1432897</li>
+                    <li style="margin-bottom: 6px;"><strong>Jennifer Quinonez</strong> (San Diego County Diversion Officer) — <a href="mailto:jennifer.quinonez@sdcounty.ca.gov" style="color: var(--cyber-cyan);">jennifer.quinonez@sdcounty.ca.gov</a> | Case CN471572</li>
+                    <li style="margin-bottom: 6px;"><strong>Hon. Anthony Campagna</strong> (San Diego Superior Court Judge) — Dept N-20, Vista Courthouse</li>
+                    <li style="margin-bottom: 6px;"><strong>Special Investigations Unit</strong> (CA DOJ DMFEA) — Submission No. <code>36333021</code></li>
+                    <li style="margin-bottom: 6px;"><strong>Oceanside Police Dept</strong> — Dispatchers Shirley & Lauren | Incident #<code>2600089654</code></li>
+                    <li><strong>U.S. HHS-OIG</strong> — Federal Claims Fraud Portal (Claim ID <code>262252010237</code>)</li>
+                </ul>
+            </div>
+
+            <!-- HEALTH PLANS & EXTERNAL -->
+            <div class="panel-card entity-card" data-text="molina healthcare chief medical officer civil rights kaiser permanente kristen clark presidium health pouya afshar melody shedlosky">
+                <div class="panel-card-header">
+                    <div class="panel-card-title">🏥 Health Plans & Mobile Field Clinicians</div>
+                    <span class="badge badge-amber">PAYERS & TRANSFER</span>
+                </div>
+                <ul style="list-style: none; font-size: 13px;">
+                    <li style="margin-bottom: 6px;"><strong>Molina Healthcare CMO</strong> — <a href="mailto:ChiefMedicalOfficer@molinahealthcare.com" style="color: var(--cyber-cyan);">ChiefMedicalOfficer@molinahealthcare.com</a> | Non-delegable Knox-Keene duty</li>
+                    <li style="margin-bottom: 6px;"><strong>Molina Civil Rights & Grievances</strong> — <a href="mailto:civil.rights@molinahealthcare.com" style="color: var(--cyber-cyan);">civil.rights@molinahealthcare.com</a></li>
+                    <li style="margin-bottom: 6px;"><strong>Kaiser Permanente SoCal CalAIM</strong> — <a href="mailto:scal.kaiser.medi-cal@kp.org" style="color: var(--cyber-cyan);">scal.kaiser.medi-cal@kp.org</a> | 866-551-9619</li>
+                    <li style="margin-bottom: 6px;"><strong>Kristen Clark</strong> (Kaiser ECM Coordinator) — 626-529-7860 (Direct Line)</li>
+                    <li style="margin-bottom: 6px;"><strong>Dr. Pouya Afshar, MD & Melody Shedlosky</strong> (Presidium Health) — <a href="mailto:pouya@presidiumhealth.com" style="color: var(--cyber-cyan);">pouya@presidiumhealth.com</a> | Mobile field care target</li>
+                    <li><strong>Community Health Group (CHG)</strong> — Destination Plan for Expedited Plan-to-Plan Transfer</li>
+                </ul>
+            </div>
+
+            <!-- CLINICIANS, LANDLORDS & MEDIA -->
+            <div class="panel-card entity-card" data-text="dr mitesh patel dr arvin wali dr yuan xing dr wali qayoumi jonathan lung vista modera melrose lisa halverstadt voice of san diego inewsource cody dulaney">
+                <div class="panel-card-header">
+                    <div class="panel-card-title">🔬 Treating Specialists, Housing & Media</div>
+                    <span class="badge badge-green">CLINICAL & HOUSING</span>
+                </div>
+                <ul style="list-style: none; font-size: 13px;">
+                    <li style="margin-bottom: 6px;"><strong>Dr. Mitesh Patel, MD</strong> (Treating Psychiatrist, VCC) — Certified 10-Yr Sobriety & Remission July 21</li>
+                    <li style="margin-bottom: 6px;"><strong>Dr. Arvin Wali, MD</strong> (UCSD Neurosurgery) — Mandated 2-Level Cervical Disc Replacement & &lt;5 lb restriction</li>
+                    <li style="margin-bottom: 6px;"><strong>Dr. Yuan Xing, MD</strong> (The Neuron Clinic) — Neurological Movement Disorder & Sobriety Records</li>
+                    <li style="margin-bottom: 6px;"><strong>Jonathan Lung</strong> (City of Vista Housing Division Manager) — <a href="mailto:jlung@vista.gov" style="color: var(--cyber-cyan);">jlung@vista.gov</a> | Author of Feb 3 Blacklist</li>
+                    <li style="margin-bottom: 6px;"><strong>Lisa Halverstadt & Tigist Layne</strong> (Voice of San Diego) — Investigative Oversight</li>
+                    <li><strong>Cody Dulaney</strong> (inewsource) — Healthcare & Housing Investigative Press</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: VAULT & EXHIBITS -->
+    <div id="tab-vault" class="tab-panel">
+        <div class="panel-card">
+            <div class="panel-card-header">
+                <div class="panel-card-title">🔒 Cryptographically Secured Master Evidence Ledger</div>
+                <span class="badge badge-live">118 FILES SECURED</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+                All files below are synchronized locally and backed up in real-time to the zero-access encrypted Proton Drive Vault at <code>C:\Users\Saturn\Proton Drive\WYATT_LEGAL_EVIDENTIARY_VAULT\</code>.
+            </p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Master Dossier / Exhibit Name</th>
+                            <th>Description & Strategic Function</th>
+                            <th>Size / Format</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>01_EXECUTIVE_LEGAL_BRIEF_AND_CASE_SUMMARY.md</strong></td>
+                            <td>Executive brief, party identification, factual narrative, Knox-Keene violations & legal roadmap</td>
+                            <td>15.4 KB (.md)</td>
+                            <td><span class="badge badge-live">SYNCHRONIZED</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>02_MASTER_CHRONOLOGICAL_TIMELINE_OF_EVENTS.md</strong></td>
+                            <td>Timestamped master chronology from 2016 trauma baseline through August 29, 2026</td>
+                            <td>33.6 KB (.md)</td>
+                            <td><span class="badge badge-live">SYNCHRONIZED</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>03_MASTER_ENTITY_DIRECTORY_AND_COMMUNICATIONS_INDEX.md</strong></td>
+                            <td>Complete master directory of all 101 participating entities and contact nodes</td>
+                            <td>25.4 KB (.md)</td>
+                            <td><span class="badge badge-live">SYNCHRONIZED</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>04_WHISTLEBLOWER_PROTECTION_AND_DAMAGES_LEGAL_MEMORANDUM.md</strong></td>
+                            <td>Comprehensive statutory analysis (FCA, CFCA, Labor Code § 1102.5, W&I § 15610.07) & itemized damages</td>
+                            <td>14.8 KB (.md)</td>
+                            <td><span class="badge badge-live">SYNCHRONIZED</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>05_COMPREHENSIVE_EVIDENTIARY_INDEX_AND_EXHIBIT_CATALOG.md</strong></td>
+                            <td>Catalog of 28 primary documentary exhibits and 20 timestamped audio/video recordings</td>
+                            <td>21.4 KB (.md)</td>
+                            <td><span class="badge badge-live">SYNCHRONIZED</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>04_CALAIM_WHISTLEBLOWER_LEGAL_ANALYSIS_AND_DAMAGES_REPORT.md</strong></td>
+                            <td>Exhaustive 7-part legal analysis & $2.41M – $6.15M damages model from SAW Spark Sweep</td>
+                            <td>55.4 KB (.md)</td>
+                            <td><span class="badge badge-live">SYNCHRONIZED</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>MANIFEST_SHA256.json / MANIFEST_SHA256.txt</strong></td>
+                            <td>Immutable cryptographic hash ledger guaranteeing court-admissible chain of custody</td>
+                            <td>36.2 KB (.json/.txt)</td>
+                            <td><span class="badge badge-pink">SEALED</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 5: 1-CLICK TRANSMITTALS -->
+    <div id="tab-transmittals" class="tab-panel">
+        <div class="transmittal-box">
+            <button class="copy-btn" onclick="copyText('trans-dmhc')">📋 Copy for DMHC Portal</button>
+            <h3 style="color: #fff; font-size: 16px; margin-bottom: 4px;">🏛️ State Analyst Rue (DMHC Help Center)</h3>
+            <p style="color: var(--laser-amber); font-size: 12px; font-family: var(--font-mono);">Target Cases: DMHC 1432899, 1433498 (EXPEDITED), 1432897</p>
+            <pre class="code-block" id="trans-dmhc">SUBJECT: HIGH-PRIORITY REGULATORY UPDATE: FORENSIC MAINFRAME AUDIT REVEALS RETALIATORY EHR TAMPERING & BENEFICIARY COST-SHIFTING // DMHC CASE NOS. 1432899, 1433498, & 1432897
+
+Attention: State Regulatory Analyst Rue, California Department of Managed Health Care (DMHC) Help Center
+
+Complainants Matthew Cole Wyatt and Sandra Arlene Wyatt hereby submit this urgent evidentiary update into active Stage 2 investigations:
+
+1. FORENSIC AUDIT OF MOLINA MAINFRAME (AUGUST 29, 2026 @ 03:10 AM PDT):
+Live telemetry extracted from Molina Healthcare's database reveals that on August 20, 2026 (the exact day Lead Care Manager Andrea Christopher surfaced from her 13-day blackout), Serene Health clinical supervisors manually injected false active substance abuse diagnostic codes (ICD-10 F10.10, F19.10, F17.200) into Matthew Wyatt's state record. This bad-faith overwrite directly contradicted certified psychiatric documentation from treating psychiatrist Dr. Mitesh Patel, MD (VCC July 21, 2026 cert confirming sustained remission and verified sobriety) and The Neuron Clinic. Serene executed this falsification to deflect from 48 days of abandonment and unlawfully attempt to coerce Matthew into sectarian congregate shelters (ECTLC) in 105°F heat while institutionalizing 79yo stroke survivor Sandra Wyatt.
+
+2. UNLAWFUL OUT-OF-POCKET COST SHIFTING ($308.53):
+On August 28, 2026, due to Serene Health's bad-faith refusal to execute corporate P-Card payment before the 11:00 AM checkout cliff, Matthew Wyatt was forced to personally front $308.53 out-of-pocket (Mastercard Debit *0084, Approval Code 027938) to keep Room 130 secured during an active NWS 105°F Heat Advisory.
+
+DEMANDED EMERGENCY ADMINISTRATIVE ORDERS:
+1. Immediate Direct Disgorgement Order directing Molina/Serene to reimburse $308.53 directly to Matthew Wyatt;
+2. Direct-billing authorization for Extended Stay America Room 130 through permanent move-in;
+3. Immediate direct disbursement of the $429.00 Modera Melrose holding deposit (Log #11) to Pronto Housing;
+4. Enforced emergency plan-to-plan transfer to Community Health Group (CHG) and Presidium Health.</pre>
+        </div>
+
+        <div class="transmittal-box">
+            <button class="copy-btn" onclick="copyText('trans-court')">📋 Copy for Public Defender / Court</button>
+            <h3 style="color: #fff; font-size: 16px; margin-bottom: 4px;">⚖️ Officer Jennifer Quinonez & Public Defender (Superior Court)</h3>
+            <p style="color: var(--cyber-cyan); font-size: 12px; font-family: var(--font-mono);">Docket: San Diego Superior Court Case No. CN471572 (Dept N-20)</p>
+            <pre class="code-block" id="trans-court">MEMORANDUM OF RECORD: PRE-EMPTIVE INOCULATION OF COURT-ORDERED MENTAL HEALTH DIVERSION RECORD (PC § 1001.36) AGAINST RETALIATORY THIRD-PARTY EHR TAMPERING
+
+TO: Deputy Public Defender & Diversion Officer Jennifer Quinonez (jennifer.quinonez@sdcounty.ca.gov)
+IN RE: People v. Matthew Cole Wyatt, San Diego Superior Court Case No. CN471572 (Dept. N-20, Hon. Anthony Campagna)
+
+Please place this formal memorandum and attached clinical exhibits into Matthew Cole Wyatt's active Mental Health Diversion compliance file:
+
+1. CONTEXT OF COMPLIANCE: Matthew Wyatt remains in 100% full compliance with all court-ordered Mental Health Diversion terms granted by Judge Campagna on June 12, 2026. Treating psychiatrist Dr. Mitesh Patel, MD (Vista Community Clinic) certified on July 21, 2026, that Matthew 'continues to maintain sobriety' and is in sustained remission.
+
+2. RETALIATORY EHR OVERWRITE BY DELEGATED HOUSING CONTRACTOR: On August 29, 2026, a forensic audit of Molina Healthcare's database mainframe revealed that delegated CalAIM housing agency Serene Health Group LLC manually injected unauthorized active substance abuse codes (F10.10, F19.10) into Matthew's state Medicaid profile on August 20, 2026. This was done without drug testing or physician evaluation, solely as retaliatory deflection after Matthew reported their fraudulent billing (Claim ID 262252010237) to the California DOJ (Submission 36333021) and DMHC.
+
+3. LEGAL ACTION: This memorandum formally confirms that any third-party EHR entries from Serene Health Group are fraudulent, retaliatory falsifications under California Penal Code § 134 and § 471.5, and are completely superseded by the certified psychiatric records of Dr. Mitesh Patel, MD and The Neuron Clinic.</pre>
+        </div>
+    </div>
+
+    <div id="toast">Copied to clipboard!</div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        function filterTimelineCategory(cat) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            const items = document.querySelectorAll('.timeline-item');
+            items.forEach(item => {
+                if (cat === 'all' || item.getAttribute('data-cat').includes(cat)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function filterTimeline() {
+            const query = document.getElementById('timeline-search').value.toLowerCase();
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                const text = item.innerText.toLowerCase();
+                item.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function filterEntities() {
+            const query = document.getElementById('entity-search').value.toLowerCase();
+            document.querySelectorAll('.entity-card').forEach(card => {
+                const text = (card.getAttribute('data-text') + ' ' + card.innerText).toLowerCase();
+                card.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function copyText(elemId) {
+            const text = document.getElementById(elemId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.style.display = 'block';
+                setTimeout(() => { toast.style.display = 'none'; }, 2500);
+            });
+        }
+    </script>
+</body>
+</html>

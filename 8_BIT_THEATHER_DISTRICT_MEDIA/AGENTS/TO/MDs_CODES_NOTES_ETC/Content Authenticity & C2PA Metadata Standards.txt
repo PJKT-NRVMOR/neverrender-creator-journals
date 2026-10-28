@@ -1,0 +1,8 @@
++-----------------------------------------------------------------------+
+|                    STEERING COMMITTEE & MEMBERSHIP                    |
++-----------------------------------------------------------------------+
+|  Steering:  ADOBE  //  BBC  //  INTEL  //  MICROSOFT  //  TRUEPIC    |
+|  General:   CANON  //  DIGICERT  //  NIKON  //  RIAA  //  WITNESS    |
++-----------------------------------------------------------------------+
+|  Specification Implementation: CAI Architecture Standard v1.3         |
++-----------------------------------------------------------------------+

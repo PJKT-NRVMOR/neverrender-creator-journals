@@ -1,0 +1,505 @@
+{
+    "project": "PROJECT_NEVERMORE",
+    "version": "2.0",
+    "description": "Production-grade color palettes curated for the retro-futuristic world of Vespera. Inspired by the chromatic systems of Moebius, Syd Mead, and space-age Googie architecture.",
+    "palettes": [
+        {
+            "name": "Moebius Twilight & Desert",
+            "origin": "Inspired by the surreal, pastel-saturated landscapes of Moebius (Jean Giraud) in works like Arzach and The Airtight Garage.",
+            "aesthetic_notes": "Characterized by soft, dreamlike sand and sagebrush tones contrasted against cold, highly saturated lavender and electric turquoise highlights. Captures the 'Ligne Claire' comic aesthetic.",
+            "colors": [
+                {
+                    "name": "Sand Drift",
+                    "role": "Dominant Base / Ground Warmth",
+                    "hex": "#E8C595",
+                    "rgb": [
+                        232,
+                        197,
+                        149
+                    ],
+                    "hsl": [
+                        35,
+                        61,
+                        75
+                    ],
+                    "usage": "Use for primary background structures, desert expanses, and organic rock formations."
+                },
+                {
+                    "name": "Sagebrush",
+                    "role": "Secondary / Cool Muted",
+                    "hex": "#78A3A2",
+                    "rgb": [
+                        120,
+                        163,
+                        162
+                    ],
+                    "hsl": [
+                        180,
+                        20,
+                        55
+                    ],
+                    "usage": "Perfect for secondary machinery panels, foliage, and structural middle-grounds."
+                },
+                {
+                    "name": "Twilight Lavender",
+                    "role": "Shadows / Atmospheric Bed",
+                    "hex": "#5E507A",
+                    "rgb": [
+                        94,
+                        80,
+                        122
+                    ],
+                    "hsl": [
+                        260,
+                        21,
+                        40
+                    ],
+                    "usage": "Use for cast shadows, evening skies, and shaded rock alcoves."
+                },
+                {
+                    "name": "Electric Turquoise",
+                    "role": "High-Contrast Accent / Terminal Light",
+                    "hex": "#00E5FF",
+                    "rgb": [
+                        0,
+                        229,
+                        255
+                    ],
+                    "hsl": [
+                        186,
+                        100,
+                        50
+                    ],
+                    "usage": "Reserved for Vespera's hair highlights, neon terminal panels, and active thruster rings."
+                },
+                {
+                    "name": "Terracotta Clay",
+                    "role": "Warm Contrast Accent",
+                    "hex": "#C86B52",
+                    "rgb": [
+                        200,
+                        107,
+                        82
+                    ],
+                    "hsl": [
+                        13,
+                        53,
+                        55
+                    ],
+                    "usage": "Use for apparel straps, leather flight gear accents, and sunset atmospheric haze."
+                },
+                {
+                    "name": "Midnight Indigo",
+                    "role": "Structural Contrasts / Outlines",
+                    "hex": "#1B1D36",
+                    "rgb": [
+                        27,
+                        29,
+                        54
+                    ],
+                    "hsl": [
+                        236,
+                        33,
+                        16
+                    ],
+                    "usage": "Use for fine ink outlines, dark mechanical framing, and deep spatial voids."
+                }
+            ]
+        },
+        {
+            "name": "Syd Mead Aerodynamic",
+            "origin": "Inspired by the sleek, high-luster industrial designs, architectural concepts, and chrome reflections of Syd Mead.",
+            "aesthetic_notes": "A high-end, functional palette combining cool slate-steel bases with polished chrome highlights and hot sunset-amber and cyan interfaces.",
+            "colors": [
+                {
+                    "name": "Slate Steel",
+                    "role": "Dominant Base / Structural Metal",
+                    "hex": "#2D3748",
+                    "rgb": [
+                        45,
+                        55,
+                        72
+                    ],
+                    "hsl": [
+                        218,
+                        23,
+                        23
+                    ],
+                    "usage": "Use for primary metal bulkheads, aerodynamic vehicle hulls, and reinforced columns."
+                },
+                {
+                    "name": "Polished Chrome",
+                    "role": "Luminous Highlight / Reflective Rim",
+                    "hex": "#E2E8F0",
+                    "rgb": [
+                        226,
+                        232,
+                        240
+                    ],
+                    "hsl": [
+                        214,
+                        32,
+                        91
+                    ],
+                    "usage": "Use for specular highlights, polished metal edges, and high-frequency reflection bands."
+                },
+                {
+                    "name": "Sunset Amber",
+                    "role": "Secondary Base / Warm Ambient",
+                    "hex": "#ED8936",
+                    "rgb": [
+                        237,
+                        137,
+                        54
+                    ],
+                    "hsl": [
+                        27,
+                        84,
+                        57
+                    ],
+                    "usage": "Use for warm interior key-lights, atmospheric sunset backlighting, and structural glass tinting."
+                },
+                {
+                    "name": "Neon Cyan",
+                    "role": "Functional Accent / Active Interface",
+                    "hex": "#0BC5EA",
+                    "rgb": [
+                        11,
+                        197,
+                        234
+                    ],
+                    "hsl": [
+                        190,
+                        91,
+                        48
+                    ],
+                    "usage": "Use for active flight HUDs, digital dials, and engine power lines."
+                },
+                {
+                    "name": "Safety Orange",
+                    "role": "Alert Highlight / Functional Piping",
+                    "hex": "#FF5A00",
+                    "rgb": [
+                        255,
+                        90,
+                        0
+                    ],
+                    "hsl": [
+                        21,
+                        100,
+                        50
+                    ],
+                    "usage": "Use for piping on Vespera's flight suit, high-voltage labels, and manual release hatches."
+                },
+                {
+                    "name": "Deep Charcoal",
+                    "role": "Core Shadow / Deep Value",
+                    "hex": "#1A202C",
+                    "rgb": [
+                        26,
+                        32,
+                        44
+                    ],
+                    "hsl": [
+                        220,
+                        26,
+                        14
+                    ],
+                    "usage": "Use for dark shadows, unlit cavities, and anti-reflective dashboard padding."
+                }
+            ]
+        },
+        {
+            "name": "Raygun Gothic / Googie Retro",
+            "origin": "Inspired by the bold, sweeping, space-age optimism of 1950s Googie architecture and pulp sci-fi covers.",
+            "aesthetic_notes": "A retro-modern aesthetic utilizing creamy off-whites, polished brass, and atomic teals with a signature radioactive lime highlight.",
+            "colors": [
+                {
+                    "name": "Creamy Rocket White",
+                    "role": "Dominant Base / Sleek Hulls",
+                    "hex": "#FFFDF0",
+                    "rgb": [
+                        255,
+                        253,
+                        240
+                    ],
+                    "hsl": [
+                        52,
+                        100,
+                        97
+                    ],
+                    "usage": "Use for external ship armor, sleek fiberglass counters, and modular ceiling panels."
+                },
+                {
+                    "name": "Polished Brass",
+                    "role": "Secondary Metallic / Structural Trim",
+                    "hex": "#D4AF37",
+                    "rgb": [
+                        212,
+                        175,
+                        55
+                    ],
+                    "hsl": [
+                        46,
+                        65,
+                        52
+                    ],
+                    "usage": "Use for physical console dials, chrono-compass gears, and viewport trim."
+                },
+                {
+                    "name": "Atomic Teal",
+                    "role": "Primary Cool Contrast / Base Suit",
+                    "hex": "#008B8B",
+                    "rgb": [
+                        0,
+                        139,
+                        139
+                    ],
+                    "hsl": [
+                        180,
+                        100,
+                        27
+                    ],
+                    "usage": "Use for deep control panels, cockpit seat upholstery, and secondary flight apparel."
+                },
+                {
+                    "name": "Radioactive Lime",
+                    "role": "Glowing Accent / Energy Core",
+                    "hex": "#ADFF2F",
+                    "rgb": [
+                        173,
+                        255,
+                        47
+                    ],
+                    "hsl": [
+                        84,
+                        100,
+                        59
+                    ],
+                    "usage": "Reserved for reactor cores, fuel conduits, and radioactive isotope gauges."
+                },
+                {
+                    "name": "Cherry Rocket Red",
+                    "role": "Saturated Accent / Critical Indicator",
+                    "hex": "#FF007F",
+                    "rgb": [
+                        255,
+                        0,
+                        127
+                    ],
+                    "hsl": [
+                        330,
+                        100,
+                        50
+                    ],
+                    "usage": "Use for launch buttons, warning sirens, and decorative starburst wall art."
+                },
+                {
+                    "name": "Bakelite Brown",
+                    "role": "Structural Framing / Mid-Century Contrast",
+                    "hex": "#4A2C2A",
+                    "rgb": [
+                        74,
+                        44,
+                        42
+                    ],
+                    "hsl": [
+                        4,
+                        28,
+                        23
+                    ],
+                    "usage": "Use for rich wood veneers, dashboard consoles, and structural base moldings."
+                }
+            ]
+        },
+        {
+            "name": "Synthwave Dusk Grids",
+            "origin": "Curated from late-twentieth-century electronic vector graphics and high-contrast cyberpunk sunset aesthetics.",
+            "aesthetic_notes": "Extremely high contrast. Perfect for heavy neon nightlife sequences, grid-space simulations, and chrome reflection beds.",
+            "colors": [
+                {
+                    "name": "Deep Grid Blue",
+                    "role": "Dominant Base / Velvet Sky",
+                    "hex": "#0F1026",
+                    "rgb": [
+                        15,
+                        16,
+                        38
+                    ],
+                    "hsl": [
+                        237,
+                        43,
+                        10
+                    ],
+                    "usage": "Use for twilight skies, simulated holographic grid grounds, and shaded areas."
+                },
+                {
+                    "name": "Laser Magenta",
+                    "role": "Primary Glow / Neon Tubing",
+                    "hex": "#FF007F",
+                    "rgb": [
+                        255,
+                        0,
+                        127
+                    ],
+                    "hsl": [
+                        330,
+                        100,
+                        50
+                    ],
+                    "usage": "Use for primary city light sources, neon signs, and glowing wireframe borders."
+                },
+                {
+                    "name": "Sunset Violet",
+                    "role": "Secondary / Midtone Shift",
+                    "hex": "#7B2CBF",
+                    "rgb": [
+                        123,
+                        44,
+                        191
+                    ],
+                    "hsl": [
+                        272,
+                        63,
+                        46
+                    ],
+                    "usage": "Use for sky gradients, volumetric engine plumes, and holographic ambient fills."
+                },
+                {
+                    "name": "Electric Cyan",
+                    "role": "Cool Accent / Vector Line",
+                    "hex": "#00F5FF",
+                    "rgb": [
+                        0,
+                        245,
+                        255
+                    ],
+                    "hsl": [
+                        182,
+                        100,
+                        50
+                    ],
+                    "usage": "Use for secondary wireframes, radar displays, and bright reflections on visor plates."
+                },
+                {
+                    "name": "Solar Flare Gold",
+                    "role": "Warm Highlight / Horizon Glow",
+                    "hex": "#FFB703",
+                    "rgb": [
+                        255,
+                        183,
+                        3
+                    ],
+                    "hsl": [
+                        43,
+                        100,
+                        51
+                    ],
+                    "usage": "Use for synthetic sun shapes, glowing headlight cones, and specular surface glints."
+                }
+            ]
+        },
+        {
+            "name": "Surrealist Illusion Pearl",
+            "origin": "Inspired by classic surrealism (Salvador Dali, Hugo Zarate) and modern spatial-digital art.",
+            "aesthetic_notes": "A shifting, ethereal palette using pearlescent base tones, liquid gold highlights, and deep amethyst shadows to disrupt physical reality.",
+            "colors": [
+                {
+                    "name": "Iridescent Pearl",
+                    "role": "Dominant Base / Ethereal Surface",
+                    "hex": "#E2D4F0",
+                    "rgb": [
+                        226,
+                        212,
+                        240
+                    ],
+                    "hsl": [
+                        270,
+                        44,
+                        89
+                    ],
+                    "usage": "Use for dream-world columns, warped organic structures, and pearlescent ship hulls."
+                },
+                {
+                    "name": "Liquid Gold",
+                    "role": "Luminous Highlight / Melting Metal",
+                    "hex": "#E5A93C",
+                    "rgb": [
+                        229,
+                        169,
+                        60
+                    ],
+                    "hsl": [
+                        39,
+                        77,
+                        57
+                    ],
+                    "usage": "Use for dripping metallic elements, glowing eyes, and celestial bodies."
+                },
+                {
+                    "name": "Ethereal Lilac",
+                    "role": "Secondary / Midtone Violet",
+                    "hex": "#9D81BA",
+                    "rgb": [
+                        157,
+                        129,
+                        186
+                    ],
+                    "hsl": [
+                        269,
+                        29,
+                        62
+                    ],
+                    "usage": "Perfect for fog, atmospheric vapor layers, and organic flesh-to-metal transitions."
+                },
+                {
+                    "name": "Deep Amethyst",
+                    "role": "Core Shadow / Deep Void",
+                    "hex": "#3B1C54",
+                    "rgb": [
+                        59,
+                        28,
+                        84
+                    ],
+                    "hsl": [
+                        273,
+                        50,
+                        22
+                    ],
+                    "usage": "Use for bottomless pits, surreal portals, and high-contrast ambient occlusion."
+                },
+                {
+                    "name": "Venomous Green",
+                    "role": "High-Contrast Highlight / Dream Disruptor",
+                    "hex": "#39FF14",
+                    "rgb": [
+                        57,
+                        255,
+                        20
+                    ],
+                    "hsl": [
+                        111,
+                        100,
+                        54
+                    ],
+                    "usage": "Reserved for impossible natural phenomena, temporal tears, and shifting compass needles."
+                }
+            ]
+        }
+    ],
+    "workflow_integration": {
+        "resolve_grading": "Import these values into DaVinci Resolve's RGB Mixer. Set your primary lift/shadows to Deep Charcoal or Midnight Indigo, your midtones/gamma to Sand Drift or Slate Steel, and your gain/highlights to Polished Chrome. Clamp your key light outputs to sunset amber/gold to replicate the airbrushed luster.",
+        "comfyui_prompting": "When using SDXL or Flux.1, append these hex/color descriptors directly to your styling node: 'in the style of Moebius with a color scheme of sand drift #E8C595, sagebrush #78A3A2, and twilight lavender shadows #5E507A, high contrast outline, clean ink illustration'. This prevents the model's latent space from drifting into modern digital photography.",
+        "css_variables": {
+            "description": "Exposed CSS Variables for direct UI implementation of web storyboards.",
+            "variables": {
+                "--vespera-base-warm": "#E8C595",
+                "--vespera-base-cool": "#78A3A2",
+                "--vespera-shadow": "#5E507A",
+                "--vespera-neon-teal": "#00E5FF",
+                "--vespera-suit-orange": "#FF5A00",
+                "--vespera-deep-contrast": "#1B1D36"
+            }
+        }
+    }
+}

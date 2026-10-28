@@ -1,0 +1,30 @@
+﻿The Raven Hotel Palette (Altered Carbon)
+________________
+An HTML-formatted analysis of the atmospheric cyberpunk colors present in the scene visuals.
+
+
+
+
+Neon Orange / Glowing Amber
+#FF7B39
+The prominent color used for "The Raven Hotel" neon sign and the internal window grids.
+
+
+Deep Shadow / Dark Charcoal
+#12161A
+The dominant background tone representing the sleek, wet streets, shadows, and building structures.
+
+
+Cyberpunk Neon Green
+#00FF66
+An electric, vibrant accent color seen reflecting off the wet pavement and glowing from terminal screens.
+
+
+Muted Teal / Deep Aquamarine
+#1D3D3D
+Found in the atmospheric fog, overhead structural lighting, and ambient sky glow.
+
+
+Soft Warm White / Light Cream
+#E6DFD3
+The color of the entrance doorway lighting where characters are standing, serving as a focal point.

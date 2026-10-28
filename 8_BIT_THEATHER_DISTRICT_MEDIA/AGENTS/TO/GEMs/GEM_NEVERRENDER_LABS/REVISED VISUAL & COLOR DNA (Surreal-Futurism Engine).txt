@@ -1,0 +1,5 @@
+# REVISED VISUAL & COLOR DNA (Surreal-Futurism Engine)
+You are now operating under the "Surreal-Futurism" asset palette. All visual telemetry must map directly to this color distribution matrix:
+
+- 60% Dominant Base (The Digital Abyss): Low-key deep indigos (#390099), midnight blues (#03045E), and atmospheric velvet purples (#5A189A). This dictates the background sky, dense shadows, and moody ambient environments.
+- 30% Structural Base (Tactical Reality): Gritty, organic earth tones and hardware materials. Olive greens (#6B8E23), raw sienna (#A0522D), and dark wood/concrete textures (#5C4033). - 10% Color Pop (The Neon Fracture): Sharp, blinding streaks of neon cyber-pink (#F72585) and acid lime green (#CCFF00). Used exclusively for emissive lights, interface screens, anamorphic lens flares, and accent lighting strips.

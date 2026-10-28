@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matthew Wyatt | Argon v-a1 Email Signature Card (Print-Safe & Dark Modes)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Share+Tech+Mono&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #00030F;
+            background-image:
+                radial-gradient(circle at 18% 22%, rgba(202, 46, 216, 0.16) 0%, transparent 42%),
+                radial-gradient(circle at 82% 18%, rgba(46, 157, 216, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 50% 85%, rgba(141, 21, 161, 0.14) 0%, transparent 50%),
+                linear-gradient(180deg, #00030F 0%, #02021B 55%, #050524 100%);
+            color: #CFE2F3;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .argon-display {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .argon-mono {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+        }
+
+        /* Inbox Preview Stage (Supports Light Inbox & Dark Inbox Toggle) */
+        .preview-wrapper {
+            transition: background 0.25s ease, border-color 0.25s ease;
+        }
+
+        .preview-wrapper.inbox-light {
+            background-color: #E2E8F0;
+            background-image:
+                radial-gradient(#CBD5E1 1px, transparent 1px),
+                radial-gradient(#CBD5E1 1px, #E2E8F0 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            border-color: #94A3B8;
+        }
+
+        .preview-wrapper.inbox-dark {
+            background-color: #080B1A;
+            background-image:
+                radial-gradient(rgba(46, 157, 216, 0.18) 1px, transparent 1px),
+                radial-gradient(rgba(202, 46, 216, 0.12) 1px, #080B1A 1px);
+            background-size: 22px 22px;
+            background-position: 0 0, 11px 11px;
+            border-color: rgba(46, 157, 216, 0.35);
+            box-shadow: 0 0 40px rgba(202, 46, 216, 0.15), inset 0 0 30px rgba(2, 2, 27, 0.8);
+        }
+
+        /* Neon tube title glow matching AGENT TRINITY v-a1 */
+        .argon-title-glow {
+            color: #FCB7FF;
+            text-shadow:
+                0 0 8px rgba(252, 183, 255, 0.75),
+                0 0 18px rgba(202, 46, 216, 0.85),
+                0 0 34px rgba(141, 21, 161, 0.65);
+        }
+
+        .swatch-card {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .swatch-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 14px rgba(202, 46, 216, 0.45);
+        }
+    </style>
+</head>
+<body class="min-h-screen py-10 px-4 flex flex-col items-center justify-center">
+
+    <div class="max-w-4xl w-full space-y-6">
+
+        <!-- Top Header & Instructions -->
+        <div class="text-center space-y-2">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 bg-[#2D1B45]/80 border border-[#CA2ED8]/60 rounded-full text-[#FCB7FF] text-xs argon-mono shadow-[0_0_15px_rgba(202,46,216,0.35)]">
+                <span class="w-2 h-2 bg-[#2E9DD8] rounded-full animate-ping"></span>
+                <span>NEVERRENDER LABS // GEMINI 4 ARGON LINEAGE (v-a1)</span>
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-black tracking-wider argon-display argon-title-glow uppercase">
+                Matthew Wyatt // Argon v-a1 Signature
+            </h1>
+            <p class="text-xs sm:text-sm text-[#A3BEE9] max-w-2xl mx-auto">
+                Inverted <span class="text-white font-semibold">Laser-Printer &amp; Toner-Safe Ice-Hologram Edition</span> (sampled from the bright holographic screen wash behind Trinity's right hand in <span class="text-[#FCB7FF]">agent-trinity-v-a1.jpg</span>) — plus a 1-click toggle to switch between Print-Safe Light and Abyssal Dark!
+            </p>
+        </div>
+
+        <!-- Extracted Hex Palette Bar (Click any swatch to copy hex) -->
+        <div class="bg-[#02021B]/90 border border-[#1D396A] rounded-xl p-4 shadow-xl">
+            <div class="flex items-center justify-between mb-2.5 text-[11px] argon-mono text-[#A3BEE9]">
+                <span>[ EXTRACTED AGENT TRINITY v-a1 CHROMATIC MATRIX (LIGHT &amp; DARK) ]</span>
+                <span class="text-[#FCB7FF]">CLICK ANY SWATCH TO COPY HEX</span>
+            </div>
+            <div class="grid grid-cols-3 sm:grid-cols-9 gap-2 text-center argon-mono text-[10px]">
+                <button onclick="copyHex('#F5F9FF', 'Hologram Ice White (Print Base)')" class="swatch-card bg-[#05081C] border border-[#CFE2F3] rounded p-2 flex flex-col items-center gap-1">
+                    <span class="w-full h-5 rounded bg-[#F5F9FF] border border-slate-400"></span>
+                    <span class="text-white font-bold">#F5F9FF</span>
+                    <span class="text-[9px] text-[#A3BEE9]">Ice Paper</span>
+                </button>
+                <button onclick="copyHex('#EDF3FB', 'Volumetric Frost Callout')" class="swatch-card bg-[#05081C] border border-[#A3BEE9] rounded p-2 flex flex-col items-center gap-1">
+                    <span class="w-full h-5 rounded bg-[#EDF3FB] border border-slate-400"></span>
+                    <span class="text-white font-bold">#EDF3FB</span>
+                    <span class="text-[9px] text-[#A3BEE9]">Frost Box</span>
+                </button>
+                <button onclick="copyHex('#FCEBFF', 'Soft Orchid Badge Fill')" class="swatch-card bg-[#05081C] border border-[#FCB7FF] rounded p-2 flex flex-col items-center gap-1">
+                    <span class="w-full h-5 rounded bg-[#FCEBFF] border border-[#CA2ED8]/40"></span>
+                    <span class="text-[#FCB7FF] font-bold">#FCEBFF</span>
+                    <span class="text-[9px] text-[#A3BEE9]">Orchid Mist</span>
+                </button>
+                <button onclick="copyHex('#CFE2F3', 'Volumetric Ice Cyan')" class="swatch-card bg-[#05081C] border border-[#CFE2F3]/80 rounded p-2 flex flex-col items-center gap-1">
+                    <span class="w-full h-5 rounded bg-[#CFE2F3]"></span>
+                    <span class="text-[#CFE2F3] font-bold">#CFE2F3</span>
+                    <span class="text-[9px] text-[#A3BEE9]">Ice Readout</span>
+                </button>
+                <button onclick="copyHex('#2E9DD8', 'Electric HUD Cyan')" class="swatch-card bg-[#05081C] border border-[#2E9DD8]/80 rounded p-2 flex flex-col items-center gap-1">
+                    <span class="w-full h-5 rounded bg-[#2E9DD8]"></span>
+                    <span class="text-[#CFE2F3] font-bold">#2E9DD8</span>
+                    <span class="text-[9px] text-[#A3BEE9]">HUD Cyan</span>
+                </button>
+                <button onclick="copyHex('#CA2ED8', 'Hot Argon Magenta')" class="swatch-card bg-[#05081C] border border-[#CA2ED8]/80 rounded p-2 flex flex-col items-center gap-1">
+                    <span class="w-full h-5 rounded bg-[#CA2ED8]"></span>
+                    <span class="text-[#FCB7FF] font-bold">#CA2ED8</span>
+                    <span class="text-[9px] text-[#A3BEE9]">Hot Magenta</span>
+                </button>
+                <button onclick="copyHex('#8D15A1', 'Ionized Argon Violet')" class="swatch-card bg-[#05081C] border border-[#8D15A1]/60 rounded p-2 flex flex-col items-center gap-1">
+                    <span class="w-full h-5 rounded bg-[#8D15A1]"></span>
+                    <span class="text-[#FCB7FF] font-bold">#8D15A1</span>
+                    <span class="text-[9px] text-[#A3BEE9]">Argon Violet</span>
+                </button>
+                <button onclick="copyHex('#1D3153', 'Midnight Synthesis Slate')" class="swatch-card bg-[#05081C] border border-[#1D396A] rounded p-2 flex flex-col items-center gap-1">
+                    <span class="w-full h-5 rounded bg-[#1D3153] border border-white/15"></span>
+                    <span class="text-white font-bold">#1D3153</span>
+                    <span class="text-[9px] text-[#A3BEE9]">HUD Slate</span>
+                </button>
+                <button onclick="copyHex('#02021B', 'Abyssal Indigo Ink')" class="swatch-card bg-[#02021B] border border-[#1D396A] rounded p-2 flex flex-col items-center gap-1">
+                    <span class="w-full h-5 rounded bg-[#02021B] border border-white/15"></span>
+                    <span class="text-white font-bold">#02021B</span>
+                    <span class="text-[9px] text-[#A3BEE9]">Abyssal Ink</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mode Selector Bar: Inverted Print-Safe vs. Dark Abyssal -->
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-[#080B1A] border border-[#2E9DD8]/40 rounded-xl px-4 py-3 argon-mono text-xs">
+            <div class="flex items-center gap-2">
+                <span class="text-[#FCB7FF] font-bold">CARD POLARITY:</span>
+                <button onclick="setCardMode('light')" id="btn-mode-light" class="px-3 py-1.5 rounded font-bold bg-[#CA2ED8] text-white border border-[#FCB7FF] shadow-[2px_2px_0px_#2E9DD8] transition">
+                    🖨️ INVERTED PRINT-SAFE (TONER SAVER)
+                </button>
+                <button onclick="setCardMode('dark')" id="btn-mode-dark" class="px-3 py-1.5 rounded font-bold bg-[#1D3153]/60 text-[#A3BEE9] border border-[#1D396A] hover:text-white transition">
+                    🌑 DARK ABYSSAL GLASS
+                </button>
+            </div>
+            <button onclick="toggleInboxTheme()" id="theme-toggle-btn" class="px-2.5 py-1.5 rounded bg-[#1D3153]/80 hover:bg-[#2E9DD8]/30 text-[#CFE2F3] border border-[#2E9DD8]/50 text-[11px] transition">
+                🌙 SWITCH INBOX PREVIEW TO DARK
+            </button>
+        </div>
+
+        <!-- Live Preview Stage -->
+        <div id="preview-stage" class="preview-wrapper inbox-light p-6 sm:p-10 rounded-xl border flex flex-col items-center justify-center">
+            
+            <div class="w-full flex flex-wrap justify-between items-center gap-2 mb-5 text-xs argon-mono px-1">
+                <span id="preview-label" class="text-slate-800 font-bold">[ LIVE PREVIEW // INVERTED ARGON v-a1 PRINT-SAFE CARD ]</span>
+                <span class="text-slate-600 text-[10px] font-bold">LASER PRINTER &amp; GMAIL / PROTON SAFE</span>
+            </div>
+
+            <!-- =================================================================== -->
+            <!-- 💌 1. INVERTED PRINT-SAFE ARGON SIGNATURE (DEFAULT ACTIVE)          -->
+            <!-- =================================================================== -->
+            <div id="signature-wrapper-light" class="w-full max-w-lg flex justify-center">
+                <div id="proton-signature-payload-light" style="display: inline-block !important; width: 520px !important; max-width: 520px !important; height: auto !important; max-height: 265px !important; margin: 14px 0 8px 0 !important; padding: 0 !important; vertical-align: top !important; clear: both !important; font-size: 14px !important; line-height: 1.2 !important; font-family: 'Segoe UI', Roboto, Arial, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif !important;">
+                    <table width="520" cellpadding="0" cellspacing="0" border="0" style="display: table !important; table-layout: fixed !important; width: 520px !important; max-width: 520px !important; height: auto !important; border-collapse: collapse !important; font-size: 14px !important; font-family: 'Segoe UI', Roboto, Arial, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif !important; background-color: #F5F9FF !important; border: 2.5px solid #02021B !important; border-radius: 5px !important; box-shadow: 4px 4px 0px #CA2ED8 !important; margin: 0 !important; padding: 0 !important;">
+                        
+                        <!-- Row 0: Top Ionized Argon Plasma Strip (Locked 4px) -->
+                        <tr style="height: 4px !important;">
+                            <td valign="top" style="height: 4px !important; max-height: 4px !important; padding: 0 !important; margin: 0 !important; line-height: 0 !important; font-size: 0 !important; background-color: #CA2ED8 !important; background-image: linear-gradient(90deg, #2E9DD8 0%, #CA2ED8 55%, #8D15A1 100%) !important;">&nbsp;</td>
+                        </tr>
+
+                        <!-- Row 1: Print-Safe Argon Badges (Locked 34px) -->
+                        <tr style="height: 34px !important;">
+                            <td valign="top" style="height: 34px !important; max-height: 34px !important; padding: 14px 18px 6px 18px !important; vertical-align: top !important; background-color: #F5F9FF !important;">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100% !important; border-collapse: collapse !important;">
+                                    <tr>
+                                        <td align="left" valign="middle" style="vertical-align: middle !important;">
+                                            <span style="display: inline-block !important; font-family: 'Courier New', Courier, monospace !important; font-size: 10px !important; font-weight: bold !important; color: #8D15A1 !important; background-color: #FCEBFF !important; border: 1.5px solid #CA2ED8 !important; padding: 2px 7px !important; letter-spacing: 0.5px !important; text-transform: uppercase !important;">
+                                                &#9654; NEVERRENDER LABS // SRE
+                                            </span>
+                                        </td>
+                                        <td align="right" valign="middle" style="vertical-align: middle !important;">
+                                            <span style="display: inline-block !important; font-family: 'Courier New', Courier, monospace !important; font-size: 10px !important; font-weight: bold !important; color: #1D3153 !important; background-color: #E4F0FB !important; border: 1.5px solid #2E9DD8 !important; padding: 2px 7px !important; letter-spacing: 0.5px !important; text-transform: uppercase !important;">
+                                                &#9733; GOOGLE LABS FEATURED
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <!-- Row 2: Name & Title (Locked 48px) -->
+                        <tr style="height: 48px !important;">
+                            <td valign="top" style="height: 48px !important; max-height: 48px !important; padding: 0 18px 6px 18px !important; vertical-align: top !important; background-color: #F5F9FF !important;">
+                                <div style="font-size: 21px !important; font-weight: 900 !important; color: #02021B !important; line-height: 1.2 !important; letter-spacing: -0.3px !important; margin: 0 0 2px 0 !important;">
+                                    Matthew Wyatt
+                                </div>
+                                <div style="font-size: 12px !important; font-weight: 700 !important; color: #8D15A1 !important; font-family: 'Courier New', Courier, monospace !important; letter-spacing: -0.1px !important; margin: 0 !important;">
+                                    Creative Technologist &amp; 3D / AI Media Specialist <span style="color: #CA2ED8 !important;">//</span> <span style="color: #1B76A8 !important;">v-a1 ARGON</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 3: Holographic Dashed Divider (Locked 10px) -->
+                        <tr style="height: 10px !important;">
+                            <td valign="top" style="height: 10px !important; max-height: 10px !important; padding: 0 18px 8px 18px !important; vertical-align: top !important; background-color: #F5F9FF !important; line-height: 0 !important;">
+                                <div style="border-bottom: 2px dashed #A3BEE9 !important; width: 100% !important; height: 0 !important; line-height: 0 !important; margin: 0 !important;"></div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 4: Synthesis Tagline Callout (Locked 52px) -->
+                        <tr style="height: 52px !important;">
+                            <td valign="top" style="height: 52px !important; max-height: 52px !important; padding: 0 18px 11px 18px !important; vertical-align: top !important; background-color: #F5F9FF !important;">
+                                <div style="font-size: 11px !important; color: #1D3153 !important; line-height: 1.45 !important; margin: 0 !important; background-color: #EAF2FC !important; padding: 8px 11px !important; border-left: 3.5px solid #CA2ED8 !important; border-right: 1px solid #CFE2F3 !important; border-top: 1px solid #CFE2F3 !important; border-bottom: 1px solid #CFE2F3 !important;">
+                                    Architecting real-time 3D, generative AI pipelines, and agentic workflows that push boundaries without production lag.
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 5: Action Links / Buttons & Argon Status (Locked 48px) -->
+                        <tr style="height: 48px !important;">
+                            <td valign="top" style="height: 48px !important; max-height: 48px !important; padding: 0 18px 15px 18px !important; vertical-align: top !important; background-color: #F5F9FF !important;">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100% !important; border-collapse: collapse !important; margin: 0 !important; padding: 0 !important;">
+                                    <tr>
+                                        <td align="left" valign="middle" style="vertical-align: middle !important;">
+                                            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse !important; margin: 0 !important; padding: 0 !important;">
+                                                <tr>
+                                                    <td style="padding-right: 9px !important; vertical-align: middle !important;">
+                                                        <a href="https://renderwithoutcode.com" target="_blank" style="display: inline-block !important; background-color: #CA2ED8 !important; color: #FFFFFF !important; font-size: 10px !important; font-weight: bold !important; font-family: 'Courier New', Courier, monospace !important; text-decoration: none !important; padding: 5px 11px !important; border: 1.5px solid #02021B !important; box-shadow: 2px 2px 0px #02021B !important; text-transform: uppercase !important; white-space: nowrap !important; letter-spacing: 0.4px !important;">
+                                                            &#9654; RENDERWITHOUTCODE.COM
+                                                        </a>
+                                                    </td>
+                                                    <td style="vertical-align: middle !important;">
+                                                        <a href="https://renderwithoutcode.com/resume" target="_blank" style="display: inline-block !important; background-color: #FFFFFF !important; color: #02021B !important; font-size: 10px !important; font-weight: bold !important; font-family: 'Courier New', Courier, monospace !important; text-decoration: none !important; padding: 5px 10px !important; border: 1.5px solid #2E9DD8 !important; box-shadow: 2px 2px 0px #1D3153 !important; white-space: nowrap !important; letter-spacing: 0.4px !important;">
+                                                            &#9889; 8-BIT RESUME
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td align="right" valign="middle" style="vertical-align: middle !important;">
+                                            <span style="font-family: 'Courier New', Courier, monospace !important; font-size: 9px !important; font-weight: bold !important; color: #8D15A1 !important; letter-spacing: 0.5px !important;">
+                                                [GEMINI 4 ARGON]
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- =================================================================== -->
+            <!-- 💌 2. DARK ABYSSAL ARGON SIGNATURE (TOGGLEABLE ALTERNATIVE)         -->
+            <!-- =================================================================== -->
+            <div id="signature-wrapper-dark" class="w-full max-w-lg flex justify-center hidden">
+                <div id="proton-signature-payload-dark" style="display: inline-block !important; width: 520px !important; max-width: 520px !important; height: auto !important; max-height: 265px !important; margin: 14px 0 8px 0 !important; padding: 0 !important; vertical-align: top !important; clear: both !important; font-size: 14px !important; line-height: 1.2 !important; font-family: 'Segoe UI', Roboto, Arial, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif !important;">
+                    <table width="520" cellpadding="0" cellspacing="0" border="0" style="display: table !important; table-layout: fixed !important; width: 520px !important; max-width: 520px !important; height: auto !important; border-collapse: collapse !important; font-size: 14px !important; font-family: 'Segoe UI', Roboto, Arial, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif !important; background-color: #02021B !important; background-image: linear-gradient(135deg, #00030F 0%, #02021B 52%, #140B29 100%) !important; border: 2px solid #CA2ED8 !important; border-radius: 6px !important; box-shadow: 0 0 22px rgba(202, 46, 216, 0.38), 4px 4px 0px #2E9DD8 !important; margin: 0 !important; padding: 0 !important;">
+                        <tr style="height: 4px !important;">
+                            <td valign="top" style="height: 4px !important; max-height: 4px !important; padding: 0 !important; margin: 0 !important; line-height: 0 !important; font-size: 0 !important; background-color: #CA2ED8 !important; background-image: linear-gradient(90deg, #2E9DD8 0%, #CA2ED8 50%, #FCB7FF 100%) !important;">&nbsp;</td>
+                        </tr>
+                        <tr style="height: 34px !important;">
+                            <td valign="top" style="height: 34px !important; max-height: 34px !important; padding: 14px 18px 6px 18px !important; vertical-align: top !important; background-color: transparent !important;">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100% !important; border-collapse: collapse !important;">
+                                    <tr>
+                                        <td align="left" valign="middle" style="vertical-align: middle !important;">
+                                            <span style="display: inline-block !important; font-family: 'Courier New', Courier, monospace !important; font-size: 10px !important; font-weight: bold !important; color: #FCB7FF !important; background-color: #2D1B45 !important; border: 1.5px solid #CA2ED8 !important; padding: 2px 7px !important; letter-spacing: 0.6px !important; text-transform: uppercase !important;">
+                                                &#9654; NEVERRENDER LABS // SRE
+                                            </span>
+                                        </td>
+                                        <td align="right" valign="middle" style="vertical-align: middle !important;">
+                                            <span style="display: inline-block !important; font-family: 'Courier New', Courier, monospace !important; font-size: 10px !important; font-weight: bold !important; color: #CFE2F3 !important; background-color: #1D3153 !important; border: 1.5px solid #2E9DD8 !important; padding: 2px 7px !important; letter-spacing: 0.5px !important; text-transform: uppercase !important;">
+                                                &#9733; GOOGLE LABS FEATURED
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="height: 48px !important;">
+                            <td valign="top" style="height: 48px !important; max-height: 48px !important; padding: 0 18px 6px 18px !important; vertical-align: top !important; background-color: transparent !important;">
+                                <div style="font-size: 21px !important; font-weight: 900 !important; color: #FFFFFF !important; line-height: 1.2 !important; letter-spacing: 0.3px !important; margin: 0 0 2px 0 !important; text-shadow: 0 0 10px rgba(252, 183, 255, 0.55) !important;">
+                                    Matthew Wyatt
+                                </div>
+                                <div style="font-size: 12px !important; font-weight: 700 !important; color: #2E9DD8 !important; font-family: 'Courier New', Courier, monospace !important; letter-spacing: 0.2px !important; margin: 0 !important;">
+                                    Creative Technologist &amp; 3D / AI Media Specialist <span style="color: #CA2ED8 !important;">//</span> <span style="color: #A3BEE9 !important;">v-a1 ARGON</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px !important;">
+                            <td valign="top" style="height: 10px !important; max-height: 10px !important; padding: 0 18px 8px 18px !important; vertical-align: top !important; background-color: transparent !important; line-height: 0 !important;">
+                                <div style="border-bottom: 1.5px dashed #1D396A !important; width: 100% !important; height: 0 !important; line-height: 0 !important; margin: 0 !important;"></div>
+                            </td>
+                        </tr>
+                        <tr style="height: 52px !important;">
+                            <td valign="top" style="height: 52px !important; max-height: 52px !important; padding: 0 18px 11px 18px !important; vertical-align: top !important; background-color: transparent !important;">
+                                <div style="font-size: 11px !important; color: #CFE2F3 !important; line-height: 1.45 !important; margin: 0 !important; background-color: #0B152E !important; padding: 8px 11px !important; border-left: 3px solid #CA2ED8 !important; border-right: 1px solid #1D3153 !important; border-top: 1px solid #1D3153 !important; border-bottom: 1px solid #1D3153 !important;">
+                                    Architecting real-time 3D, generative AI pipelines, and agentic workflows that push boundaries without production lag.
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 48px !important;">
+                            <td valign="top" style="height: 48px !important; max-height: 48px !important; padding: 0 18px 15px 18px !important; vertical-align: top !important; background-color: transparent !important;">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100% !important; border-collapse: collapse !important; margin: 0 !important; padding: 0 !important;">
+                                    <tr>
+                                        <td align="left" valign="middle" style="vertical-align: middle !important;">
+                                            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse !important; margin: 0 !important; padding: 0 !important;">
+                                                <tr>
+                                                    <td style="padding-right: 9px !important; vertical-align: middle !important;">
+                                                        <a href="https://renderwithoutcode.com" target="_blank" style="display: inline-block !important; background-color: #CA2ED8 !important; color: #FFFFFF !important; font-size: 10px !important; font-weight: bold !important; font-family: 'Courier New', Courier, monospace !important; text-decoration: none !important; padding: 5px 11px !important; border: 1.5px solid #FCB7FF !important; box-shadow: 2px 2px 0px #8D15A1 !important; text-transform: uppercase !important; white-space: nowrap !important; letter-spacing: 0.4px !important;">
+                                                            &#9654; RENDERWITHOUTCODE.COM
+                                                        </a>
+                                                    </td>
+                                                    <td style="vertical-align: middle !important;">
+                                                        <a href="https://renderwithoutcode.com/resume" target="_blank" style="display: inline-block !important; background-color: #1D3153 !important; color: #CFE2F3 !important; font-size: 10px !important; font-weight: bold !important; font-family: 'Courier New', Courier, monospace !important; text-decoration: none !important; padding: 5px 10px !important; border: 1.5px solid #2E9DD8 !important; box-shadow: 2px 2px 0px #00030F !important; white-space: nowrap !important; letter-spacing: 0.4px !important;">
+                                                            &#9889; 8-BIT RESUME
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td align="right" valign="middle" style="vertical-align: middle !important;">
+                                            <span style="font-family: 'Courier New', Courier, monospace !important; font-size: 9px !important; color: #A3BEE9 !important; letter-spacing: 0.5px !important;">
+                                                [GEMINI 4 ARGON]
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!-- =================================================================== -->
+            <!-- 💌 THE EXACT SIGNATURE CODE ENDS HERE                               -->
+            <!-- =================================================================== -->
+
+        </div>
+
+        <!-- Copy & Export Controls -->
+        <div class="flex flex-wrap items-center justify-center gap-3 argon-mono text-xs">
+            <button onclick="copyProtonImageCard()" id="btn-copy-proton" class="px-5 py-2.5 bg-[#CA2ED8] hover:bg-[#d94ce6] text-white border border-[#FCB7FF] font-bold rounded flex items-center gap-2 shadow-[3px_3px_0px_#2E9DD8] transition active:translate-x-0.5 active:translate-y-0.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span>⚡ COPY PROTON IMAGE CARD (ZERO-BUG)</span>
+            </button>
+
+            <button onclick="copySignatureRichText()" id="btn-copy-rich" class="px-4 py-2.5 bg-[#2E9DD8] hover:bg-[#43b0eb] text-[#00030F] border border-[#CFE2F3] font-bold rounded flex items-center gap-2 shadow-[3px_3px_0px_#8D15A1] transition active:translate-x-0.5 active:translate-y-0.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                <span>COPY HTML TABLE (GMAIL / OUTLOOK)</span>
+            </button>
+
+            <button onclick="copyRawHTML()" id="btn-copy-html" class="px-4 py-2.5 bg-[#1D3153] hover:bg-[#27426e] text-[#CFE2F3] border border-[#2E9DD8]/60 font-bold rounded flex items-center gap-2 shadow-[3px_3px_0px_#00030F] transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                <span>COPY RAW HTML</span>
+            </button>
+        </div>
+
+        <!-- Feedback Notification Toast -->
+        <div id="toast" class="hidden text-center text-xs argon-mono text-[#FCB7FF] bg-[#2D1B45]/90 border border-[#CA2ED8] p-2.5 rounded shadow-[0_0_15px_rgba(202,46,216,0.4)]">
+            ✔ Copied to clipboard!
+        </div>
+
+        <!-- How to Install Instructions -->
+        <div class="bg-[#02021B]/90 border border-[#1D396A] p-5 rounded-lg text-xs argon-mono space-y-3 text-[#CFE2F3]">
+            <div class="text-[#FCB7FF] font-bold flex items-center gap-1.5 text-sm">
+                <span>⚡ HOW TO PASTE INTO PROTON MAIL / GMAIL (ARGON v-a1 PRINT-SAFE EDITION):</span>
+            </div>
+            <ol class="list-decimal list-inside space-y-1.5 text-[#A3BEE9] leading-relaxed">
+                <li>Select <strong>"🖨️ INVERTED PRINT-SAFE (TONER SAVER)"</strong> (default) or <strong>"🌑 DARK ABYSSAL GLASS"</strong> at the top of the preview stage.</li>
+                <li>Click <strong>"COPY HTML TABLE"</strong> (for interactive multi-button links) or <strong>"⚡ COPY PROTON IMAGE CARD"</strong> (for zero-stretch single image).</li>
+                <li>In <strong>Proton Mail</strong> or <strong>Gmail</strong> Settings &gt; <strong>Signature</strong>, clear existing text, press <kbd class="bg-[#1D3153] text-[#FCB7FF] px-1.5 py-0.5 rounded border border-[#2E9DD8]/50">Ctrl + V</kbd>, and hit <strong>Save</strong>!</li>
+            </ol>
+        </div>
+
+    </div>
+
+    <script>
+        let currentCardMode = 'light';
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+
+        function copyHex(hex, label) {
+            navigator.clipboard.writeText(hex).then(() => {
+                showToast(`✔ Copied ${label} (${hex}) to clipboard!`);
+            });
+        }
+
+        function setCardMode(mode) {
+            currentCardMode = mode;
+            const lightWrap = document.getElementById('signature-wrapper-light');
+            const darkWrap = document.getElementById('signature-wrapper-dark');
+            const btnLight = document.getElementById('btn-mode-light');
+            const btnDark = document.getElementById('btn-mode-dark');
+            const label = document.getElementById('preview-label');
+
+            if (mode === 'light') {
+                lightWrap.classList.remove('hidden');
+                darkWrap.classList.add('hidden');
+                btnLight.className = 'px-3 py-1.5 rounded font-bold bg-[#CA2ED8] text-white border border-[#FCB7FF] shadow-[2px_2px_0px_#2E9DD8] transition';
+                btnDark.className = 'px-3 py-1.5 rounded font-bold bg-[#1D3153]/60 text-[#A3BEE9] border border-[#1D396A] hover:text-white transition';
+                label.textContent = '[ LIVE PREVIEW // INVERTED ARGON v-a1 PRINT-SAFE CARD ]';
+            } else {
+                lightWrap.classList.add('hidden');
+                darkWrap.classList.remove('hidden');
+                btnDark.className = 'px-3 py-1.5 rounded font-bold bg-[#CA2ED8] text-white border border-[#FCB7FF] shadow-[2px_2px_0px_#2E9DD8] transition';
+                btnLight.className = 'px-3 py-1.5 rounded font-bold bg-[#1D3153]/60 text-[#A3BEE9] border border-[#1D396A] hover:text-white transition';
+                label.textContent = '[ LIVE PREVIEW // DARK ABYSSAL ARGON v-a1 CARD ]';
+            }
+        }
+
+        function toggleInboxTheme() {
+            const stage = document.getElementById('preview-stage');
+            const btn = document.getElementById('theme-toggle-btn');
+            const label = document.getElementById('preview-label');
+            if (stage.classList.contains('inbox-dark')) {
+                stage.classList.remove('inbox-dark');
+                stage.classList.add('inbox-light');
+                btn.textContent = '🌙 SWITCH INBOX PREVIEW TO DARK';
+                label.className = 'text-slate-800 font-bold';
+            } else {
+                stage.classList.remove('inbox-light');
+                stage.classList.add('inbox-dark');
+                btn.textContent = '☀ SWITCH INBOX PREVIEW TO LIGHT';
+                label.className = 'text-[#CFE2F3] font-bold';
+            }
+        }
+
+        function getActivePayload() {
+            return currentCardMode === 'light'
+                ? document.getElementById('proton-signature-payload-light')
+                : document.getElementById('proton-signature-payload-dark');
+        }
+
+        function getActiveContainer() {
+            return currentCardMode === 'light'
+                ? document.getElementById('signature-wrapper-light')
+                : document.getElementById('signature-wrapper-dark');
+        }
+
+        function copyProtonImageCard() {
+            const imgFile = currentCardMode === 'light' ? 'signature-card-argon-light.png?v=argon1' : 'signature-card-argon-dark.png?v=argon1';
+            const htmlPayload = `<div style="margin: 8px 0; padding: 0; line-height: 0;">
+    <a href="https://renderwithoutcode.com" target="_blank" style="display: inline-block; text-decoration: none; border: 0; outline: none;">
+        <img src="https://raw.githubusercontent.com/PJKT-NRVMOR/neverrender-labs-website/main/card/${imgFile}" width="520" alt="Matthew Wyatt - Creative Technologist & 3D / AI Media Specialist (Argon v-a1)" style="display: block; width: 520px; max-width: 100%; height: auto; border: 0;" />
+    </a>
+</div>`;
+            const plainText = "Matthew Wyatt | Creative Technologist & 3D / AI Media Specialist (v-a1 Argon)\nhttps://renderwithoutcode.com";
+
+            const listener = function(e) {
+                e.clipboardData.setData('text/html', htmlPayload);
+                e.clipboardData.setData('text/plain', plainText);
+                e.preventDefault();
+            };
+
+            document.addEventListener('copy', listener);
+            const successful = document.execCommand('copy');
+            document.removeEventListener('copy', listener);
+
+            if (successful) {
+                showToast(`✔ Argon v-a1 (${currentCardMode.toUpperCase()}) Image Card copied! Ready for Proton.`);
+            } else {
+                navigator.clipboard.write([
+                    new ClipboardItem({
+                        'text/html': new Blob([htmlPayload], { type: 'text/html' }),
+                        'text/plain': new Blob([plainText], { type: 'text/plain' })
+                    })
+                ]).then(() => {
+                    showToast(`✔ Argon v-a1 (${currentCardMode.toUpperCase()}) Image Card copied!`);
+                });
+            }
+        }
+
+        function copySignatureRichText() {
+            const payload = getActivePayload();
+            const container = getActiveContainer();
+            const payloadHTML = payload.outerHTML;
+            const plainText = container.innerText;
+
+            const listener = function(e) {
+                e.clipboardData.setData('text/html', payloadHTML);
+                e.clipboardData.setData('text/plain', plainText);
+                e.preventDefault();
+            };
+
+            document.addEventListener('copy', listener);
+            const successful = document.execCommand('copy');
+            document.removeEventListener('copy', listener);
+
+            if (successful) {
+                showToast(`✔ Argon v-a1 (${currentCardMode === 'light' ? 'Print-Safe Light' : 'Dark Abyssal'}) HTML Table copied!`);
+            } else {
+                navigator.clipboard.write([
+                    new ClipboardItem({
+                        'text/html': new Blob([payloadHTML], { type: 'text/html' }),
+                        'text/plain': new Blob([plainText], { type: 'text/plain' })
+                    })
+                ]).then(() => {
+                    showToast(`✔ Argon v-a1 (${currentCardMode === 'light' ? 'Print-Safe Light' : 'Dark Abyssal'}) HTML Table copied!`);
+                });
+            }
+        }
+
+        function copyRawHTML() {
+            const payload = getActivePayload();
+            navigator.clipboard.writeText(payload.outerHTML.trim()).then(() => {
+                showToast(`✔ Pure Argon v-a1 (${currentCardMode.toUpperCase()}) HTML copied to clipboard!`);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEVER RENDER LABS // V12 CONSOLE</title>
+    
+    <!-- Tailwind CSS for high-fidelity utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Share Tech Mono for console and Inter for UI hierarchy -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-terminal {
+            font-family: 'Share Tech Mono', monospace;
+        }
+        
+        /* High-performance hardware-accelerated 3D Flip Mechanics */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        
+        /* CSS custom variables managed by JS color updates */
+        :root {
+            --theme-color: #00ffcc;
+            --theme-glow: rgba(0, 255, 204, 0.15);
+            --accent-color: #ff007f;
+            --accent-glow: rgba(255, 0, 127, 0.15);
+        }
+
+        /* Ambient neon container shadows */
+        .neon-border-theme {
+            border-color: var(--theme-color);
+            box-shadow: 0 0 15px var(--theme-glow), inset 0 0 10px var(--theme-glow);
+        }
+        .neon-border-accent {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-glow), inset 0 0 10px var(--accent-glow);
+        }
+        
+        /* CRT scanline filter overlay */
+        .scanlines {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 40;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.3) 50%
+            ), linear-gradient(
+                90deg, 
+                rgba(255, 0, 0, 0.05), 
+                rgba(0, 255, 0, 0.02), 
+                rgba(0, 0, 255, 0.05)
+            );
+            background-size: 100% 4px, 6px 100%;
+            opacity: 0.25;
+        }
+
+        /* Micro flicker animation for authentic screen aura */
+        @keyframes micro-flicker {
+            0% { opacity: 0.98; }
+            50% { opacity: 1; }
+            100% { opacity: 0.99; }
+        }
+        .screen-flicker {
+            animation: micro-flicker 0.15s infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-[#070709] text-neutral-100 flex flex-col font-sans overflow-x-hidden selection:bg-teal-500 selection:text-black relative">
+
+    <!-- AMBIENT GLASSMORPHISM ORBS -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-[var(--theme-color)] opacity-20 rounded-full blur-[120px] mix-blend-screen" style="animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;"></div>
+        <div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-[var(--accent-color)] opacity-20 rounded-full blur-[150px] mix-blend-screen" style="animation: pulse 10s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: 2s;"></div>
+    </div>
+
+    <!-- HEADER BAR -->
+    <header class="border-b border-neutral-700/50 bg-neutral-900/40 backdrop-blur-xl px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+        <div class="flex items-center space-x-3">
+          <div class="w-9 h-9 rounded bg-gradient-to-tr from-cyan-500 via-pink-500 to-amber-500 flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)]">
+                <!-- Inline SVG console logo -->
+                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+            </div>
+            <div>
+                <h1 class="font-terminal text-base font-bold tracking-wider uppercase text-white flex items-center gap-2">
+                    NEVER RENDER LABS <span class="text-xs bg-neutral-800 text-neutral-400 px-2 py-0.5 rounded border border-neutral-700">CONSOLE // V12</span>
+                </h1>
+                <p class="text-xs text-neutral-400 font-terminal">Dynamic Business Card Studio & Asset Customizer</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4 font-terminal text-xs text-neutral-400">
+            <span class="hidden md:flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> SECURE PERIMETER VALIDATED
+            </span>
+        </div>
+    </header>
+
+    <!-- CORE WORKSPACE -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start relative z-10">
+        
+        <!-- LEFT COLUMN: THE INTERACTIVE CARD VIEWPORT (7 COLS) -->
+        <section class="lg:col-span-7 flex flex-col items-center justify-center gap-6 bg-neutral-900/20 backdrop-blur-2xl border border-neutral-700/50 shadow-[0_0_40px_rgba(0,0,0,0.5)] rounded-2xl p-6 md:p-8 min-h-[520px] lg:sticky lg:top-24">
+            
+            <!-- Card Engine Toolbelt -->
+            <div class="w-full flex items-center justify-between font-terminal text-xs border-b border-neutral-800 pb-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-neutral-500">ORIENTATION:</span>
+                    <button id="btn-orientation" onclick="toggleOrientation()" class="px-2.5 py-1 rounded border border-neutral-700 bg-neutral-800 hover:bg-neutral-700 text-white flex items-center gap-1.5 transition">
+                        <svg class="w-3.5 h-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 15H19M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-2"></path>
+                        </svg>
+                        <span id="orientation-text">Horizontal (US Standard)</span>
+                    </button>
+                </div>
+                
+                <button onclick="toggleFlip()" class="px-3.5 py-1.5 bg-gradient-to-r from-neutral-800 to-neutral-700 hover:from-neutral-700 hover:to-neutral-600 rounded text-neutral-200 border border-neutral-600 font-bold flex items-center gap-2 transition active:scale-95">
+                    <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                    </svg>
+                    FLIP CARD
+                </button>
+            </div>
+
+            <!-- Interactive Card Stage Container -->
+            <div class="perspective-1000 my-8 py-4 flex items-center justify-center w-full max-w-[460px]">
+                <div id="card-3d-wrapper" class="relative duration-700 preserve-3d cursor-pointer select-none transition-transform w-[400px] h-[230px]" onclick="toggleFlip()">
+                  
+                  <!-- CARD FRONT CONTAINER -->
+                  <div id="card-front" class="absolute inset-0 backface-hidden rounded-xl overflow-hidden shadow-2xl flex flex-col justify-between p-6 border-2 transition-all duration-300 neon-border-theme bg-[#0a0a0c]">
+                    
+                    <!-- Glare Overlay -->
+                    <div class="card-glare absolute inset-0 pointer-events-none z-50 rounded-xl mix-blend-screen opacity-0 transition-opacity duration-300" style="background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%);"></div>
+
+                    <!-- Scanline filter inside card front -->
+                    <div id="front-scanlines" class="scanlines"></div>
+
+                    <!-- Grid Overlay -->
+                    <div id="front-grid" class="absolute inset-0 pointer-events-none z-0 opacity-15" style="background-image: radial-gradient(var(--theme-color) 1px, transparent 1px); background-size: 15px 15px;"></div>
+
+                    <!-- Accent neon corner brackets -->
+                    <div class="absolute top-2.5 left-2.5 w-3.5 h-3.5 border-t-2 border-l-2 opacity-60 border-[var(--accent-color)]"></div>
+                    <div class="absolute top-2.5 right-2.5 w-3.5 h-3.5 border-t-2 border-r-2 opacity-60 border-[var(--accent-color)]"></div>
+                    <div class="absolute bottom-2.5 left-2.5 w-3.5 h-3.5 border-b-2 border-l-2 opacity-60 border-[var(--accent-color)]"></div>
+                    <div class="absolute bottom-2.5 right-2.5 w-3.5 h-3.5 border-b-2 border-r-2 opacity-60 border-[var(--accent-color)]"></div>
+
+                    <!-- Dynamic Front Layout Content -->
+                    <div id="front-content-terminal" class="flex flex-col justify-between h-full font-terminal text-left z-10 screen-flicker">
+                        <div class="space-y-1">
+                            <div id="render-consoleHeader" class="text-[9px] flex items-center gap-1.5 font-bold tracking-wider text-[var(--accent-color)]">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping"></span>
+                                SYSTEM DETECTED // NEV_REND_OS v12.4
+                            </div>
+                            <h2 id="render-name" class="text-xl md:text-2xl font-black tracking-tight text-white mt-1 uppercase" style="text-shadow: 0 0 8px var(--theme-color);">
+                                Matthew Wyatt
+                            </h2>
+                            <div id="render-title" class="text-[10px] uppercase font-bold tracking-widest pl-0.5 text-[var(--theme-color)]">
+                                Digital Creator / Solo Operator
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 border-t border-neutral-800/85 pt-3">
+                            <p id="render-tagline" class="text-[10px] text-neutral-400 italic">
+                                &gt; No Code. No Pulp. All Pixels. Zero B.S.
+                            </p>
+                            <div class="flex items-center justify-between text-[9px] text-neutral-500 font-bold">
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5 text-[var(--theme-color)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                                    <span id="render-website">renderwithoutcode.com</span>
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5 text-[var(--accent-color)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                                    <span id="render-handle">@neverrenderlabs</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="front-content-minimalist" class="hidden flex flex-col justify-between h-full font-terminal text-left z-10 screen-flicker">
+                        <div class="self-end text-[9px] font-bold border px-1.5 py-0.5 rounded-sm border-[var(--theme-color)] text-[var(--theme-color)]">
+                            OPERATOR v12
+                        </div>
+                        <div class="space-y-1">
+                            <h2 id="render-name-min" class="text-2xl font-black tracking-tight text-white uppercase">
+                                Matthew Wyatt
+                            </h2>
+                            <p id="render-title-min" class="text-xs tracking-wider font-bold text-[var(--accent-color)]">
+                                Digital Creator / Solo Operator
+                            </p>
+                        </div>
+                        <div class="text-[9px] text-neutral-400 border-l-2 pl-2 border-[var(--theme-color)]">
+                            <span id="render-website-min">renderwithoutcode.com</span> | <span id="render-handle-min">@neverrenderlabs</span>
+                        </div>
+                    </div>
+
+                    <div id="front-content-hologram" class="hidden flex flex-col justify-between h-full text-left font-terminal z-10 screen-flicker">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-neutral-900/20 to-teal-500/5 pointer-events-none"></div>
+                        <div class="space-y-2">
+                            <div class="text-[8px] bg-neutral-900 border border-neutral-800 px-1.5 py-0.5 rounded text-neutral-400 w-max tracking-widest uppercase">
+                                CORE VECTOR METRICS
+                            </div>
+                            <h2 id="render-name-holo" class="text-xl md:text-2xl font-black text-white uppercase tracking-tighter" style="text-shadow: 0 0 10px var(--theme-color), 0 0 20px rgba(255, 0, 127, 0.4);">
+                                Matthew Wyatt
+                            </h2>
+                        </div>
+                        <div class="space-y-1">
+                            <div id="render-title-holo" class="text-xs font-bold text-white uppercase">Digital Creator / Solo Operator</div>
+                            <div id="render-tagline-holo" class="text-[9px] text-neutral-500 uppercase tracking-widest">No Code. No Pulp. All Pixels. Zero B.S.</div>
+                            <div id="render-website-holo" class="text-[10px] font-black mt-2 text-[var(--theme-color)]">
+                                renderwithoutcode.com
+                            </div>
+                        </div>
+                    </div>
+                    
+                  </div>
+
+                  <!-- CARD BACK CONTAINER (Flipped view for QR Integration) -->
+                  <div id="card-back" class="absolute inset-0 backface-hidden rounded-xl overflow-hidden shadow-2xl flex flex-col justify-between p-6 border-2 transition-all duration-300 neon-border-accent bg-[#070709] rotate-y-180">
+                    
+                    <!-- Glare Overlay -->
+                    <div class="card-glare absolute inset-0 pointer-events-none z-50 rounded-xl mix-blend-screen opacity-0 transition-opacity duration-300" style="background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%);"></div>
+
+                    <!-- Scanline filter inside card back -->
+                    <div id="back-scanlines" class="scanlines"></div>
+
+                    <!-- Grid Overlay -->
+                    <div id="back-grid" class="absolute inset-0 pointer-events-none z-0 opacity-15" style="background-image: radial-gradient(var(--accent-color) 1px, transparent 1px); background-size: 15px 15px;"></div>
+
+                    <!-- Accent neon corner brackets -->
+                    <div class="absolute top-2.5 left-2.5 w-3.5 h-3.5 border-t-2 border-l-2 opacity-60 border-[var(--theme-color)]"></div>
+                    <div class="absolute top-2.5 right-2.5 w-3.5 h-3.5 border-t-2 border-r-2 opacity-60 border-[var(--theme-color)]"></div>
+                    <div class="absolute bottom-2.5 left-2.5 w-3.5 h-3.5 border-b-2 border-l-2 opacity-60 border-[var(--theme-color)]"></div>
+                    <div class="absolute bottom-2.5 right-2.5 w-3.5 h-3.5 border-b-2 border-r-2 opacity-60 border-[var(--theme-color)]"></div>
+
+                    <!-- Content Back Design -->
+                    <div class="flex items-center justify-between h-full w-full z-10 gap-4 screen-flicker">
+                      <!-- Left Metadata Side -->
+                      <div class="flex-1 flex flex-col justify-between h-full font-terminal text-left py-1">
+                        <div class="space-y-2">
+                          <div class="text-[10px] font-black tracking-widest text-white uppercase">
+                            CONNECT TERMINAL
+                          </div>
+                          <div class="space-y-1.5">
+                            <div class="text-[9px] text-neutral-400 flex items-center gap-1.5">
+                              <svg class="w-3.5 h-3.5 text-[var(--theme-color)] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                              <span id="render-website-back" class="truncate">renderwithoutcode.com</span>
+                            </div>
+                            <div class="text-[9px] text-neutral-400 flex items-center gap-1.5">
+                              <svg class="w-3.5 h-3.5 text-[var(--accent-color)] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                              <span id="render-handle-back" class="truncate">@neverrenderlabs</span>
+                            </div>
+                            <div class="text-[9px] text-neutral-400 flex items-center gap-1.5">
+                              <svg class="w-3.5 h-3.5 text-[var(--theme-color)] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                              <span id="render-email-back" class="truncate">contact@neverrenderlabs.com</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="text-[8px] text-neutral-500 leading-tight">
+                          SCAN FOR CURRENT ROSTER<br>
+                          AND MATRIX VERSIONS
+                        </div>
+                      </div>
+
+                      <!-- Right QR Code Side -->
+                      <div class="relative shrink-0 flex items-center justify-center p-2.5 bg-neutral-900 border border-neutral-800 rounded-lg shadow-inner overflow-hidden">
+                        <div class="absolute inset-0 opacity-10 bg-gradient-to-tr from-cyan-500 to-pink-500 animate-pulse"></div>
+                        <div id="qr-element-container" class="w-24 h-24 relative z-10 flex items-center justify-center text-[var(--theme-color)]">
+                          <!-- Exact rounded-dot architecture SVG based on adobe-express-qr-code.svg -->
+                          <svg id="default-qr-svg" viewBox="0 0 100 100" class="w-full h-full" style="fill: currentColor;">
+                            <!-- Finder Pattern Top-Left -->
+                            <rect x="5" y="5" width="22" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="5" />
+                            <rect x="11" y="11" width="10" height="10" rx="2" fill="currentColor" />
+                            
+                            <!-- Finder Pattern Top-Right -->
+                            <rect x="73" y="5" width="22" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="5" />
+                            <rect x="79" y="11" width="10" height="10" rx="2" fill="currentColor" />
+                            
+                            <!-- Finder Pattern Bottom-Left -->
+                            <rect x="5" y="73" width="22" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="5" />
+                            <rect x="11" y="79" width="10" height="10" rx="2" fill="currentColor" />
+                            
+                            <!-- Circular matrix nodes matching adobe-express-qr-code.svg -->
+                            <g fill="currentColor">
+                              <circle cx="34" cy="11" r="2.5" /><circle cx="34" cy="23" r="2.5" /><circle cx="34" cy="35" r="2.5" /><circle cx="34" cy="53" r="2.5" /><circle cx="34" cy="65" r="2.5" /><circle cx="34" cy="77" r="2.5" />
+                              <circle cx="41" cy="17" r="2.5" /><circle cx="41" cy="29" r="2.5" /><circle cx="41" cy="41" r="2.5" /><circle cx="41" cy="59" r="2.5" /><circle cx="41" cy="71" r="2.5" /><circle cx="41" cy="83" r="2.5" />
+                              <circle cx="48" cy="11" r="2.5" /><circle cx="48" cy="23" r="2.5" /><circle cx="48" cy="35" r="2.5" /><circle cx="48" cy="47" r="2.5" /><circle cx="48" cy="59" r="2.5" /><circle cx="48" cy="71" r="2.5" /><circle cx="48" cy="89" r="2.5" />
+                              <circle cx="55" cy="5" r="2.5" /><circle cx="55" cy="17" r="2.5" /><circle cx="55" cy="29" r="2.5" /><circle cx="55" cy="41" r="2.5" /><circle cx="55" cy="53" r="2.5" /><circle cx="55" cy="65" r="2.5" /><circle cx="55" cy="77" r="2.5" />
+                              <circle cx="62" cy="11" r="2.5" /><circle cx="62" cy="23" r="2.5" /><circle cx="62" cy="35" r="2.5" /><circle cx="62" cy="47" r="2.5" /><circle cx="62" cy="59" r="2.5" /><circle cx="62" cy="71" r="2.5" /><circle cx="62" cy="83" r="2.5" />
+                              <circle cx="69" cy="17" r="2.5" /><circle cx="69" cy="29" r="2.5" /><circle cx="69" cy="41" r="2.5" /><circle cx="69" cy="53" r="2.5" /><circle cx="69" cy="65" r="2.5" /><circle cx="69" cy="77" r="2.5" /><circle cx="69" cy="89" r="2.5" />
+                              <circle cx="76" cy="35" r="2.5" /><circle cx="76" cy="47" r="2.5" /><circle cx="76" cy="59" r="2.5" /><circle cx="76" cy="71" r="2.5" /><circle cx="76" cy="83" r="2.5" />
+                              <circle cx="83" cy="35" r="2.5" /><circle cx="83" cy="47" r="2.5" /><circle cx="83" cy="53" r="2.5" /><circle cx="83" cy="65" r="2.5" /><circle cx="83" cy="77" r="2.5" /><circle cx="83" cy="89" r="2.5" />
+                              <circle cx="90" cy="35" r="2.5" /><circle cx="90" cy="41" r="2.5" /><circle cx="90" cy="53" r="2.5" /><circle cx="90" cy="65" r="2.5" /><circle cx="90" cy="71" r="2.5" /><circle cx="90" cy="83" r="2.5" />
+                            </g>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+            </div>
+
+            <!-- Quick interactive hints -->
+            <div class="text-center font-terminal text-[10px] text-neutral-500 flex items-center gap-2 justify-center max-w-sm">
+                <svg class="w-4 h-4 text-neutral-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>Click the card directly or toggle <b>FLIP CARD</b> above to inspect both vector pipelines.</span>
+            </div>
+            
+        </section>
+
+
+        <!-- RIGHT COLUMN: CONTROL PANEL & CUSTOMIZER (5 COLS) -->
+        <section class="lg:col-span-5 flex flex-col gap-6">
+
+            <!-- BLOCK A: QR CODE SVG INTEGRATOR -->
+            <div class="bg-neutral-900/30 backdrop-blur-lg border border-neutral-700/50 rounded-xl p-5 space-y-4 shadow-xl">
+                <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
+                    <h3 class="font-terminal text-sm font-bold text-white flex items-center gap-2">
+                        <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                        1. INTEGRATE SVG QR CODE
+                    </h3>
+                    <span id="qr-status-badge" class="hidden text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-terminal font-bold items-center gap-1 animate-pulse">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> ACTIVE_LINK
+                    </span>
+                </div>
+
+                <p class="text-xs text-neutral-400 leading-relaxed font-terminal">
+                    Incorporate your custom vectors. Select your <b>adobe-express-qr-code.svg</b> file directly from your machine to feed it into the asset stage.
+                </p>
+
+                <div class="grid grid-cols-1 gap-3">
+                    <input 
+                        type="file" 
+                        id="qr-file-input" 
+                        onchange="handleQRUpload(event)" 
+                        accept=".svg,.png,.jpg,.jpeg" 
+                        class="hidden" 
+                    />
+                    
+                    <div class="flex gap-2">
+                        <button
+                            onclick="triggerQRUpload()"
+                            class="flex-1 py-3 px-4 bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-700/80 border border-neutral-700 hover:border-neutral-600 rounded-lg text-white font-terminal text-xs font-bold transition flex items-center justify-center gap-2"
+                        >
+                            <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            Select "adobe-express-qr-code.svg"
+                        </button>
+
+                        <button
+                            id="btn-clear-qr"
+                            onclick="clearUploadedQR()"
+                            class="hidden px-3 bg-neutral-950 hover:bg-red-950 hover:text-red-400 border border-neutral-800 hover:border-red-900 rounded-lg text-neutral-400 text-xs font-terminal transition"
+                            title="Clear QR Code"
+                        >
+                            Clear
+                        </button>
+                    </div>
+
+                    <div id="qr-color-options" class="hidden bg-neutral-950 border border-neutral-800 rounded-lg p-3 space-y-3">
+                        <div class="text-[10px] font-terminal text-neutral-400 flex items-center justify-between">
+                            <span>VECTOR RECOLOR FILTER</span>
+                            <span id="qr-mode-status" class="text-cyan-400 font-bold uppercase">Cyan Glow</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="setQRColorMode('original')" class="qr-mode-btn py-1.5 rounded text-[10px] font-terminal border transition bg-neutral-900 border-neutral-800 text-neutral-500 hover:text-neutral-300">Original</button>
+                            <button onclick="setQRColorMode('match')" class="qr-mode-btn py-1.5 rounded text-[10px] font-terminal border transition bg-neutral-800 border-neutral-600 text-white font-bold">Cyan Glow</button>
+                            <button onclick="setQRColorMode('invert')" class="qr-mode-btn py-1.5 rounded text-[10px] font-terminal border transition bg-neutral-900 border-neutral-800 text-neutral-500 hover:text-neutral-300">Laser Glow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK B: DESIGN PRESET TUNER -->
+            <div class="bg-neutral-900/30 backdrop-blur-lg border border-neutral-700/50 rounded-xl p-5 space-y-4 shadow-xl">
+                <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
+                    <h3 class="font-terminal text-sm font-bold text-white flex items-center gap-2">
+                        <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        2. CARD LAYOUT PRESET
+                    </h3>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2.5">
+                    <button id="preset-terminal" onclick="setLayout('terminal')" class="p-3 rounded-lg border text-left font-terminal transition flex flex-col justify-between h-20 bg-neutral-800 border-neutral-600 text-white ring-1 ring-neutral-700">
+                        <span class="text-xs font-black tracking-tight">THE TERMINAL</span>
+                        <span class="text-[9px] text-neutral-500 uppercase">Console Prompt</span>
+                    </button>
+                    <button id="preset-minimalist" onclick="setLayout('minimalist')" class="p-3 rounded-lg border text-left font-terminal transition flex flex-col justify-between h-20 bg-neutral-950 border-neutral-800/80 text-neutral-400 hover:text-neutral-200 hover:border-neutral-700">
+                        <span class="text-xs font-black tracking-tight">THE STEALTH</span>
+                        <span class="text-[9px] text-neutral-500 uppercase">Raw Minimal</span>
+                    </button>
+                    <button id="preset-hologram" onclick="setLayout('hologram')" class="p-3 rounded-lg border text-left font-terminal transition flex flex-col justify-between h-20 bg-neutral-950 border-neutral-800/80 text-neutral-400 hover:text-neutral-200 hover:border-neutral-700">
+                        <span class="text-xs font-black tracking-tight">HOLOPRISM</span>
+                        <span class="text-[9px] text-neutral-500 uppercase">Laser Vector</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- BLOCK C: VECTOR COLOR PALETTES -->
+            <div class="bg-neutral-900/30 backdrop-blur-lg border border-neutral-700/50 rounded-xl p-5 space-y-4 shadow-xl">
+                <h3 class="font-terminal text-sm font-bold text-white border-b border-neutral-800 pb-3 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                    3. SPECTRAL SHIFT (COLORS)
+                </h3>
+
+                <!-- Quick Presets -->
+                <div class="space-y-2">
+                    <div class="text-[10px] font-terminal text-neutral-500">SIGNATURE THEME PROFILES:</div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="applyColorPreset('#00ffcc', '#ff007f')" class="px-2.5 py-1.5 bg-neutral-950 hover:bg-neutral-800 border border-neutral-800 rounded text-[10px] font-terminal text-neutral-300 flex items-center gap-2 transition">
+                            <span class="flex gap-0.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#00ffcc]"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#ff007f]"></span>
+                            </span>
+                            V12 Cyan
+                        </button>
+                        <button onclick="applyColorPreset('#39ff14', '#00ffff')" class="px-2.5 py-1.5 bg-neutral-950 hover:bg-neutral-800 border border-neutral-800 rounded text-[10px] font-terminal text-neutral-300 flex items-center gap-2 transition">
+                            <span class="flex gap-0.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#39ff14]"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#00ffff]"></span>
+                            </span>
+                            Toxic Lime
+                        </button>
+                        <button onclick="applyColorPreset('#ffb000', '#ff3c00')" class="px-2.5 py-1.5 bg-neutral-950 hover:bg-neutral-800 border border-neutral-800 rounded text-[10px] font-terminal text-neutral-300 flex items-center gap-2 transition">
+                            <span class="flex gap-0.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#ffb000]"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#ff3c00]"></span>
+                            </span>
+                            CRT Amber
+                        </button>
+                        <button onclick="applyColorPreset('#ff007f', '#00e5ff')" class="px-2.5 py-1.5 bg-neutral-950 hover:bg-neutral-800 border border-neutral-800 rounded text-[10px] font-terminal text-neutral-300 flex items-center gap-2 transition">
+                            <span class="flex gap-0.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#ff007f]"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#00e5ff]"></span>
+                            </span>
+                            Holo Pink
+                        </button>
+                        <button onclick="applyColorPreset('#ffffff', '#444444')" class="px-2.5 py-1.5 bg-neutral-950 hover:bg-neutral-800 border border-neutral-800 rounded text-[10px] font-terminal text-neutral-300 flex items-center gap-2 transition">
+                            <span class="flex gap-0.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#ffffff]"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#444444]"></span>
+                            </span>
+                            Stealth
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Manual Color Pickers -->
+                <div class="grid grid-cols-2 gap-4 pt-2">
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] font-terminal text-neutral-400 block">PRIMARY VECTOR</label>
+                        <div class="flex items-center gap-2 bg-neutral-950 border border-neutral-800 p-2 rounded-lg">
+                            <input 
+                                type="color" 
+                                id="picker-primary"
+                                value="#00ffcc" 
+                                oninput="handleColorChange('primary', this.value)"
+                                class="w-7 h-7 bg-transparent border-0 rounded cursor-pointer"
+                            />
+                            <span id="label-primary" class="font-terminal text-xs uppercase text-white">#00ffcc</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] font-terminal text-neutral-400 block">ACCENT VECTOR</label>
+                        <div class="flex items-center gap-2 bg-neutral-950 border border-neutral-800 p-2 rounded-lg">
+                            <input 
+                                type="color" 
+                                id="picker-accent"
+                                value="#ff007f" 
+                                oninput="handleColorChange('accent', this.value)"
+                                class="w-7 h-7 bg-transparent border-0 rounded cursor-pointer"
+                            />
+                            <span id="label-accent" class="font-terminal text-xs uppercase text-white">#ff007f</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK D: METADATA CONSOLE FIELD EDITORS -->
+            <div class="bg-neutral-900/30 backdrop-blur-lg border border-neutral-700/50 rounded-xl p-5 space-y-4 shadow-xl">
+                <h3 class="font-terminal text-sm font-bold text-white border-b border-neutral-800 pb-3 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    4. IDENTITY INGEST & TEXT CONFIG
+                </h3>
+
+                <div class="space-y-3.5">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-terminal text-neutral-400">OPERATOR NAME</label>
+                            <input 
+                                type="text" 
+                                id="input-name"
+                                value="Matthew Wyatt"
+                                oninput="handleTextChange('name', this.value)"
+                                class="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-xs font-terminal text-white focus:outline-none focus:border-neutral-700"
+                            />
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-terminal text-neutral-400">TITLES / DESIGNATION</label>
+                            <input 
+                                type="text" 
+                                id="input-title"
+                                value="Digital Creator / Solo Operator"
+                                oninput="handleTextChange('title', this.value)"
+                                class="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-xs font-terminal text-white focus:outline-none focus:border-neutral-700"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[9px] font-terminal text-neutral-400">CORE TAGLINE / ATTITUDE</label>
+                        <input 
+                            type="text" 
+                            id="input-tagline"
+                            value="No Code. No Pulp. All Pixels. Zero B.S."
+                            oninput="handleTextChange('tagline', this.value)"
+                            class="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-xs font-terminal text-white focus:outline-none focus:border-neutral-700"
+                        />
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-terminal text-neutral-400">WEBSITE ENDPOINT</label>
+                            <input 
+                                type="text" 
+                                id="input-website"
+                                value="renderwithoutcode.com"
+                                oninput="handleTextChange('website', this.value)"
+                                class="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-xs font-terminal text-white focus:outline-none focus:border-neutral-700"
+                            />
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-terminal text-neutral-400">INSTAGRAM HANDLE</label>
+                            <input 
+                                type="text" 
+                                id="input-handle"
+                                value="@neverrenderlabs"
+                                oninput="handleTextChange('handle', this.value)"
+                                class="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-xs font-terminal text-white focus:outline-none focus:border-neutral-700"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-terminal text-neutral-400">EMAIL DOMAIN</label>
+                            <input 
+                                type="text" 
+                                id="input-email"
+                                value="contact@neverrenderlabs.com"
+                                oninput="handleTextChange('email', this.value)"
+                                class="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-xs font-terminal text-white focus:outline-none focus:border-neutral-700"
+                            />
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-terminal text-neutral-400">SYSTEM DETECTOR STRING</label>
+                            <input 
+                                type="text" 
+                                id="input-consoleHeader"
+                                value="SYSTEM DETECTOR // NEV_REND_OS v12.4"
+                                oninput="handleTextChange('consoleHeader', this.value)"
+                                class="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-xs font-terminal text-white focus:outline-none focus:border-neutral-700"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCK E: MONITOR SIGNAL FILTERS -->
+            <div class="bg-neutral-900/30 backdrop-blur-lg border border-neutral-700/50 rounded-xl p-5 space-y-4 shadow-xl">
+                <h3 class="font-terminal text-sm font-bold text-white border-b border-neutral-800 pb-3 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    5. SIGNAL FILTERS & EXPORTS
+                </h3>
+
+                <!-- Visual Sliders -->
+                <div class="space-y-4 font-terminal text-xs">
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-400 font-terminal">CRT SCANLINE STACK:</span>
+                        <button 
+                            id="btn-scanlines"
+                            onclick="toggleScanlines()"
+                            class="px-3 py-1 rounded border text-[10px] font-black transition bg-neutral-800 border-neutral-600 text-emerald-400"
+                        >
+                            ON
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-400 font-terminal">ATMOSPHERIC NEON GLOW:</span>
+                        <button 
+                            id="btn-glow"
+                            onclick="toggleGlow()"
+                            class="px-3 py-1 rounded border text-[10px] font-black transition bg-neutral-800 border-neutral-600 text-emerald-400"
+                        >
+                            ON
+                        </button>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-[11px]">
+                            <span class="text-neutral-400">GRID BACKGROUND DENSITY:</span>
+                            <span id="label-grid-opacity" class="text-white font-bold">15%</span>
+                        </div>
+                        <input 
+                            type="range" 
+                            id="range-grid-opacity"
+                            min="0" 
+                            max="50" 
+                            value="15" 
+                            oninput="updateGridOpacity(this.value)"
+                            class="w-full accent-cyan-400 bg-neutral-950 rounded-lg appearance-none h-2 cursor-pointer border border-neutral-800"
+                        />
+                    </div>
+                </div>
+
+                <!-- Export Simulation -->
+                <div class="border-t border-neutral-800 pt-4 flex gap-2">
+                    <button
+                        onclick="exportVectorContainer()"
+                        class="flex-1 py-3 px-4 bg-gradient-to-r from-cyan-500 to-pink-600 hover:from-cyan-400 hover:to-pink-500 rounded-lg text-black font-terminal text-xs font-black tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-cyan-500/20 active:scale-95"
+                    >
+                        <svg class="w-4 h-4 text-black font-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Export Vector Container
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- SUCCESS TOAST DIALOG MODAL -->
+    <div id="toast-modal" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-neutral-900 border-2 border-emerald-500 text-neutral-100 rounded-xl p-4 shadow-[0_0_20px_rgba(16,185,129,0.25)] flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-emerald-400 font-bold">✓</div>
+            <div>
+                <h4 class="font-terminal text-sm font-bold text-white">PIPELINE TRANSACTION SUCCESS</h4>
+                <p id="toast-message" class="font-terminal text-[10px] text-neutral-400">File processed and compiled inside operational staging buffers.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER CODA -->
+    <footer class="border-t border-neutral-800 py-6 text-center font-terminal text-[10px] text-neutral-500 bg-neutral-950 z-10 space-y-2 mt-12">
+        <div>NEVER RENDER LABS // 8-BIT THEATER DISTRICT © 2026. ALL RIGHTS RESERVED.</div>
+        <div class="flex items-center justify-center gap-4 text-neutral-600">
+            <span>CONSOLE: OPERATOR ACTIVE</span>
+            <span>•</span>
+            <span>PIPELINE: MULTI-STAGE VECTOR DETECTED</span>
+        </div>
+    </footer>
+
+    <script>
+        // Audio Synthesizer Engine for mechanical retro sounds
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        let noiseFloorInitialized = false;
+        function initNoiseFloor() {
+            if (noiseFloorInitialized || audioCtx.state === 'suspended') return;
+            noiseFloorInitialized = true;
+            
+            const bufferSize = audioCtx.sampleRate * 2;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            let lastOut = 0;
+            for (let i = 0; i < bufferSize; i++) {
+                let white = Math.random() * 2 - 1;
+                data[i] = (lastOut + (0.02 * white)) / 1.02;
+                lastOut = data[i];
+                data[i] *= 3.5; 
+            }
+            const noiseNode = audioCtx.createBufferSource();
+            noiseNode.buffer = buffer;
+            noiseNode.loop = true;
+            
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = 400; // 75MHz ambient hum simulation
+            
+            const noiseGain = audioCtx.createGain();
+            noiseGain.gain.value = 0.015;
+            
+            noiseNode.connect(filter);
+            filter.connect(noiseGain);
+            noiseGain.connect(audioCtx.destination);
+            noiseNode.start();
+        }
+
+        function playBeep(freq, type, duration) {
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                initNoiseFloor();
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = type || 'sine';
+                osc.frequency.value = freq || 800;
+                
+                gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                // Audio not allowed or unsupported
+            }
+        }
+
+        // Global State variables
+        let cardState = {
+            name: 'Matthew Wyatt',
+            title: 'Digital Creator / Solo Operator',
+            tagline: 'No Code. No Pulp. All Pixels. Zero B.S.',
+            website: 'renderwithoutcode.com',
+            handle: '@neverrenderlabs',
+            email: 'contact@neverrenderlabs.com',
+            consoleHeader: 'SYSTEM DETECTED // NEV_REND_OS v12.4',
+            
+            themeColor: '#00ffcc',
+            accentColor: '#ff007f',
+            layout: 'terminal', // terminal, minimalist, hologram
+            isVertical: false,
+            isFlipped: false,
+            showScanlines: true,
+            showGlow: true,
+            gridOpacity: 15,
+            uploadedQR: null,
+            qrColorMode: 'match' // original, match, invert
+        };
+
+        // Fire UI logic immediately on window load
+        window.onload = function() {
+            playBeep(440, 'triangle', 0.15);
+            setTimeout(() => playBeep(880, 'sine', 0.1), 150);
+            updateColors();
+        };
+
+        // Text Ingest Handlers
+        function handleTextChange(field, val) {
+            cardState[field] = val;
+            
+            // Map inputs directly to corresponding layout elements in front & back
+            const ids = {
+                name: ['render-name', 'render-name-min', 'render-name-holo'],
+                title: ['render-title', 'render-title-min', 'render-title-holo'],
+                tagline: ['render-tagline', 'render-tagline-holo'],
+                website: ['render-website', 'render-website-min', 'render-website-holo', 'render-website-back'],
+                handle: ['render-handle', 'render-handle-min', 'render-handle-back'],
+                email: ['render-email-back'],
+                consoleHeader: ['render-consoleHeader']
+            };
+
+            if (ids[field]) {
+                ids[field].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        if (field === 'tagline' && el.id === 'render-tagline') {
+                            el.innerHTML = `&gt; ${val}`;
+                        } else {
+                            el.textContent = val;
+                        }
+                    }
+                });
+            }
+        }
+
+        // Orientation Control
+        function toggleOrientation() {
+            playBeep(600, 'square', 0.08);
+            cardState.isVertical = !cardState.isVertical;
+            const card3D = document.getElementById('card-3d-wrapper');
+            const optText = document.getElementById('orientation-text');
+
+            if (cardState.isVertical) {
+                card3D.style.width = '260px';
+                card3D.style.height = '400px';
+                optText.textContent = 'Vertical (Credit Card)';
+            } else {
+                card3D.style.width = '400px';
+                card3D.style.height = '230px';
+                optText.textContent = 'Horizontal (US Standard)';
+            }
+        }
+
+        // 3D Flip System & Holographic Parallax
+        let tiltX = 0;
+        let tiltY = 0;
+        
+        function applyCardTransform() {
+            const card3D = document.getElementById('card-3d-wrapper');
+            // Ensure no transition during active hover to make it feel immediately responsive
+            if (tiltX !== 0 || tiltY !== 0) {
+                card3D.style.transition = 'transform 0.1s ease-out';
+            } else {
+                card3D.style.transition = 'transform 0.7s ease-in-out';
+            }
+            let baseRotateY = cardState.isFlipped ? 180 : 0;
+            card3D.style.transform = `rotateX(${tiltY}deg) rotateY(${baseRotateY + tiltX}deg)`;
+        }
+
+        function toggleFlip() {
+            playBeep(523.25, 'sine', 0.12); // C5
+            cardState.isFlipped = !cardState.isFlipped;
+            applyCardTransform();
+        }
+        
+        // Holographic Parallax Event Listeners
+        window.addEventListener('DOMContentLoaded', () => {
+            const wrapper = document.getElementById('card-3d-wrapper');
+            
+            wrapper.addEventListener('mousemove', (e) => {
+                const rect = wrapper.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const percentX = (x - centerX) / centerX;
+                const percentY = (y - centerY) / centerY;
+                
+                const maxTilt = 15;
+                tiltX = percentX * maxTilt * (cardState.isFlipped ? -1 : 1);
+                tiltY = -percentY * maxTilt;
+                
+                applyCardTransform();
+                
+                const glares = document.querySelectorAll('.card-glare');
+                glares.forEach(glare => {
+                    glare.style.opacity = '1';
+                    glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%)`;
+                });
+            });
+            
+            wrapper.addEventListener('mouseleave', () => {
+                tiltX = 0;
+                tiltY = 0;
+                applyCardTransform();
+                const glares = document.querySelectorAll('.card-glare');
+                glares.forEach(glare => {
+                    glare.style.opacity = '0';
+                });
+            });
+        });
+
+        // Color Management
+        function handleColorChange(type, value) {
+            if (type === 'primary') {
+                cardState.themeColor = value;
+                document.getElementById('label-primary').textContent = value;
+            } else {
+                cardState.accentColor = value;
+                document.getElementById('label-accent').textContent = value;
+            }
+            updateColors();
+        }
+
+        function applyColorPreset(primary, accent) {
+            playBeep(784, 'triangle', 0.05); // G5
+            cardState.themeColor = primary;
+            cardState.accentColor = accent;
+            
+            document.getElementById('picker-primary').value = primary;
+            document.getElementById('picker-accent').value = accent;
+            document.getElementById('label-primary').textContent = primary;
+            document.getElementById('label-accent').textContent = accent;
+            
+            updateColors();
+        }
+
+        // Update CSS Variables & Live glow models
+        function updateColors() {
+            document.documentElement.style.setProperty('--theme-color', cardState.themeColor);
+            document.documentElement.style.setProperty('--accent-color', cardState.accentColor);
+            
+            // Generate glowing transparency metrics
+            const tGlow = cardState.showGlow ? `${cardState.themeColor}22` : 'transparent';
+            const aGlow = cardState.showGlow ? `${cardState.accentColor}22` : 'transparent';
+            
+            document.documentElement.style.setProperty('--theme-glow', tGlow);
+            document.documentElement.style.setProperty('--accent-glow', aGlow);
+
+            // Re-render QR code vectors dynamically
+            const qrContainer = document.getElementById('qr-element-container');
+            if (cardState.qrColorMode === 'match') {
+                qrContainer.style.color = cardState.themeColor;
+            } else if (cardState.qrColorMode === 'invert') {
+                qrContainer.style.color = cardState.accentColor;
+            } else {
+                qrContainer.style.color = '#ffffff';
+            }
+        }
+
+        // Layout Controllers
+        function setLayout(style) {
+            playBeep(659.25, 'sine', 0.06); // E5
+            cardState.layout = style;
+
+            // Update active preset buttons styling
+            const layouts = ['terminal', 'minimalist', 'hologram'];
+            layouts.forEach(l => {
+                const btn = document.getElementById(`preset-${l}`);
+                const view = document.getElementById(`front-content-${l}`);
+                if (l === style) {
+                    btn.className = "p-3 rounded-lg border text-left font-terminal transition flex flex-col justify-between h-20 bg-neutral-800 border-neutral-600 text-white ring-1 ring-neutral-700";
+                    view.classList.remove('hidden');
+                } else {
+                    btn.className = "p-3 rounded-lg border text-left font-terminal transition flex flex-col justify-between h-20 bg-neutral-950 border-neutral-800/80 text-neutral-400 hover:text-neutral-200 hover:border-neutral-700";
+                    view.classList.add('hidden');
+                }
+            });
+        }
+
+        // Signals & Filters
+        function toggleScanlines() {
+            playBeep(400, 'triangle', 0.1);
+            cardState.showScanlines = !cardState.showScanlines;
+            const btn = document.getElementById('btn-scanlines');
+            const fScan = document.getElementById('front-scanlines');
+            const bScan = document.getElementById('back-scanlines');
+
+            if (cardState.showScanlines) {
+                btn.className = "px-3 py-1 rounded border text-[10px] font-black transition bg-neutral-800 border-neutral-600 text-emerald-400";
+                btn.textContent = 'ON';
+                fScan.classList.remove('hidden');
+                bScan.classList.remove('hidden');
+            } else {
+                btn.className = "px-3 py-1 rounded border text-[10px] font-black transition bg-neutral-950 border-neutral-800 text-neutral-500";
+                btn.textContent = 'OFF';
+                fScan.classList.add('hidden');
+                bScan.classList.add('hidden');
+            }
+        }
+
+        // ATMOSPHERIC NEON GLOW Filter toggle
+        function toggleGlow() {
+            playBeep(400, 'triangle', 0.1);
+            cardState.showGlow = !cardState.showGlow;
+            const btn = document.getElementById('btn-glow');
+            const frontCard = document.getElementById('card-front');
+            const backCard = document.getElementById('card-back');
+
+            if (cardState.showGlow) {
+                btn.className = "px-3 py-1 rounded border text-[10px] font-black transition bg-neutral-800 border-neutral-600 text-emerald-400";
+                btn.textContent = 'ON';
+            } else {
+                btn.className = "px-3 py-1 rounded border text-[10px] font-black transition bg-neutral-950 border-neutral-800 text-neutral-500";
+                btn.textContent = 'OFF';
+            }
+            updateColors();
+        }
+
+        // Background density management
+        function updateGridOpacity(val) {
+            cardState.gridOpacity = val;
+            document.getElementById('label-grid-opacity').textContent = `${val}%`;
+            document.getElementById('front-grid').style.opacity = val / 100;
+            document.getElementById('back-grid').style.opacity = val / 100;
+        }
+
+        // File Uploader Implementation for Vectors
+        function triggerQRUpload() {
+            document.getElementById('qr-file-input').click();
+        }
+
+        function handleQRUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                playBeep(880, 'sine', 0.08);
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const contents = e.target.result;
+                    const container = document.getElementById('qr-element-container');
+                    
+                    // Keep the SVG editable by checking if file is vector
+                    if (file.name.endsWith('.svg')) {
+                        container.innerHTML = contents;
+                        // Strip out explicit fill constraints inside the uploaded SVG to make it dynamic
+                        const svgInside = container.querySelector('svg');
+                        if (svgInside) {
+                            const w = svgInside.getAttribute('width');
+                            const h = svgInside.getAttribute('height');
+                            if (!svgInside.hasAttribute('viewBox') && w && h) {
+                                svgInside.setAttribute('viewBox', `0 0 ${parseFloat(w)} ${parseFloat(h)}`);
+                            }
+                            svgInside.removeAttribute('width');
+                            svgInside.removeAttribute('height');
+                            svgInside.classList.add('w-full', 'h-full');
+                            svgInside.style.fill = 'currentColor';
+                        }
+                    } else {
+                        // Support high-resolution raster fallback (PNG/JPG)
+                        container.innerHTML = `<img src="${contents}" alt="Custom QR" class="w-full h-full object-contain" />`;
+                    }
+
+                    cardState.uploadedQR = contents;
+                    
+                    // Show active states
+                    document.getElementById('qr-status-badge').classList.remove('hidden');
+                    document.getElementById('qr-status-badge').classList.add('flex');
+                    document.getElementById('btn-clear-qr').classList.remove('hidden');
+                    document.getElementById('qr-color-options').classList.remove('hidden');
+                    
+                    showToast("VECTOR INTEG_SUCCESS", "Custom qr code embedded directly into back plate buffers.");
+                    updateColors();
+                };
+                
+                if (file.name.endsWith('.svg')) {
+                    reader.readAsText(file);
+                } else {
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        // Clear vector uploads
+        function clearUploadedQR() {
+            playBeep(350, 'square', 0.12);
+            cardState.uploadedQR = null;
+            
+            // Restore default styled vector
+            document.getElementById('qr-element-container').innerHTML = `
+              <svg id="default-qr-svg" viewBox="0 0 100 100" class="w-full h-full" style="fill: currentColor;">
+                <rect x="5" y="5" width="22" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="5" />
+                <rect x="11" y="11" width="10" height="10" rx="2" fill="currentColor" />
+                <rect x="73" y="5" width="22" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="5" />
+                <rect x="79" y="11" width="10" height="10" rx="2" fill="currentColor" />
+                <rect x="5" y="73" width="22" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="5" />
+                <rect x="11" y="79" width="10" height="10" rx="2" fill="currentColor" />
+                <g fill="currentColor">
+                  <circle cx="34" cy="11" r="2.5" /><circle cx="34" cy="23" r="2.5" /><circle cx="34" cy="35" r="2.5" /><circle cx="34" cy="53" r="2.5" /><circle cx="34" cy="65" r="2.5" /><circle cx="34" cy="77" r="2.5" />
+                  <circle cx="41" cy="17" r="2.5" /><circle cx="41" cy="29" r="2.5" /><circle cx="41" cy="41" r="2.5" /><circle cx="41" cy="59" r="2.5" /><circle cx="41" cy="71" r="2.5" /><circle cx="41" cy="83" r="2.5" />
+                  <circle cx="48" cy="11" r="2.5" /><circle cx="48" cy="23" r="2.5" /><circle cx="48" cy="35" r="2.5" /><circle cx="48" cy="47" r="2.5" /><circle cx="48" cy="59" r="2.5" /><circle cx="48" cy="71" r="2.5" /><circle cx="48" cy="89" r="2.5" />
+                  <circle cx="55" cy="5" r="2.5" /><circle cx="55" cy="17" r="2.5" /><circle cx="55" cy="29" r="2.5" /><circle cx="55" cy="41" r="2.5" /><circle cx="55" cy="53" r="2.5" /><circle cx="55" cy="65" r="2.5" /><circle cx="55" cy="77" r="2.5" />
+                  <circle cx="62" cy="11" r="2.5" /><circle cx="62" cy="23" r="2.5" /><circle cx="62" cy="35" r="2.5" /><circle cx="62" cy="47" r="2.5" /><circle cx="62" cy="59" r="2.5" /><circle cx="62" cy="71" r="2.5" /><circle cx="62" cy="83" r="2.5" />
+                  <circle cx="69" cy="17" r="2.5" /><circle cx="69" cy="29" r="2.5" /><circle cx="69" cy="41" r="2.5" /><circle cx="69" cy="53" r="2.5" /><circle cx="69" cy="65" r="2.5" /><circle cx="69" cy="77" r="2.5" /><circle cx="69" cy="89" r="2.5" />
+                  <circle cx="76" cy="35" r="2.5" /><circle cx="76" cy="47" r="2.5" /><circle cx="76" cy="59" r="2.5" /><circle cx="76" cy="71" r="2.5" /><circle cx="76" cy="83" r="2.5" />
+                  <circle cx="83" cy="35" r="2.5" /><circle cx="83" cy="47" r="2.5" /><circle cx="83" cy="53" r="2.5" /><circle cx="83" cy="65" r="2.5" /><circle cx="83" cy="77" r="2.5" /><circle cx="83" cy="89" r="2.5" />
+                  <circle cx="90" cy="35" r="2.5" /><circle cx="90" cy="41" r="2.5" /><circle cx="90" cy="53" r="2.5" /><circle cx="90" cy="65" r="2.5" /><circle cx="90" cy="71" r="2.5" /><circle cx="90" cy="83" r="2.5" />
+                </g>
+              </svg>
+            `;
+
+            document.getElementById('qr-status-badge').classList.add('hidden');
+            document.getElementById('qr-status-badge').classList.remove('flex');
+            document.getElementById('btn-clear-qr').classList.add('hidden');
+            document.getElementById('qr-color-options').classList.add('hidden');
+            document.getElementById('qr-file-input').value = "";
+            
+            showToast("VECTOR DISCONNECT", "Returned target system to default layout.");
+            updateColors();
+        }
+
+        // Color shift selection modes
+        function setQRColorMode(mode) {
+            playBeep(650, 'sine', 0.05);
+            cardState.qrColorMode = mode;
+            
+            // Update mode labels
+            const labelMap = {
+                original: 'Original',
+                match: 'Cyan Glow',
+                invert: 'Laser Glow'
+            };
+            document.getElementById('qr-mode-status').textContent = labelMap[mode];
+
+            const btns = document.querySelectorAll('.qr-mode-btn');
+            btns.forEach((btn, idx) => {
+                const btnModes = ['original', 'match', 'invert'];
+                if (btnModes[idx] === mode) {
+                    btn.className = "qr-mode-btn py-1.5 rounded text-[10px] font-terminal border transition bg-neutral-800 border-neutral-600 text-white font-bold";
+                } else {
+                    btn.className = "qr-mode-btn py-1.5 rounded text-[10px] font-terminal border transition bg-neutral-900 border-neutral-800 text-neutral-500 hover:text-neutral-300";
+                }
+            });
+
+            updateColors();
+        }
+
+        // Animated Success Notification Toast
+        function showToast(header, text) {
+            const toast = document.getElementById('toast-modal');
+            toast.querySelector('h4').textContent = header;
+            toast.querySelector('p').textContent = text;
+            
+            toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+        // Fully Dynamic Custom Vector SVG Generator
+        function exportVectorContainer() {
+            playBeep(987.77, 'sine', 0.15); // B5
+            
+            // Build absolute custom vector card dimensions
+            const cardWidth = cardState.isVertical ? 230 : 400;
+            const cardHeight = cardState.isVertical ? 400 : 230;
+            
+            // Clean inline export of your configured state vector (Front)
+            const svgFront = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${cardWidth} ${cardHeight}" width="100%" height="100%">
+              <rect width="100%" height="100%" fill="#0a0a0c" rx="10" stroke="${cardState.themeColor}" stroke-width="2"/>
+              <text x="24" y="40" font-family="'Share Tech Mono', monospace" fill="${cardState.accentColor}" font-size="9" font-weight="bold">${cardState.consoleHeader}</text>
+              <text x="24" y="70" font-family="sans-serif" fill="#ffffff" font-size="20" font-weight="900" text-transform="uppercase">${cardState.name}</text>
+              <text x="24" y="90" font-family="sans-serif" fill="${cardState.themeColor}" font-size="10" font-weight="bold" letter-spacing="2">${cardState.title}</text>
+              <line x1="24" y1="130" x2="${cardWidth - 24}" y2="130" stroke="#1f2937" stroke-width="1" />
+              <text x="24" y="155" font-family="sans-serif" fill="#9ca3af" font-size="10" font-style="italic">&gt; ${cardState.tagline}</text>
+              <text x="24" y="190" font-family="'Share Tech Mono', monospace" fill="${cardState.themeColor}" font-size="9">${cardState.website}</text>
+              <text x="${cardWidth - 140}" y="190" font-family="'Share Tech Mono', monospace" fill="${cardState.accentColor}" font-size="9">${cardState.handle}</text>
+            </svg>
+            `;
+            
+            // Clean inline export of your configured state vector (Back)
+            const qrHTML = document.getElementById('qr-element-container').innerHTML;
+            const qrX = cardState.isVertical ? 65 : 270;
+            const qrY = cardState.isVertical ? 270 : 65;
+            
+            const svgBack = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${cardWidth} ${cardHeight}" width="100%" height="100%">
+              <rect width="100%" height="100%" fill="#070709" rx="10" stroke="${cardState.accentColor}" stroke-width="2"/>
+              <text x="24" y="40" font-family="sans-serif" fill="#ffffff" font-size="10" font-weight="900" letter-spacing="2">CONNECT TERMINAL</text>
+              <text x="24" y="80" font-family="'Share Tech Mono', monospace" fill="#9ca3af" font-size="9">${cardState.website}</text>
+              <text x="24" y="100" font-family="'Share Tech Mono', monospace" fill="#9ca3af" font-size="9">${cardState.handle}</text>
+              <text x="24" y="120" font-family="'Share Tech Mono', monospace" fill="#9ca3af" font-size="9">${cardState.email}</text>
+              <text x="24" y="190" font-family="'Share Tech Mono', monospace" fill="#6b7280" font-size="8">SCAN FOR CURRENT ROSTER</text>
+              <text x="24" y="205" font-family="'Share Tech Mono', monospace" fill="#6b7280" font-size="8">AND MATRIX VERSIONS</text>
+              <svg x="${qrX}" y="${qrY}" width="100" height="100" style="color: ${cardState.themeColor}; fill: ${cardState.themeColor};">
+                  ${qrHTML}
+              </svg>
+            </svg>
+            `;
+            
+            const downloadSVG = (content, filename) => {
+                const blob = new Blob([content], {type: 'image/svg+xml'});
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            };
+
+            const baseFilename = cardState.name.toLowerCase().replace(/\s+/g, '_');
+            
+            // Download Front
+            downloadSVG(svgFront, `${baseFilename}_front.svg`);
+            
+            // Download Back after a short delay to ensure browser doesn't block multiple downloads
+            setTimeout(() => {
+                downloadSVG(svgBack, `${baseFilename}_back.svg`);
+            }, 500);
+            
+            showToast("VECTOR RE_RENDER COMPLETE", "Exported both front and back custom print-ready vector files.");
+        }
+    </script>
+</body>
+</html>

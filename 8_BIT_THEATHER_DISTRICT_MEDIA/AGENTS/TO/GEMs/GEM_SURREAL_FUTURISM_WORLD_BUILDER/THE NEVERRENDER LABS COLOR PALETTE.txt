@@ -1,0 +1,9 @@
++-------------------------------------------------------------------------+
+|                  THE NEVERRENDER LABS COLOR PALETTE                     |
++-------------------------------------------------------------------------+
+|  60% BASE ARCHITECTURE:  Deep Slate-Teal [#124559]                      |
+|                          Clinical Icy White [#EAFBFF]                  |
+|  30% DYNAMIC ENERGY:     Electric Cyan   [#00E5FF]                      |
+|                          Jade Teal       [#00C49A]                      |
+|  10% DISRUPTIVE POP:     Coral Pink-Red  [#FF6B6B]                      |
++-------------------------------------------------------------------------+
