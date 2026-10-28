@@ -1,5 +1,4 @@
 import os
-import shutil
 from PIL import Image, ImageDraw, ImageFont
 
 BASE_CAMPAIGN_DIR = r"C:\Users\Saturn\Desktop\project-marshall-college\project-marshall-college\04-campaigns-outreach-drops\drafts-for-chapman-marshall-college-approval\2026-10-27-autum-warmth-and-old-world-peculiars"
@@ -13,14 +12,12 @@ os.makedirs(NRL_CUTS, exist_ok=True)
 
 CREST_PATH = os.path.join(NRL_CUTS, "tcc-oct23-crest.png")
 
-# Colors
 BG_OUTER = (239, 233, 223)      # #EFE9DF
 BG_PARCHMENT = (248, 243, 236)  # #F8F3EC
 BURGUNDY = (112, 29, 50)        # #701D32
 GOLD_LINE = (200, 182, 142)     # #C8B68E
 GOLD_TEXT = (140, 109, 70)      # #8C6D46
 INK_DARK = (31, 29, 28)         # #1F1D1C
-INK_MUTED = (120, 108, 95)
 
 def load_font(names, size):
     for name in names:
@@ -34,7 +31,6 @@ f_bold = lambda sz: load_font(["garabd.ttf", "georgiab.ttf", "timesbd.ttf"], sz)
 f_ital = lambda sz: load_font(["garait.ttf", "georgiai.ttf", "timesi.ttf"], sz)
 
 def paste_centered(canvas, img_path, box, bg_color=BG_PARCHMENT):
-    """box = (x1, y1, x2, y2)"""
     x1, y1, x2, y2 = box
     bw, bh = x2 - x1, y2 - y1
     if not os.path.exists(img_path):
@@ -58,39 +54,33 @@ def draw_centered_text(draw, y, text, font, fill, width):
     return bbox[3] - bbox[1]
 
 # ==============================================================================
-# 1. BUILD HIGH-RES MMS COMPILATION CARD (1080 x 1350 Portrait 4:5)
+# 1. BUILD HIGH-RES MMS COMPILATION CARD (1080 x 1350 Portrait 4:5) - NO SWORD
 # ==============================================================================
 W, H = 1080, 1350
 card = Image.new("RGB", (W, H), BG_OUTER)
 draw = ImageDraw.Draw(card)
 
-# Inner Parchment Frame
 pad = 28
 draw.rectangle([pad, pad, W - pad, H - pad], fill=BG_PARCHMENT, outline=GOLD_LINE, width=3)
-# Top & Bottom Burgundy Bars
 draw.rectangle([pad, pad, W - pad, pad + 10], fill=BURGUNDY)
 draw.rectangle([pad, H - pad - 10, W - pad, H - pad], fill=BURGUNDY)
 
-# Crest
 if os.path.exists(CREST_PATH):
     crest = Image.open(CREST_PATH).convert("RGBA")
     crest.thumbnail((86, 86), Image.Resampling.LANCZOS)
     card.paste(crest, ((W - crest.width) // 2, 54), mask=crest.split()[-1])
 
 draw_centered_text(draw, 148, "THE CHAPMAN COLLECTION", f_reg(30), INK_DARK, W)
-draw_centered_text(draw, 186, "RANCHO SANTA FE  •  NEW ARRIVALS & CURATED TREASURES", f_bold(15), GOLD_TEXT, W)
+draw_centered_text(draw, 186, "RANCHO SANTA FE  •  OLD WORLD CABINETS & AUTUMN SALE", f_bold(15), GOLD_TEXT, W)
 draw.line([(90, 214), (W - 90, 214)], fill=GOLD_LINE, width=2)
-draw_centered_text(draw, 224, "Autumn warmth and Old World peculiars", f_ital(38), BURGUNDY, W)
+draw_centered_text(draw, 224, "Autumn warmth and Old World charm", f_ital(38), BURGUNDY, W)
 
-# Bento Grid of 6 Featured Pieces (2 rows x 3 columns or 2x2 + 2)
-# Let's do a balanced 2x3 Bento Grid showcasing:
-# Row 1: Metal-Clad Door Cabinet ($2,400) | Pale Blue Patina Cabinet ($2,800) | Red-Patina Carved Cabinet ($2,450)
-# Row 2: Knight Templar Sword ($1,450) | Large Polychrome Mirror ($2,950) | Persian Silk Qum Runner ($1,850)
+# Balanced 2x3 Bento Grid showcasing all 4 Old World Cabinets + Polychrome Mirror + Persian Silk Qum Runner
 items_bento = [
-    ("tcc-oct27-cab-01-metal-clad.jpg", "Metal-Clad Door Cabinet", "Sale $2,400"),
+    ("tcc-oct27-cab-01-metal-clad.jpg", "Metal Clad Door Cabinet", "Sale $2,400"),
+    ("tcc-oct27-cab-02-carved-strap.jpg", "Carved Antique Door Cabinet", "Sale $2,400"),
+    ("tcc-oct27-cab-04-red-patina.jpg", "Red Patina Door Cabinet", "Sale $2,450"),
     ("tcc-oct27-cab-03-blue-patina.jpg", "Pale Blue Patina Cabinet", "Sale $2,800"),
-    ("tcc-oct27-cab-04-red-patina.jpg", "Red-Patina Door Cabinet", "Sale $2,450"),
-    ("tcc-oct27-cut-02-knight-templar-sword-v2.jpg", "Knight Templar Sword", "Sale $1,650"),
     ("tcc-oct27-cut-01-polychrome-mirror-v2.jpg", "75¾\" Polychrome Mirror", "Sale $2,950"),
     ("tcc-oct27-cut-05-silk-qum-runner-v2.jpg", "9'10\" Silk Qum Runner", "Sale $1,850"),
 ]
@@ -113,8 +103,7 @@ for idx, (img_name, label, price) in enumerate(items_bento):
     draw.rectangle([cx1, cy1, cx2, cy2], fill=BG_PARCHMENT, outline=GOLD_LINE, width=2)
     paste_centered(card, os.path.join(CUTS_DIR, img_name), (cx1 + 12, cy1 + 12, cx2 - 12, cy2 - 78))
 
-    # Label & Price
-    lbl_font = f_bold(20)
+    lbl_font = f_bold(19)
     pr_font = f_bold(19)
     lb_box = draw.textbbox((0, 0), label, font=lbl_font)
     lw = lb_box[2] - lb_box[0]
@@ -124,7 +113,6 @@ for idx, (img_name, label, price) in enumerate(items_bento):
     pw = pr_box[2] - pr_box[0]
     draw.text((cx1 + (col_w - pw) // 2, cy2 - 36), price, font=pr_font, fill=BURGUNDY)
 
-# Footer CTA Banner inside compilation card
 btn_w, btn_h = 560, 56
 btn_x1 = (W - btn_w) // 2
 btn_y1 = 1196
@@ -135,10 +123,10 @@ draw_centered_text(draw, 1268, "6014 La Granada, Rancho Santa Fe  •  (858) 349
 mms_card_name = "tcc-oct27-mms-compilation-card.jpg"
 for out_dir in [CUTS_DIR, NRL_CUTS]:
     card.save(os.path.join(out_dir, mms_card_name), "JPEG", quality=92, optimize=True)
-print("Saved static MMS compilation card:", mms_card_name)
+print("Saved static MMS compilation card (no sword):", mms_card_name)
 
 # ==============================================================================
-# 2. BUILD OPENGRAPH 1200x630 LINK PREVIEW BANNER (for iMessage/RCS Link Bubble)
+# 2. BUILD OPENGRAPH 1200x630 LINK PREVIEW BANNER - NO SWORD
 # ==============================================================================
 OG_W, OG_H = 1200, 630
 og = Image.new("RGB", (OG_W, OG_H), BG_OUTER)
@@ -147,7 +135,6 @@ og_draw.rectangle([18, 18, OG_W - 18, OG_H - 18], fill=BG_PARCHMENT, outline=GOL
 og_draw.rectangle([18, 18, OG_W - 18, 25], fill=BURGUNDY)
 og_draw.rectangle([18, OG_H - 25, OG_W - 18, OG_H - 18], fill=BURGUNDY)
 
-# Left panel: Branding & Headline
 if os.path.exists(CREST_PATH):
     cr_og = Image.open(CREST_PATH).convert("RGBA")
     cr_og.thumbnail((76, 76), Image.Resampling.LANCZOS)
@@ -155,23 +142,22 @@ if os.path.exists(CREST_PATH):
 
 og_draw.text((64, 150), "THE CHAPMAN COLLECTION", font=f_bold(22), fill=GOLD_TEXT)
 og_draw.text((64, 188), "Autumn warmth and", font=f_ital(44), fill=BURGUNDY)
-og_draw.text((64, 240), "Old World peculiars", font=f_ital(44), fill=BURGUNDY)
+og_draw.text((64, 240), "Old World charm", font=f_ital(44), fill=BURGUNDY)
 og_draw.line([(64, 304), (470, 304)], fill=GOLD_LINE, width=2)
-og_draw.text((64, 324), "Four newly arrived Old World", font=f_reg(24), fill=INK_DARK)
-og_draw.text((64, 356), "antique-door cabinets, Knight", font=f_reg(24), fill=INK_DARK)
-og_draw.text((64, 388), "Templar sword, 75¾\" carved", font=f_reg(24), fill=INK_DARK)
-og_draw.text((64, 420), "mirror, silk Qum runner and", font=f_reg(24), fill=INK_DARK)
-og_draw.text((64, 452), "fine gallery curiosities.", font=f_reg(24), fill=INK_DARK)
+og_draw.text((64, 324), "Four custom made Old World", font=f_reg(24), fill=INK_DARK)
+og_draw.text((64, 356), "antique door cabinets alongside", font=f_reg(24), fill=INK_DARK)
+og_draw.text((64, 388), "a 75¾\" carved architectural", font=f_reg(24), fill=INK_DARK)
+og_draw.text((64, 420), "mirror and a nearly ten foot", font=f_reg(24), fill=INK_DARK)
+og_draw.text((64, 452), "Persian silk Qum runner on sale.", font=f_reg(24), fill=INK_DARK)
 
 og_draw.rectangle([64, 505, 390, 555], fill=BURGUNDY, outline=GOLD_LINE, width=2)
 og_draw.text((92, 517), "Explore the Collection →", font=f_reg(23), fill=(255, 255, 255))
 
-# Right panel: 4 hero cutouts side by side
 og_items = [
     ("tcc-oct27-cab-01-metal-clad.jpg", (510, 52, 665, 565)),
     ("tcc-oct27-cab-03-blue-patina.jpg", (678, 52, 833, 565)),
-    ("tcc-oct27-cut-02-knight-templar-sword-v2.jpg", (846, 52, 1001, 565)),
-    ("tcc-oct27-cut-01-polychrome-mirror-v2.jpg", (1014, 52, 1168, 565)),
+    ("tcc-oct27-cut-01-polychrome-mirror-v2.jpg", (846, 52, 1001, 565)),
+    ("tcc-oct27-cut-05-silk-qum-runner-v2.jpg", (1014, 52, 1168, 565)),
 ]
 for fname, box in og_items:
     og_draw.rectangle(box, fill=BG_PARCHMENT, outline=GOLD_LINE, width=2)
@@ -180,24 +166,23 @@ for fname, box in og_items:
 og_name = "tcc-oct27-og-share-banner.jpg"
 for out_dir in [CUTS_DIR, NRL_CUTS]:
     og.save(os.path.join(out_dir, og_name), "JPEG", quality=90, optimize=True)
-print("Saved OpenGraph share banner:", og_name)
+print("Saved OpenGraph share banner (no sword):", og_name)
 
 # ==============================================================================
-# 3. BUILD ANIMATED MMS GIF SHOWCASE (< 500 KB for Carrier MMS Delivery)
+# 3. BUILD ANIMATED MMS GIF SHOWCASE (< 500 KB) - NO SWORD
 # ==============================================================================
 GW, GH = 600, 750
 frames = []
 
-# Frame 1: Resized Overview Compilation Card
 f1 = card.resize((GW, GH), Image.Resampling.LANCZOS)
 frames.append(f1)
 
 slides_spec = [
     (
         "OLD WORLD COLLECTION",
-        "Repurposed Antique-Door Cabinets",
+        "Repurposed Antique Door Cabinets",
         [
-            ("tcc-oct27-cab-01-metal-clad.jpg", "Metal-Clad Door Cabinet", "59½\" H × 32½\" W • Sale $2,400"),
+            ("tcc-oct27-cab-01-metal-clad.jpg", "Metal Clad Door Cabinet", "59½\" H × 32½\" W • Sale $2,400"),
             ("tcc-oct27-cab-03-blue-patina.jpg", "Pale Blue Patina Cabinet", "88½\" H × 50\" W • Sale $2,800"),
         ]
     ),
@@ -205,24 +190,16 @@ slides_spec = [
         "OLD WORLD COLLECTION",
         "Carved Timber & Iron Strap Doors",
         [
-            ("tcc-oct27-cab-02-carved-strap.jpg", "Carved Door & Strap Cabinet", "61½\" H × 34½\" W • Sale $2,400"),
-            ("tcc-oct27-cab-04-red-patina.jpg", "Red-Patina Carved Cabinet", "88½\" H × 50\" W • Sale $2,450"),
+            ("tcc-oct27-cab-02-carved-strap.jpg", "Carved Antique Door Cabinet", "61½\" H × 34½\" W • Sale $2,400"),
+            ("tcc-oct27-cab-04-red-patina.jpg", "Red Patina Carved Cabinet", "88½\" H × 50\" W • Sale $2,450"),
         ]
     ),
     (
-        "CHIVALRIC HISTORY & SCALE",
-        "Study Centerpiece & Grand Mirror",
+        "ARCHITECTURAL SCALE & SILK QUM",
+        "Carved Mirror & Persian Silk Runner",
         [
-            ("tcc-oct27-cut-02-knight-templar-sword-v2.jpg", "Knight Templar Sword", "49\" H × 29\" W • Sale $1,650"),
             ("tcc-oct27-cut-01-polychrome-mirror-v2.jpg", "Polychrome Mirror", "75¾\" H × 53½\" W • Sale $2,950"),
-        ]
-    ),
-    (
-        "SILK QUM & FINE CURIOSITIES",
-        "Persian Silk & Inlaid Treasures",
-        [
             ("tcc-oct27-cut-05-silk-qum-runner-v2.jpg", "9'10\" Silk Qum Runner", "Turquoise & Taupe • Sale $1,850"),
-            ("tcc-oct27-cut-04-mother-of-pearl-chest.jpg", "Mother-of-Pearl Chest", "On Stand • Sale $1,950"),
         ]
     ),
 ]
@@ -250,27 +227,28 @@ for kicker, headline, pair in slides_spec:
         tf = f_bold(16)
         sf = f_bold(14)
         tb = d.textbbox((0, 0), title, font=tf)
-        d.text((bx1 + (258 - (tb[2]-tb[0])) // 2, by2 - 58), title, font=tf, fill=INK_DARK)
-        sb = d.textbbox((0, 0), sub, font=sf)
-        d.text((bx1 + (258 - (sb[2]-sb[0])) // 2, by2 - 32), sub, font=sf, fill=BURGUNDY)
+        tw = tb[2] - tb[0]
+        d.text((bx1 + (258 - tw) // 2, by2 - 58), title, font=tf, fill=INK_DARK)
 
-    d.rectangle([110, 636, GW - 110, 680], fill=BURGUNDY, outline=GOLD_LINE, width=1)
-    draw_centered_text(d, 646, "Tap Link in Text to Explore Collection", f_reg(18), (255, 255, 255), GW)
-    draw_centered_text(d, 694, "6014 La Granada, Rancho Santa Fe  •  (858) 349-2638", f_bold(12), GOLD_TEXT, GW)
+        sb = d.textbbox((0, 0), sub, font=sf)
+        sw = sb[2] - sb[0]
+        d.text((bx1 + (258 - sw) // 2, by2 - 32), sub, font=sf, fill=BURGUNDY)
+
+    d.rectangle([90, 636, GW - 90, 678], fill=BURGUNDY, outline=GOLD_LINE, width=2)
+    draw_centered_text(d, 646, "Tap Link Below to Browse the Collection", f_reg(18), (255, 255, 255), GW)
+    draw_centered_text(d, 694, "6014 La Granada, Rancho Santa Fe  •  (858) 349-2638", f_bold(13), GOLD_TEXT, GW)
     frames.append(fr)
 
-# Quantize frames to 128 colors for compact MMS size
-q_frames = [f.quantize(colors=128, method=Image.Quantize.MEDIANCUT) for f in frames]
 gif_name = "tcc-oct27-mms-dynamic-showcase.gif"
+quantized_frames = [f.quantize(colors=128, method=Image.Quantize.MEDIANCUT) for f in frames]
 for out_dir in [CUTS_DIR, NRL_CUTS]:
     gif_path = os.path.join(out_dir, gif_name)
-    q_frames[0].save(
+    quantized_frames[0].save(
         gif_path,
         save_all=True,
-        append_images=q_frames[1:],
-        duration=[2400, 2200, 2200, 2200, 2200],
+        append_images=quantized_frames[1:],
+        duration=[2200, 2000, 2000, 2000],
         loop=0,
-        optimize=True
+        optimize=True,
     )
-gif_size_kb = os.path.getsize(os.path.join(CUTS_DIR, gif_name)) / 1024
-print(f"Saved animated MMS GIF ({gif_size_kb:.1f} KB):", gif_name)
+print("Saved animated MMS GIF (no sword):", gif_name, os.path.getsize(os.path.join(CUTS_DIR, gif_name)), "bytes")
