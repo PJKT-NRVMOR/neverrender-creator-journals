@@ -1,15 +1,60 @@
 import os
 import numpy as np
-from PIL import Image, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter
 from collections import deque
 
 src_graded = r"c:\Users\Saturn\Desktop\project-marshall-college\project-marshall-college\05-showroom-media\recieved-graded"
 cuts_dirs = [
-    r"C:\Users\Saturn\Desktop\project-marshall-college\project-marshall-college\04-campaigns-outreach-drops\drafts-for-chapman-marshall-college-approval\2026-10-27-autum-warmth-and-old-world-peculiars\cuts",
+    r"C:\Users\Saturn\Desktop\project-marshall-college\project-marshall-college\04-campaigns-outreach-drops\approved-active-drops\2026-10-30-autumn-warmth-old-world-peculiars\cuts",
     r"c:\Users\Saturn\Desktop\G_AG_FLDR\NEVERRENDER_LABS_WEBSITE\drafts-for-pmc-approval\2026-10-27-autumn-warmth-and-old-world-peculiars\cuts",
 ]
 target_bg = np.array([248.0, 243.0, 236.0], dtype=np.float32)
 target_bg_tuple = (248, 243, 236)
+
+def isolate_unrectified_metal_clad_cabinet(raw_gray_path):
+    """Isolate unrectified tcc-oct27-cab-04-metal-clad.jpg onto #F8F3EC parchment without changing perspective."""
+    im = Image.open(raw_gray_path).convert("RGB")
+    w, h = im.size
+    arr = np.array(im, dtype=np.float32)
+
+    poly = [
+        (71, 61),       # top-left crown corner
+        (648, 128),     # top-right crown corner
+        (645, 151),     # right crown bottom lip
+        (603, 155),     # right body top under crown molding
+        (587, 300),     # right body upper-mid
+        (562, 500),     # right body mid
+        (543, 700),     # right body lower-mid
+        (525, 874),     # right base bottom corner
+        (523, 916),     # right foot outer bottom
+        (490, 918),     # right foot inner bottom
+        (489, 882),     # under-skirt right
+        (165, 922),     # under-skirt left
+        (165, 956),     # left foot inner bottom
+        (119, 958),     # left foot outer bottom
+        (119, 920),     # left base bottom corner
+        (79, 95),       # left body top under crown
+        (71, 90),       # left crown bottom lip
+    ]
+
+    scale = 4
+    mask_hi = Image.new("L", (w * scale, h * scale), 0)
+    draw_hi = ImageDraw.Draw(mask_hi)
+    draw_hi.polygon([(x * scale, y * scale) for x, y in poly], fill=255)
+    mask_pil = mask_hi.resize((w, h), Image.Resampling.LANCZOS).filter(ImageFilter.GaussianBlur(radius=0.8))
+    alpha = np.array(mask_pil, dtype=np.float32) / 255.0
+
+    yy, xx = np.mgrid[0:h, 0:w]
+    shadow_l = np.exp(-(((xx - 142.0) / 36.0) ** 2 + ((yy - 958.0) / 9.0) ** 2)) * 0.16
+    shadow_r = np.exp(-(((xx - 506.0) / 32.0) ** 2 + ((yy - 918.0) / 8.0) ** 2)) * 0.14
+    line_y = 955.0 + (xx - 142.0) * (916.0 - 955.0) / (506.0 - 142.0)
+    in_span = (xx >= 115) & (xx <= 530)
+    shadow_bar = np.where(in_span, np.exp(-(((yy - (line_y - 12.0)) / 14.0) ** 2)) * 0.08, 0.0)
+    total_shadow = np.clip(shadow_l + shadow_r + shadow_bar, 0.0, 0.20)
+    shadowed_bg = target_bg[None, None, :] * (1.0 - total_shadow[..., None])
+
+    comp = arr * alpha[..., None] + shadowed_bg * (1.0 - alpha[..., None])
+    return Image.fromarray(np.clip(comp, 0, 255).astype(np.uint8))
 
 def clean_and_align_cabinet(src_path, canvas_size=(1000, 1500), target_cab_h=1360):
     im = Image.open(src_path).convert("RGB")
@@ -57,12 +102,10 @@ def clean_and_align_cabinet(src_path, canvas_size=(1000, 1500), target_cab_h=136
                 q.append((ny, nx))
 
     fg_small = (~visited)
-    # Find the cabinet's true left/right wall bounds in the mid-section (25%..65% height) where there is no floor shadow
     mid_fg = fg_small[int(sh*0.25):int(sh*0.65), :]
     _, mid_xs = np.where(mid_fg)
     left_wall_x = max(0, int(np.percentile(mid_xs, 0.5)) - 6)
     right_wall_x = min(sw, int(np.percentile(mid_xs, 99.5)) + 6)
-    # Any floor shadow sticking out laterally beyond the cabinet's vertical walls in the lower 40% is background
     fg_small[int(sh*0.60):, :left_wall_x] = False
     fg_small[int(sh*0.60):, right_wall_x:] = False
 
@@ -101,16 +144,10 @@ def clean_and_align_cabinet(src_path, canvas_size=(1000, 1500), target_cab_h=136
     canvas.paste(cropped, (px, py))
     return canvas
 
-cabinet_sources = [
-    ("tcc-oct27-cab-01-metal-clad.jpg", os.path.join(src_graded, "Old World Cabinet metal 59.5 tall x 32.5 wide x 16.25 deep $2400 to $1990 cc.jpeg")),
-    ("tcc-oct27-cab-02-carved-strap.jpg", os.path.join(src_graded, "Old World Cabinet 61.5 tall x 34.5 wide x e.jpeg")),
-    ("tcc-oct27-cab-03-blue-patina.jpg", os.path.join(src_graded, "Old World Cabinet  .jpeg")),
-    ("tcc-oct27-cab-04-red-patina.jpg", os.path.join(src_graded, "Old World Cabinet 88.5 tall x .jpeg")),
-    ("tcc-oct27-cab-04-red-patina-angle.jpg", os.path.join(src_graded, "Old World Cabinet 88.5 tall sisex .jpeg")),
-]
-
-for out_name, src_path in cabinet_sources:
-    canvas = clean_and_align_cabinet(src_path)
-    for d in cuts_dirs:
-        canvas.save(os.path.join(d, out_name), "JPEG", quality=94, optimize=True)
-    print("Saved spotless v2:", out_name)
+if __name__ == "__main__":
+    raw_gray_cab04 = os.path.join(cuts_dirs[1], "tcc-oct27-cab-04-metal-clad-raw-gray.jpg")
+    if os.path.exists(raw_gray_cab04):
+        out_cab04 = isolate_unrectified_metal_clad_cabinet(raw_gray_cab04)
+        for d in cuts_dirs:
+            out_cab04.save(os.path.join(d, "tcc-oct27-cab-04-metal-clad.jpg"), "JPEG", quality=95, optimize=True)
+        print("Saved parchment-isolated unrectified tcc-oct27-cab-04-metal-clad.jpg")
