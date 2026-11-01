@@ -9,6 +9,7 @@ import sys
 import json
 import base64
 import urllib.request
+import urllib.parse
 import psutil
 import datetime
 from pathlib import Path
@@ -29,12 +30,27 @@ else:
 
 OMNISEND_API_KEY = os.getenv("OMNISEND_API_KEY", "")
 OMNISEND_MCP_URL = "https://mcp.omnisend.com/mcp?brand=the-chapman-collection"
+OMNISEND_REST_BASE = "https://api.omnisend.com/v3"
 WP_BASE = os.getenv("WP_BASE_URL", "https://thechapmancollection.com/wp-json")
 WP_USER = os.getenv("WP_REST_USER", "neverrender-labs")
 WP_APP_PASS = os.getenv("WP_REST_APP_PASSWORD", "")
 
+MASTER_CONTACT_MD = Path(
+    r"C:\Users\Saturn\Desktop\project-marshall-college\project-marshall-college\02-clean-master-database\BATCH-08_Complete_1434_Master_Contact_Registry_DEE.md"
+)
+MASTER_INVENTORY_MD = Path(
+    r"C:\Users\Saturn\Desktop\project-marshall-college\project-marshall-college\02-clean-master-database\BATCH-09_Complete_Live_WooCommerce_Inventory_Catalog_DEE.md"
+)
+
 # Gemini Argon / Gemini Web injects UI telemetry kwargs into MCP tool calls; strip them cleanly before Pydantic validation
 GEMINI_UI_META_KEYS = {"explanation", "toolSummary", "toolAction", "waitMsBeforeAsync"}
+
+READ_ONLY_ANNOTATIONS = {
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+}
 
 
 class GeminiArgonMetadataSanitizerMiddleware(Middleware):
@@ -55,7 +71,7 @@ mcp = FastMCP(
     instructions=(
         "Local edge gateway for NeverRender Labs workstation (Tiny Hyperion) & Project Marshall College "
         "(The Chapman Collection). Controls local filesystem, hardware telemetry, Omnisend MCP/REST v3 "
-        "(True Delivered % vs. Raw Sent), and WordPress/WooCommerce REST API."
+        "(True Delivered % vs. Raw Sent), Master Contact Registry (1,960 collectors), and WordPress/WooCommerce REST API."
     ),
 )
 mcp.add_middleware(GeminiArgonMetadataSanitizerMiddleware())
@@ -137,7 +153,7 @@ async def omnisend_raw_mcp_proxy(request: Request) -> Response:
         )
 
 
-@mcp.tool(annotations={"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False})
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
 def get_system_telemetry() -> dict:
     """Retrieve real-time hardware, memory, and disk telemetry from the Beelink 6800U workstation (Tiny Hyperion)."""
     cpu_percent = psutil.cpu_percent(interval=0.5)
@@ -158,7 +174,7 @@ def get_system_telemetry() -> dict:
     }
 
 
-@mcp.tool(annotations={"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False})
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
 def list_workspace_files(directory_path: str = "C:\\Users\\Saturn\\Desktop\\G_AG_FLDR", max_files: int = 25) -> list:
     """List recent files in a workspace directory to inspect projects, assets, or renders."""
     p = Path(directory_path)
@@ -182,7 +198,7 @@ def list_workspace_files(directory_path: str = "C:\\Users\\Saturn\\Desktop\\G_AG
     return entries
 
 
-@mcp.tool(annotations={"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False})
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
 def search_vault_records(keyword: str, max_results: int = 10) -> list:
     """Search legal, medical, and municipal case records in the evidentiary vault by keyword."""
     vault_dir = Path(r"C:\Users\Saturn\Proton Drive\WYATT_LEGAL_EVIDENTIARY_VAULT")
@@ -210,7 +226,7 @@ def search_vault_records(keyword: str, max_results: int = 10) -> list:
     return results
 
 
-@mcp.tool(annotations={"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False})
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
 def query_woocommerce_catalog(search_term: str = "", per_page: int = 20) -> list:
     """Query live published products on The Chapman Collection (thechapmancollection.com) via WooCommerce REST v3."""
     if not WP_APP_PASS:
@@ -241,6 +257,134 @@ def query_woocommerce_catalog(search_term: str = "", per_page: int = 20) -> list
             }
             for p in items
         ]
+
+
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+def query_omnisend_telemetry(limit: int = 15, campaign_type: str = "") -> dict:
+    """
+    One-shot Read-Only Omnisend campaign & audience telemetry reader.
+    Returns recent Email and SMS campaigns from Omnisend REST v3 without triggering a Destructive tool confirmation.
+    """
+    if not OMNISEND_API_KEY:
+        return {"error": "OMNISEND_API_KEY not configured in .env"}
+    url = f"{OMNISEND_REST_BASE}/campaigns?limit={min(50, max(1, limit))}"
+    if campaign_type:
+        url += f"&type={urllib.parse.quote(campaign_type)}"
+    req = urllib.request.Request(
+        url,
+        headers={
+            "X-API-KEY": OMNISEND_API_KEY,
+            "Accept": "application/json",
+            "User-Agent": "NeverRender-Gateway/1.0",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            campaigns = data.get("campaigns", data if isinstance(data, list) else [])
+            return {
+                "count": len(campaigns),
+                "campaigns": campaigns,
+            }
+    except urllib.error.HTTPError as e:
+        return {"error": f"HTTP {e.code}", "details": e.read().decode("utf-8", errors="ignore")}
+
+
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+def lookup_chapman_contact(query: str, max_results: int = 15) -> dict:
+    """
+    Search The Chapman Collection Master Contact Registry (1,960 records, TC-0001 to TC-2043)
+    by name, email, phone number, city, segment, or TC-XXXX ID, plus live Omnisend contact lookup if query is an email.
+    """
+    q = query.strip().lower()
+    local_matches = []
+    if MASTER_CONTACT_MD.exists():
+        with open(MASTER_CONTACT_MD, "r", encoding="utf-8", errors="ignore") as f:
+            for line in f:
+                if line.startswith("| `TC-") and q in line.lower():
+                    cols = [c.strip() for c in line.strip().strip("|").split("|")]
+                    if len(cols) >= 8:
+                        local_matches.append({
+                            "master_id": cols[0].strip("`"),
+                            "full_name": cols[1],
+                            "email": cols[2].strip("`"),
+                            "phone": cols[3].strip("`"),
+                            "location": cols[4],
+                            "segment": cols[5],
+                            "historical_spend": cols[6],
+                            "notes": cols[7],
+                            "deliverability": cols[8] if len(cols) > 8 else "",
+                        })
+                        if len(local_matches) >= max_results:
+                            break
+
+    omnisend_live = None
+    if "@" in q and OMNISEND_API_KEY:
+        try:
+            url = f"{OMNISEND_REST_BASE}/contacts?email={urllib.parse.quote(query.strip())}&limit=5"
+            req = urllib.request.Request(
+                url,
+                headers={"X-API-KEY": OMNISEND_API_KEY, "Accept": "application/json"},
+            )
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                omnisend_live = json.loads(resp.read().decode("utf-8")).get("contacts", [])
+        except Exception as e:
+            omnisend_live = [{"error": str(e)}]
+
+    return {
+        "query": query,
+        "local_registry_matches_count": len(local_matches),
+        "local_registry_matches": local_matches,
+        "omnisend_live_contacts": omnisend_live,
+    }
+
+
+@mcp.tool(annotations=READ_ONLY_ANNOTATIONS)
+def read_local_markdown_or_doc(file_path: str, start_line: int = 1, end_line: int = 250) -> dict:
+    """
+    Read lines from any local markdown, script, JSON, or flight log file in G_AG_FLDR or project-marshall-college.
+    """
+    p = Path(file_path)
+    if not p.exists() or not p.is_file():
+        return {"error": f"File not found: {file_path}"}
+    try:
+        with open(p, "r", encoding="utf-8", errors="replace") as f:
+            all_lines = f.readlines()
+        total = len(all_lines)
+        s = max(1, start_line)
+        e = min(total, max(s, end_line))
+        snippet = "".join(f"{idx}: {all_lines[idx - 1]}" for idx in range(s, e + 1))
+        return {
+            "path": str(p),
+            "total_lines": total,
+            "start_line": s,
+            "end_line": e,
+            "content": snippet,
+        }
+    except Exception as exc:
+        return {"error": str(exc)}
+
+
+@mcp.resource("chapman://inventory/summary")
+def resource_inventory_summary() -> str:
+    """Live summary header of The Chapman Collection WooCommerce Inventory Catalog (113 Active SKUs)."""
+    if not MASTER_INVENTORY_MD.exists():
+        return "Inventory catalog file not found."
+    with open(MASTER_INVENTORY_MD, "r", encoding="utf-8", errors="replace") as f:
+        lines = [next(f, "") for _ in range(160)]
+    return "".join(lines)
+
+
+@mcp.prompt()
+def chapman_morning_telemetry_brief() -> str:
+    """Standard prompt template for running a full morning telemetry sweep across Tiny Hyperion, WooCommerce, and Omnisend."""
+    return (
+        "Run a complete morning telemetry sweep across trinity-spark-bridge:\n"
+        "1. Call get_system_telemetry() to verify Tiny Hyperion hardware status.\n"
+        "2. Call query_woocommerce_catalog(per_page=10) to inspect the newest published pieces on thechapmancollection.com.\n"
+        "3. Call query_omnisend_telemetry(limit=5) to inspect our latest Omnisend Email and SMS campaigns.\n"
+        "Report the combined readout in a clean executive table."
+    )
 
 
 if __name__ == "__main__":
