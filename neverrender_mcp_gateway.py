@@ -6,26 +6,147 @@ Tunnel: Cloudflare Quick Tunnel (TLS/HTTPS)
 
 import os
 import sys
+import json
+import base64
+import urllib.request
 import psutil
 import datetime
 from pathlib import Path
+from dotenv import load_dotenv
 from fastmcp import FastMCP
+from fastmcp.server import create_proxy
+from fastmcp.server.middleware import Middleware, MiddlewareContext, CallNext
+from fastmcp.client.transports import StreamableHttpTransport
+from starlette.requests import Request
+from starlette.responses import Response, JSONResponse
+
+# Load Project Marshall College / NeverRender Labs credentials from .env
+ENV_PATH = Path(r"C:\Users\Saturn\Desktop\project-marshall-college\.env")
+if ENV_PATH.exists():
+    load_dotenv(ENV_PATH)
+else:
+    load_dotenv()
+
+OMNISEND_API_KEY = os.getenv("OMNISEND_API_KEY", "")
+OMNISEND_MCP_URL = "https://mcp.omnisend.com/mcp?brand=the-chapman-collection"
+WP_BASE = os.getenv("WP_BASE_URL", "https://thechapmancollection.com/wp-json")
+WP_USER = os.getenv("WP_REST_USER", "neverrender-labs")
+WP_APP_PASS = os.getenv("WP_REST_APP_PASSWORD", "")
+
+# Gemini Argon / Gemini Web injects UI telemetry kwargs into MCP tool calls; strip them cleanly before Pydantic validation
+GEMINI_UI_META_KEYS = {"explanation", "toolSummary", "toolAction", "waitMsBeforeAsync"}
+
+
+class GeminiArgonMetadataSanitizerMiddleware(Middleware):
+    """Strips Gemini Argon UI metadata fields (explanation, toolSummary, toolAction) before tool validation."""
+
+    async def on_call_tool(self, context: MiddlewareContext, call_next: CallNext):
+        msg = context.message
+        if msg and getattr(msg, "arguments", None) and isinstance(msg.arguments, dict):
+            for k in list(msg.arguments.keys()):
+                if k in GEMINI_UI_META_KEYS:
+                    msg.arguments.pop(k, None)
+        return await call_next(context)
+
 
 # Initialize FastMCP Server
 mcp = FastMCP(
     name="NeverRender-Gateway",
-    instructions="Local edge gateway for NeverRender Labs workstation. Controls local filesystem, telemetry, and media assets."
+    instructions=(
+        "Local edge gateway for NeverRender Labs workstation (Tiny Hyperion) & Project Marshall College "
+        "(The Chapman Collection). Controls local filesystem, hardware telemetry, Omnisend MCP/REST v3 "
+        "(True Delivered % vs. Raw Sent), and WordPress/WooCommerce REST API."
+    ),
 )
+mcp.add_middleware(GeminiArgonMetadataSanitizerMiddleware())
 
-@mcp.tool()
+# Mount official Omnisend MCP Server via authenticated StreamableHttpTransport (zero OAuth required!)
+if OMNISEND_API_KEY:
+    omnisend_transport = StreamableHttpTransport(
+        OMNISEND_MCP_URL,
+        headers={
+            "Authorization": f"Bearer {OMNISEND_API_KEY}",
+            "X-API-KEY": OMNISEND_API_KEY,
+        },
+    )
+    omnisend_proxy = create_proxy(omnisend_transport, name="Omnisend-MCP-Bridge")
+    mcp.mount(omnisend_proxy, namespace="omnisend")
+
+
+@mcp.custom_route("/health", methods=["GET"])
+async def health_check(request: Request) -> Response:
+    """Health check endpoint for NeverRender Gateway & Omnisend MCP Bridge."""
+    return JSONResponse({
+        "status": "ONLINE",
+        "gateway": "NeverRender-Gateway (Tiny Hyperion)",
+        "omnisend_mcp_mounted": bool(OMNISEND_API_KEY),
+        "timestamp": datetime.datetime.now().isoformat(),
+    })
+
+
+@mcp.custom_route("/omnisend/mcp", methods=["GET", "POST", "DELETE", "OPTIONS"])
+async def omnisend_raw_mcp_proxy(request: Request) -> Response:
+    """
+    Direct Streamable-HTTP pass-through to https://mcp.omnisend.com/mcp
+    that automatically injects Authorization: Bearer <OMNISEND_API_KEY> and X-API-KEY
+    so gemini.google.com/devmode can connect without OAuth registration!
+    """
+    if request.method == "OPTIONS":
+        return Response(
+            status_code=204,
+            headers={
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "*",
+            },
+        )
+
+    body = await request.body()
+    forward_headers = {
+        "Authorization": f"Bearer {OMNISEND_API_KEY}",
+        "X-API-KEY": OMNISEND_API_KEY,
+        "Content-Type": request.headers.get("content-type", "application/json"),
+        "Accept": request.headers.get("accept", "application/json, text/event-stream"),
+        "User-Agent": "NeverRender-Gateway-MCP-Bridge/1.0",
+    }
+    if "mcp-session-id" in request.headers:
+        forward_headers["Mcp-Session-Id"] = request.headers["mcp-session-id"]
+
+    req = urllib.request.Request(
+        OMNISEND_MCP_URL,
+        data=body if body else None,
+        method=request.method,
+        headers=forward_headers,
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=45) as resp:
+            resp_bytes = resp.read()
+            resp_headers = {"Access-Control-Allow-Origin": "*"}
+            for h_key in ("Content-Type", "Mcp-Session-Id"):
+                val = resp.headers.get(h_key)
+                if val:
+                    resp_headers[h_key] = val
+            return Response(content=resp_bytes, status_code=resp.status, headers=resp_headers)
+    except urllib.error.HTTPError as e:
+        err_bytes = e.read()
+        return Response(
+            content=err_bytes,
+            status_code=e.code,
+            media_type="application/json",
+            headers={"Access-Control-Allow-Origin": "*"},
+        )
+
+
+@mcp.tool(annotations={"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False})
 def get_system_telemetry() -> dict:
-    """Retrieve real-time hardware, memory, and disk telemetry from the Beelink 6800U workstation."""
+    """Retrieve real-time hardware, memory, and disk telemetry from the Beelink 6800U workstation (Tiny Hyperion)."""
     cpu_percent = psutil.cpu_percent(interval=0.5)
     mem = psutil.virtual_memory()
     disk = psutil.disk_usage("C:\\")
-    
+
     return {
         "status": "ONLINE",
+        "workstation": "Tiny Hyperion (Beelink SER6 // Ryzen 7 6800U)",
         "timestamp": datetime.datetime.now().isoformat(),
         "cpu_load_percent": cpu_percent,
         "memory_used_gb": round((mem.total - mem.available) / (1024**3), 2),
@@ -33,16 +154,17 @@ def get_system_telemetry() -> dict:
         "memory_free_percent": round(mem.available / mem.total * 100, 1),
         "disk_c_free_gb": round(disk.free / (1024**3), 2),
         "disk_c_total_gb": round(disk.total / (1024**3), 2),
-        "python_runtime": sys.version.split()[0]
+        "python_runtime": sys.version.split()[0],
     }
 
-@mcp.tool()
+
+@mcp.tool(annotations={"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False})
 def list_workspace_files(directory_path: str = "C:\\Users\\Saturn\\Desktop\\G_AG_FLDR", max_files: int = 25) -> list:
     """List recent files in a workspace directory to inspect projects, assets, or renders."""
     p = Path(directory_path)
     if not p.exists() or not p.is_dir():
         return [{"error": f"Directory not found: {directory_path}"}]
-    
+
     entries = []
     for item in sorted(p.iterdir(), key=lambda x: x.stat().st_mtime if x.exists() else 0, reverse=True):
         if len(entries) >= max_files:
@@ -53,19 +175,20 @@ def list_workspace_files(directory_path: str = "C:\\Users\\Saturn\\Desktop\\G_AG
                 "name": item.name,
                 "is_dir": item.is_dir(),
                 "size_kb": round(stat.st_size / 1024, 2) if item.is_file() else 0,
-                "modified": datetime.datetime.fromtimestamp(stat.st_mtime).strftime("%Y-%m-%d %H:%M:%S")
+                "modified": datetime.datetime.fromtimestamp(stat.st_mtime).strftime("%Y-%m-%d %H:%M:%S"),
             })
         except Exception:
             continue
     return entries
 
-@mcp.tool()
+
+@mcp.tool(annotations={"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False})
 def search_vault_records(keyword: str, max_results: int = 10) -> list:
     """Search legal, medical, and municipal case records in the evidentiary vault by keyword."""
     vault_dir = Path(r"C:\Users\Saturn\Proton Drive\WYATT_LEGAL_EVIDENTIARY_VAULT")
     if not vault_dir.exists():
         vault_dir = Path(r"C:\Users\Saturn\Desktop\city-of-vista-fullfilled-cpra-request")
-    
+
     results = []
     keyword_lower = keyword.lower()
     for root, dirs, files in os.walk(vault_dir):
@@ -78,7 +201,7 @@ def search_vault_records(keyword: str, max_results: int = 10) -> list:
                         "filename": f,
                         "path": str(full_p),
                         "size_kb": round(stat.st_size / 1024, 2),
-                        "modified": datetime.datetime.fromtimestamp(stat.st_mtime).strftime("%Y-%m-%d %H:%M:%S")
+                        "modified": datetime.datetime.fromtimestamp(stat.st_mtime).strftime("%Y-%m-%d %H:%M:%S"),
                     })
                     if len(results) >= max_results:
                         return results
@@ -86,12 +209,48 @@ def search_vault_records(keyword: str, max_results: int = 10) -> list:
                     continue
     return results
 
+
+@mcp.tool(annotations={"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False})
+def query_woocommerce_catalog(search_term: str = "", per_page: int = 20) -> list:
+    """Query live published products on The Chapman Collection (thechapmancollection.com) via WooCommerce REST v3."""
+    if not WP_APP_PASS:
+        return [{"error": "WP_REST_APP_PASSWORD not configured in .env"}]
+    auth_str = base64.b64encode(f"{WP_USER}:{WP_APP_PASS}".encode("utf-8")).decode("utf-8")
+    url = f"{WP_BASE}/wc/v3/products?status=publish&per_page={min(100, max(1, per_page))}"
+    if search_term:
+        url += f"&search={urllib.parse.quote(search_term)}"
+    req = urllib.request.Request(
+        url,
+        headers={
+            "Authorization": f"Basic {auth_str}",
+            "User-Agent": "NeverRender-Gateway/1.0",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        items = json.loads(resp.read().decode("utf-8"))
+        return [
+            {
+                "id": p.get("id"),
+                "sku": p.get("sku") or f"WC-{p.get('id')}",
+                "name": p.get("name"),
+                "price": p.get("price"),
+                "regular_price": p.get("regular_price"),
+                "sale_price": p.get("sale_price"),
+                "stock_status": p.get("stock_status"),
+                "permalink": p.get("permalink"),
+            }
+            for p in items
+        ]
+
+
 if __name__ == "__main__":
     port = 8765
     print(f"[*] Starting NeverRender Gateway FastMCP Streamable-HTTP server on port {port}...")
+    print(f"    -> Primary Gateway MCP Path:  http://127.0.0.1:{port}/mcp (includes mounted omnisend_* tools)")
+    print(f"    -> Direct Omnisend Proxy Path: http://127.0.0.1:{port}/omnisend/mcp")
     mcp.run(
         transport="streamable-http",
         host="127.0.0.1",
         port=port,
-        path="/mcp"
+        path="/mcp",
     )
