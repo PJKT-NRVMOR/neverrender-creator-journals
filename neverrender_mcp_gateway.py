@@ -89,7 +89,8 @@ if OMNISEND_API_KEY:
     mcp.mount(omnisend_proxy, namespace="omnisend")
 
 
-@mcp.custom_route("/health", methods=["GET"])
+@mcp.custom_route("/", methods=["GET", "HEAD"])
+@mcp.custom_route("/health", methods=["GET", "HEAD"])
 async def health_check(request: Request) -> Response:
     """Health check endpoint for NeverRender Gateway & Omnisend MCP Bridge."""
     return JSONResponse({
@@ -97,6 +98,25 @@ async def health_check(request: Request) -> Response:
         "gateway": "NeverRender-Gateway (Tiny Hyperion)",
         "omnisend_mcp_mounted": bool(OMNISEND_API_KEY),
         "timestamp": datetime.datetime.now().isoformat(),
+    })
+
+
+@mcp.custom_route("/.well-known/{filename:path}", methods=["GET", "HEAD"])
+async def well_known_verification(request: Request) -> Response:
+    """
+    Serves Google Connected Apps Platform /.well-known/ domain verification files
+    from C:\\Users\\Saturn\\Desktop\\G_AG_FLDR\\.well-known\\ for permanent custom domain tunnels.
+    """
+    filename = request.path_params.get("filename", "")
+    well_known_dir = Path(r"C:\Users\Saturn\Desktop\G_AG_FLDR\.well-known").resolve()
+    target = (well_known_dir / filename).resolve()
+    if str(target).startswith(str(well_known_dir)) and target.is_file():
+        return Response(content=target.read_text(encoding="utf-8", errors="replace"), media_type="text/plain")
+    return JSONResponse({
+        "gateway": "NeverRender-Gateway (Tiny Hyperion)",
+        "mcp_endpoint": "/mcp",
+        "well_known_path": filename,
+        "status": "READY_FOR_DOMAIN_VERIFICATION",
     })
 
 
@@ -281,7 +301,11 @@ def query_omnisend_telemetry(limit: int = 15, campaign_type: str = "") -> dict:
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
             data = json.loads(resp.read().decode("utf-8"))
-            campaigns = data.get("campaigns", data if isinstance(data, list) else [])
+            campaigns = (
+                data.get("campaign")
+                or data.get("campaigns")
+                or (data if isinstance(data, list) else [])
+            )
             return {
                 "count": len(campaigns),
                 "campaigns": campaigns,
