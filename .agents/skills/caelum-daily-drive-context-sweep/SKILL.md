@@ -22,8 +22,9 @@ description: Perform Dev Caelum's (dev-agent-caelum-v-c1 // Orbital Operator Cor
 3. **Native Cloud CLI Execution**:
    - Always invoke `gdrive` and `gsheets` with `ANTIGRAVITY_APP_DATA_DIR=/tmp/agy_plugins` (or `/tmp/agy_plugins/bin/gdrive` and `/tmp/agy_plugins/bin/gsheets`).
    - Use `gdrive mutate rename <FILE_ID> "<NEW_NAME>"` and `gdrive mutate mv <FILE_ID> <DEST_FOLDER_ID>` for fast, deterministic batch execution.
-4. **Preserved Taxonomy Prefixes**:
-   - Always preserve Developer Mode prefixes (`dev-log:`, `dev-log-v<N>:`, `dev-log-v-a<N>:`, `dev-agent:`), Argon prefixes (`agent-log-v-a<N>:`, `agent-log:`), and Blue Team Beau (`YYYY-MM-DD-*`) prefixes intact before the lowercase kebab-case title.
+4. **Preserved Taxonomy Prefixes (Including NotebookLM `active-*` Sorting Prefixes)**:
+   - **CRITICAL NOTEBOOKLM RULE**: Active Google Docs attached to the `Deterministic Execution Engine (DEE)` NotebookLM (`22620b15-171f-4430-b9fa-9b19cf8d1547`) use the `active-` prefix (`active-dev-agent:`, `active-dev-log:`, `active-dev-ops:`, `active-agent-log:`, `active-agent-log-v-a1:`) so they sort alphabetically at the very top of the 104+ source list above retired `.md` archives. NEVER strip `active-` from an active agent/dev log!
+   - Always preserve Developer Mode prefixes (`dev-log:`, `dev-log-v<N>:`, `dev-log-v-a<N>:`, `dev-agent:`, `dev-ops:`), Argon prefixes (`agent-log-v-a<N>:`, `agent-log:`), and Blue Team Beau (`YYYY-MM-DD-*`) prefixes intact before the lowercase kebab-case title.
    - Standard category prefixes: `tech-spec:`, `case-log:`, `daily-note:`, `notebook-chat:`, `cinematic-prod:`, `work-career:`, `legal-dossier:`, `research-report:`, `legal-historical:`, `housing-ops:`, `system-archive:`, `showroom-media:`, `staged-dup:`.
 5. **Zero Auto-Deletion**: Never permanently delete or trash duplicate files. Always rename with `staged-dup: <kebab-case-title>` and move to `pole-of-inaccessibility` (`1fzv5HwYtOu5o2W0Vg9Z8qZLE7zfsGC_S`).
 
