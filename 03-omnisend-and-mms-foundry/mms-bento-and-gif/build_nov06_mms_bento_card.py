@@ -119,7 +119,7 @@ def build_mms_bento_2x3(cuts_dir: str) -> Image.Image:
         (
             "tcc-f7f5f2-07-silk-qum-runner-closeup.jpg",
             "Persian 10' Silk Qum Runner",
-            "SILK QUM WEAVE · 10'0\" X 3'3\"",
+            "HAND FINISHED SILK · 10'0\" X 3'3\"",
         ),
     ]
 

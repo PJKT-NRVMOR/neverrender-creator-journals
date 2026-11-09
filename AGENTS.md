@@ -21,8 +21,23 @@ Whenever drafting, editing, or sanitizing copy, client updates, executive summar
 Whenever drafting, editing, or reviewing any client-facing copy for **The Chapman Collection** or **Melissa Chapman** (newsletters, flyers, website copy, product descriptions, Chairish/Etsy/Instagram posts, or client correspondence), you **MUST** follow [`melissa-tone-copywriter`](./.agents/skills/melissa-tone-copywriter/SKILL.md) and its living corpus at [`voice-corpus.md`](./.agents/skills/melissa-tone-copywriter/references/voice-corpus.md):
 - **Zero Em-Dashes (`—`) or En-Dashes (`–`)** anywhere in prose.
 - **No Serial / Oxford Comma** before `and` in simple lists (e.g., *"celebrities, politicians and even royalty"*, *"history, craftsmanship and beauty"*).
-- **Warm, understated British-California elegance**: Grounded in her Harrington Road (London) roots and Rancho Santa Fe showroom (`6014 La Granada, Rancho Santa Fe, CA 92067`).
+- **Warm, understated British-California elegance**: Grounded in her Rancho Santa Fe showroom (`6014 La Granada, Rancho Santa Fe, CA 92067`). Never put `"Established in 1995"` or `"London & Rancho Santa Fe"` in headers, badges, or sub-headers (keep her Harrington Road London roots strictly inside the approved 6-paragraph About Us biography).
 - **Short, balanced 2-sentence paragraphs** with gracious, low-pressure hospitality.
+- **Permanent Copy & Social Guardrails (Effective Immediately, Nov 8, 2026)**:
+  1. **No In-Home Trial Offers**: Never mention `"48 hour in home trial"`, `"free in home trial"`, or `"complimentary in home preview"` across any social posts, adverts, or website pages.
+  2. **Official Showroom Hours**:
+     - Monday through Thursday: `10:00 AM to 6:00 PM`
+     - Friday and Saturday: `10:00 AM to 7:00 PM`
+     - Sunday: `By Appointment`
+     *(Never write `"10:00 AM to 5:00 PM"`, `"Tuesday through Saturday"`, or `"open seven days a week"`).*
+  3. **Hand-Finished Silk Carpets (PERMANENTLY REMOVED - 09:46 AM PST, Nov 8, 2026)**:
+     - Remove 100% of hand-finished silk Qum carpets (`WC-3192, 3105, 3103, 3101, 3098, 3095, 3092, 3090, 3088, 3081`) from the website (`status="draft"`, `catalog_visibility="hidden"`), Meta Catalog, social media, and future email circulars.
+     - Redirect all legacy `/product/*hand-finished-silk-qum*` URLs (including the `09:02 AM` newsletter Midnight Blue Runner link) directly (`302`) to `https://thechapmancollection.com/product-category/carpets/`.
+  4. **Institutional Call to Action (`"Contact Us"`)**:
+     - Never write `"contact Melissa"`, `"text Melissa"`, `"call Melissa"`, or `"have Melissa arrange"`.
+     - Always write `"contact us"` or `"visit our Rancho Santa Fe showroom"`.
+  5. **Pre-Post Social Approval**: Send draft social posts to Melissa via text or email for a quick factual check before publishing.
+  6. **Top-Level Navigation**: Never use `"Curate Your Collection"`; keep top-level navigation strictly to the 5 core pages (`About Us`, `Services`, `Inventory` / `Shop`, `Details on Shipping`, `Check Out` / `Contact Us`).
 - **Enshrined 5-Swatch "Chaphavian Palette" (`Chapman + Safe Haven + Gustavian` — Active Default Until Otherwise Noticed)**:
   ```css
   :root {

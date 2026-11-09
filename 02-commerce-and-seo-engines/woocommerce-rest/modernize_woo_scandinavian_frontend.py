@@ -50,26 +50,91 @@ def api_request(url, method="GET", data=None):
 
 
 PHP_CODE = r"""
-// 1. Permanently block sensitive items (WC-3211 Knights Templar Sword & WC-3327 Mosaic Bone Tusks) from syncing to Meta Catalog
+// 1. Permanently block sensitive items (WC-3211 Sword, WC-3327 Tusks) and all purged Hand-Finished Silk Qum rugs from syncing to Meta Catalog (Facebook & Instagram)
+define('NRL_PURGED_SILK_QUM_IDS', array(3192, 3105, 3103, 3101, 3098, 3095, 3092, 3090, 3088, 3081));
 add_filter('wc_facebook_should_sync_product', function ($should_sync, $product) {
-    if ($product && in_array((int) $product->get_id(), array(3211, 3327), true)) {
+    $blocked = array_merge(array(3211, 3327), NRL_PURGED_SILK_QUM_IDS);
+    if ($product && in_array((int) $product->get_id(), $blocked, true)) {
         return false;
     }
     return $should_sync;
 }, 999, 2);
 
-// 2. Never render em-dashes, en-dashes, or broken Windows-1252 replacement chars via wptexturize or gettext anywhere on the frontend
+// 1b. Redirect any clicks on purged Hand-Finished Silk Qum carpet URLs (including the 2026-11-08 09:02 AM email blast blue runner link) straight to /product-category/carpets/
+function nrl_redirect_purged_silk_qum_urls() {
+    if (is_admin()) {
+        return;
+    }
+    $req_uri = isset($_SERVER['REQUEST_URI']) ? strtolower((string) $_SERVER['REQUEST_URI']) : '';
+    if (strpos($req_uri, '/wp-json/') !== false) {
+        return;
+    }
+    if (
+        strpos($req_uri, 'new-persian-hand-finished-silk-qum') !== false ||
+        strpos($req_uri, 'hand-finished-silk-qum') !== false ||
+        (function_exists('is_singular') && is_singular('product') && in_array((int) get_queried_object_id(), NRL_PURGED_SILK_QUM_IDS, true))
+    ) {
+        wp_redirect('https://thechapmancollection.com/product-category/carpets/', 302);
+        exit;
+    }
+}
+add_action('init', 'nrl_redirect_purged_silk_qum_urls', 1);
+add_action('template_redirect', 'nrl_redirect_purged_silk_qum_urls', 1);
+
+// 2. Never render em-dashes, en-dashes, broken Windows-1252 replacement chars, or legacy CTA/trial phrases anywhere on the frontend
 function nrl_strip_rendered_dashes($text) {
     if (!is_string($text) || $text === '') {
         return $text;
     }
-    return str_replace(
+    $text = str_replace(
         array('&#8212;', '&#8211;', '&mdash;', '&ndash;', "\xE2\x80\x94", "\xE2\x80\x93", "\xEF\xBF\xBD"),
         array(', ', ' to ', ', ', ' to ', ', ', ' to ', '"'),
         $text
     );
+    $text = str_ireplace(
+        array(
+            'call or text Melissa directly',
+            'call or text Melissa',
+            'contact Melissa directly',
+            'contact Melissa',
+            'text Melissa',
+            'have Melissa arrange',
+            '48-hour in-home trial',
+            '48 hour in home trial',
+            'complimentary in-home trial',
+            'complimentary in-home preview',
+            'free in-home trial',
+            'free in home trial'
+        ),
+        array(
+            'contact us',
+            'contact us',
+            'contact us',
+            'contact us',
+            'contact us',
+            'contact us to arrange',
+            'private showroom appointment',
+            'private showroom appointment',
+            'private showroom appointment',
+            'private showroom appointment',
+            'private showroom appointment',
+            'private showroom appointment'
+        ),
+        $text
+    );
+    if (stripos($text, 'Silk Qum') !== false || stripos($text, 'hand-finished silk') !== false || stripos($text, 'hand finished silk') !== false) {
+        $text = preg_replace('/\bhand[- ]woven\b/i', 'hand-finished', $text);
+        $text = preg_replace('/\bwoven\b/i', 'hand-finished', $text);
+    }
+    return $text;
 }
 add_filter('the_title', 'nrl_strip_rendered_dashes', 999);
+add_filter('woocommerce_product_get_name', function ($name) {
+    return str_replace(array('&amp;', '&#038;'), '&', nrl_strip_rendered_dashes((string) $name));
+}, 999);
+add_filter('woocommerce_product_title', function ($title) {
+    return str_replace(array('&amp;', '&#038;'), '&', nrl_strip_rendered_dashes((string) $title));
+}, 999);
 add_filter('the_content', 'nrl_strip_rendered_dashes', 999);
 add_filter('the_excerpt', 'nrl_strip_rendered_dashes', 999);
 add_filter('woocommerce_short_description', 'nrl_strip_rendered_dashes', 999);
@@ -109,11 +174,15 @@ add_action('pre_get_posts', function ($query) {
     if (is_admin() || !$query->is_main_query()) {
         return;
     }
+    $existing_not_in = (array) $query->get('post__not_in');
+    $query->set('post__not_in', array_values(array_unique(array_merge($existing_not_in, NRL_PURGED_SILK_QUM_IDS))));
     if (function_exists('is_woocommerce') && (is_shop() || is_product_category() || is_product_tag())) {
         $query->set('posts_per_page', nrl_get_requested_per_page());
     }
 }, 999);
 add_filter('fl_builder_loop_query_args', function ($args) {
+    $existing_not_in = isset($args['post__not_in']) ? (array) $args['post__not_in'] : array();
+    $args['post__not_in'] = array_values(array_unique(array_merge($existing_not_in, NRL_PURGED_SILK_QUM_IDS)));
     if (function_exists('is_woocommerce') && (is_shop() || is_product_category() || is_product_tag())) {
         $args['posts_per_page'] = nrl_get_requested_per_page();
     }
@@ -125,8 +194,9 @@ add_action('woocommerce_after_add_to_cart_form', function () {
     echo '<div class="nrl-rsf-concierge-note">'
        . '<strong>Rancho Santa Fe Showroom Concierge</strong><br>'
        . 'Private showroom consultations, white-glove delivery and showroom pickup at 6014 La Granada, Rancho Santa Fe. '
-       . 'For additional photographs, condition details or white-glove delivery arrangements, call or text Melissa directly at '
-       . '<a href="tel:+18583492638">(858) 349-2638</a>.'
+       . 'For additional photographs, condition details or white-glove delivery arrangements, please '
+       . '<a href="https://thechapmancollection.com/contact-us/">contact us</a> at '
+       . '<a href="tel:+18583492638">(858) 349-2638</a> or visit our Rancho Santa Fe showroom.'
        . '</div>';
 });
 

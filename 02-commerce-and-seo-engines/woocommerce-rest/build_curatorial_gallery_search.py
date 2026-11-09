@@ -41,24 +41,25 @@ import shutil
 SNAPSHOT_PATH = r"C:\Users\Saturn\Desktop\project-marshall-college\project-marshall-college\02-clean-master-database\inventory_snapshot.json"
 SLATE_DIR = r"C:\Users\Saturn\Desktop\project-marshall-college\project-marshall-college\04-campaigns-outreach-drops\inspo-gustavian-eloquence-2026-11-02\pmc-custom-backdrops-preview"
 CHALK_DIR = r"C:\Users\Saturn\Desktop\project-marshall-college\project-marshall-college\04-campaigns-outreach-drops\inspo-gustavian-eloquence-2026-11-02\gustavian-chalk-lightened"
+F7F5F2_CUTS_DIR = r"C:\Users\Saturn\Desktop\project-marshall-college\project-marshall-college\04-campaigns-outreach-drops\drafts-for-chapman-marshall-college-approval\2026-11-04-scandinavian-gustavian-gallery\cuts"
 OUT_DIR_NRL = r"c:\Users\Saturn\Desktop\G_AG_FLDR\NEVERRENDER_LABS_WEBSITE\drafts-for-pmc-approval\chapman-curatorial-gallery-search"
 OUT_FILE_PMC = r"C:\Users\Saturn\Desktop\project-marshall-college\project-marshall-college\04-campaigns-outreach-drops\chapman-curatorial-gallery-search.html"
 
 COLOR_SWATCHES = [
-    {"id": "walnut",     "label": "Walnut & Chestnut",   "hex": "#7D6256", "keywords": ["walnut", "mahogany", "oak", "chestnut", "wood", "brown", "carved", "giltwood", "teak", "cherry", "burl", "camel", "tan"]},
-    {"id": "terracotta", "label": "Terracotta & Rust",   "hex": "#CE644A", "keywords": ["terracotta", "rust", "coral", "salmon", "copper", "brick", "burnt orange", "persimmon", "madder", "henna"]},
-    {"id": "crimson",    "label": "Ruby & Crimson",      "hex": "#9E2A2B", "keywords": ["red", "crimson", "ruby", "burgundy", "claret", "wine", "carmine", "scarlet", "garnet", "rose"]},
-    {"id": "ivory",      "label": "Ivory & Parchment",   "hex": "#F4EE9E", "keywords": ["ivory", "cream", "beige", "parchment", "alabaster", "white", "bone", "ecru", "champagne", "marble"]},
-    {"id": "gold",       "label": "Ochre & Gilt Gold",   "hex": "#F7E600", "keywords": ["gold", "gilt", "ochre", "saffron", "yellow", "brass", "ormolu", "amber", "mustard", "honey", "bronze"]},
-    {"id": "sage",       "label": "Sage & Celadon",      "hex": "#8ABF7F", "keywords": ["green", "sage", "celadon", "olive", "emerald", "moss", "forest", "jade", "pistachio", "foliage", "verdure"]},
-    {"id": "sky",        "label": "Ice & Cerulean Blue", "hex": "#74C0FC", "keywords": ["light blue", "sky blue", "ice blue", "powder blue", "turquoise", "aqua", "cerulean", "teal", "robin", "blue"]},
-    {"id": "navy",       "label": "Royal & Indigo",      "hex": "#4C6EF5", "keywords": ["navy", "indigo", "midnight", "cobalt", "sapphire", "royal blue", "lapis", "prussian"]},
-    {"id": "plum",       "label": "Aubergine & Mauve",   "hex": "#7F5F99", "keywords": ["plum", "aubergine", "purple", "violet", "lavender", "mauve", "amethyst", "lilac", "mulberry"]},
-    {"id": "charcoal",   "label": "Charcoal & Ebony",    "hex": "#666664", "keywords": ["black", "ebony", "charcoal", "slate", "iron", "graphite", "dark", "steel", "pewter", "silver"]},
+    {"id": "walnut",     "label": "Walnut and Chestnut",   "hex": "#7D6256", "keywords": ["walnut", "mahogany", "oak", "chestnut", "wood", "brown", "carved", "giltwood", "teak", "cherry", "burl", "camel", "tan"]},
+    {"id": "terracotta", "label": "Terracotta and Rust",   "hex": "#CE644A", "keywords": ["terracotta", "rust", "coral", "salmon", "copper", "brick", "burnt orange", "persimmon", "madder", "henna"]},
+    {"id": "crimson",    "label": "Ruby and Crimson",      "hex": "#9E2A2B", "keywords": ["red", "crimson", "ruby", "burgundy", "claret", "wine", "carmine", "scarlet", "garnet", "rose"]},
+    {"id": "ivory",      "label": "Ivory and Parchment",   "hex": "#F4EE9E", "keywords": ["ivory", "cream", "beige", "parchment", "alabaster", "white", "bone", "ecru", "champagne", "marble"]},
+    {"id": "gold",       "label": "Ochre and Gilt Gold",   "hex": "#F7E600", "keywords": ["gold", "gilt", "ochre", "saffron", "yellow", "brass", "ormolu", "amber", "mustard", "honey", "bronze"]},
+    {"id": "sage",       "label": "Sage and Celadon",      "hex": "#8ABF7F", "keywords": ["green", "sage", "celadon", "olive", "emerald", "moss", "forest", "jade", "pistachio", "foliage", "verdure"]},
+    {"id": "sky",        "label": "Ice and Cerulean Blue", "hex": "#74C0FC", "keywords": ["light blue", "sky blue", "ice blue", "powder blue", "turquoise", "aqua", "cerulean", "teal", "robin", "blue"]},
+    {"id": "navy",       "label": "Royal and Indigo",      "hex": "#4C6EF5", "keywords": ["navy", "indigo", "midnight", "cobalt", "sapphire", "royal blue", "lapis", "prussian"]},
+    {"id": "plum",       "label": "Aubergine and Mauve",   "hex": "#7F5F99", "keywords": ["plum", "aubergine", "purple", "violet", "lavender", "mauve", "amethyst", "lilac", "mulberry"]},
+    {"id": "charcoal",   "label": "Charcoal and Ebony",    "hex": "#666664", "keywords": ["black", "ebony", "charcoal", "slate", "iron", "graphite", "dark", "steel", "pewter", "silver"]},
 ]
 
 PERIOD_BUCKETS = [
-    {"id": "17th", "label": "17th Century & Earlier", "patterns": [r"15th", r"16th", r"17th", r"14\d\d", r"15\d\d", r"16\d\d", r"renaissance", r"gothic", r"tudor", r"jacobean"]},
+    {"id": "17th", "label": "17th Century and Earlier", "patterns": [r"15th", r"16th", r"17th", r"14\d\d", r"15\d\d", r"16\d\d", r"renaissance", r"gothic", r"tudor", r"jacobean"]},
     {"id": "18th", "label": "18th Century",           "patterns": [r"18th", r"17\d\d", r"louis xv", r"louis xvi", r"georgian", r"chippendale", r"queen anne", r"rococo"]},
     {"id": "19th", "label": "19th Century",           "patterns": [r"19th", r"18\d\d", r"victorian", r"napoleon", r"empire", r"regency", r"biedermeier", r"meiji", r"qajar", r"late 19th"]},
     {"id": "20th", "label": "Early 20th Century",     "patterns": [r"20th", r"190\d", r"191\d", r"192\d", r"193\d", r"194\d", r"195\d", r"art deco", r"art nouveau", r"edwardian", r"mid-century", r"vintage"]},
@@ -118,17 +119,17 @@ def classify_top_category(cats, name):
         if "runner" in cat_set or "runner" in nl:
             return "CARPETS & RUNNERS", "Runners"
         elif "small carpet" in cat_set:
-            return "CARPETS & RUNNERS", "Small & Area Carpets"
-        return "CARPETS & RUNNERS", "Room & Palace Carpets"
+            return "CARPETS & RUNNERS", "Small and Area Carpets"
+        return "CARPETS & RUNNERS", "Room and Palace Carpets"
     if any(k in cat_set for k in ["tapestry", "artwork & tapestries"]) and ("tapestry" in cat_set or "tapestry" in nl):
         return "TAPESTRIES", "Tapestries"
     if any(k in cat_set for k in ["furniture", "cabinets", "cabinets and consoles", "seating", "tables", "tables and office desks"]) or any(w in nl for w in ["cabinet", "armoire", "chair", "settee", "table", "desk", "console", "chest", "commode", "vitrine", "bench"]):
         return "EUROPEAN FURNITURE", "European Furniture"
     if any(k in cat_set for k in ["classic artwork", "modern artwork", "artwork & tapestries"]) or any(w in nl for w in ["painting", "oil on", "lithograph", "watercolor", "portrait"]):
-        return "FINE ART", "Fine Art & Paintings"
+        return "FINE ART", "Fine Art and Paintings"
     if any(k in cat_set for k in ["bronzes", "statuaries"]) or any(w in nl for w in ["bronze", "marble", "statue", "sculpture", "bust"]):
-        return "BRONZES & SCULPTURE", "Bronzes & Sculpture"
-    return "DECORATIVE ARTS", "Mirrors, Porcelain & Objects"
+        return "BRONZES & SCULPTURE", "Bronzes and Sculpture"
+    return "DECORATIVE ARTS", "Mirrors, Porcelain and Objects"
 
 
 def main():
@@ -151,12 +152,23 @@ def main():
         if os.path.exists(src_p):
             shutil.copy2(src_p, os.path.join(OUT_DIR_NRL, "assets", fn))
 
+    for fn in [
+        "tcc-f7f5f2-01-spanish-knights-cabinet.jpg",
+        "tcc-f7f5f2-02-english-gothic-hallstand.jpg",
+        "tcc-f7f5f2-03-boulle-marquetry-credenza.jpg",
+        "tcc-f7f5f2-04-dutch-marquetry-armchair.jpg",
+        "tcc-f7f5f2-05-french-empire-pedestals.jpg",
+    ]:
+        src_p = os.path.join(F7F5F2_CUTS_DIR, fn)
+        if os.path.exists(src_p):
+            shutil.copy2(src_p, os.path.join(OUT_DIR_NRL, "assets", fn))
+
     catalog = [
         {
             "id": 9901,
             "name": "Antique Spanish Carved Walnut Armoire with Conquistador Knights",
             "url": "https://thechapmancollection.com/",
-            "image": "assets/spanish-knights-cabinet-slate-curved.jpg",
+            "image": "assets/tcc-f7f5f2-01-spanish-knights-cabinet.jpg",
             "top_category": "EUROPEAN FURNITURE",
             "sub_category": "18th Century Spanish Case Piece",
             "all_categories": ["Furniture", "Cabinets and Consoles"],
@@ -172,9 +184,9 @@ def main():
         },
         {
             "id": 9902,
-            "name": "Monumental English Carved Oak Tall Gothic Hallstand with Mirror & Bench",
+            "name": "Monumental English Carved Oak Tall Gothic Hallstand with Mirror and Bench",
             "url": "https://thechapmancollection.com/",
-            "image": "assets/english-gothic-hallstand-slate-curved.jpg",
+            "image": "assets/tcc-f7f5f2-02-english-gothic-hallstand.jpg",
             "top_category": "EUROPEAN FURNITURE",
             "sub_category": "19th Century English Architectural Hallstand",
             "all_categories": ["Furniture", "Cabinets and Consoles"],
@@ -190,11 +202,11 @@ def main():
         },
         {
             "id": 9903,
-            "name": "Napoleon III Ebonized Pearwood & Floral Marquetry Vitrine Credenza with Ormolu Mounts",
+            "name": "Napoleon III Ebonized Pearwood and Floral Marquetry Vitrine Credenza with Ormolu Mounts",
             "url": "https://thechapmancollection.com/",
-            "image": "assets/boulle-marquetry-credenza-slate-curved.jpg",
+            "image": "assets/tcc-f7f5f2-03-boulle-marquetry-credenza.jpg",
             "top_category": "EUROPEAN FURNITURE",
-            "sub_category": "19th Century French Boulle & Marquetry",
+            "sub_category": "19th Century French Boulle and Marquetry",
             "all_categories": ["Furniture", "Cabinets and Consoles"],
             "colors": ["charcoal", "gold", "walnut"],
             "periods": ["19th"],
@@ -205,6 +217,42 @@ def main():
             "sale_price": "6800",
             "active_price": "6800",
             "search_blob": "napoleon iii ebonized pearwood floral marquetry vitrine credenza ormolu mounts french furniture",
+        },
+        {
+            "id": 9904,
+            "name": "19th Century Dutch Floral Marquetry Walnut Armchair with Gold Silk Damask Upholstery",
+            "url": "https://thechapmancollection.com/",
+            "image": "assets/tcc-f7f5f2-04-dutch-marquetry-armchair.jpg",
+            "top_category": "EUROPEAN FURNITURE",
+            "sub_category": "19th Century Dutch Floral Marquetry Seating",
+            "all_categories": ["Furniture", "Seating and Chairs"],
+            "colors": ["walnut", "gold"],
+            "periods": ["19th"],
+            "w_ft": 2.25,
+            "l_ft": 3.33,
+            "size_label": '40" H x 27" W x 23" D',
+            "regular_price": "3400",
+            "sale_price": "2600",
+            "active_price": "2600",
+            "search_blob": "19th century dutch floral marquetry walnut armchair gold silk damask upholstery seating furniture",
+        },
+        {
+            "id": 9905,
+            "name": "Pair of 19th Century French Empire Mahogany and Gilt Bronze Mounted Marble-Top Pedestals",
+            "url": "https://thechapmancollection.com/",
+            "image": "assets/tcc-f7f5f2-05-french-empire-pedestals.jpg",
+            "top_category": "EUROPEAN FURNITURE",
+            "sub_category": "19th Century French Empire Pedestals",
+            "all_categories": ["Furniture", "Pedestals and Columns"],
+            "colors": ["walnut", "gold", "ivory"],
+            "periods": ["19th"],
+            "w_ft": 1.50,
+            "l_ft": 3.83,
+            "size_label": '46" H x 18" W x 18" D',
+            "regular_price": "5800",
+            "sale_price": "4400",
+            "active_price": "4400",
+            "search_blob": "pair 19th century french empire mahogany gilt bronze ormolu marble top pedestals columns furniture",
         },
     ]
 
@@ -281,24 +329,31 @@ def main():
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Chapman Collection | Rancho Santa Fe &amp; London Heritage</title>
+<title>The Chapman Collection | Rancho Santa Fe and London Heritage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {{
-    --bg: #FFFFFF;
-    --off-greige: #F4F1EC;
-    --greige-panel: #C2BCB2;
-    --slate-panel: #9CA6B0;
-    --taupe-panel: #AFA9A0;
-    --text-main: #1E1D1B;
-    --text-muted: #524F4A;
-    --text-italic-hint: #5A7496;
-    --border-hairline: #CFCAC0;
-    --border-active: #232220;
-    --gold-accent: #8C7044;
-    --studio-grey-card: #F6F5F2;
+    /* The Chaphavian Palette (Chapman + Safe Haven + Gustavian) */
+    --chaphavian-alabaster: #F7F5F2; /* 60% Primary plaster & linen canvas */
+    --chaphavian-putty:     #D5D3CC; /* 60% Carved limestone & millwork */
+    --chaphavian-slate:     #8A8F97; /* 30% Wainscoting & study paneling */
+    --chaphavian-rose:      #B35A5E; /* 10% Alcove warmth & textile accent */
+    --chaphavian-iron:      #2B2F32; /* 10% Steel window grids & deep ink */
+
+    --bg: var(--chaphavian-alabaster);
+    --off-greige: var(--chaphavian-alabaster);
+    --greige-panel: var(--chaphavian-putty);
+    --slate-panel: var(--chaphavian-slate);
+    --taupe-panel: var(--chaphavian-iron);
+    --text-main: var(--chaphavian-iron);
+    --text-muted: #52575D;
+    --text-italic-hint: var(--chaphavian-rose);
+    --border-hairline: var(--chaphavian-putty);
+    --border-active: var(--chaphavian-iron);
+    --gold-accent: var(--chaphavian-rose);
+    --studio-grey-card: var(--chaphavian-alabaster);
   }}
 
   * {{
@@ -308,13 +363,110 @@ def main():
   }}
 
   body {{
-    background-color: #FAF8F5;
-    color: var(--text-main);
+    background-color: #F7F5F2;
+    color: var(--chaphavian-iron);
     font-family: 'Cormorant Garamond', Georgia, serif;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.5;
+    font-weight: 500;
+    -webkit-text-stroke: 0.15px rgba(43, 47, 50, 0.32);
+    line-height: 1.55;
     overflow-x: hidden;
     position: relative;
+  }}
+
+  h1, h2, h3, h4, .brand-title, .console-lead {{
+    font-weight: 600 !important;
+    color: var(--chaphavian-iron);
+  }}
+
+  .main-nav a, .search-trigger, .nrl-float-btn, .reset-trigger {{
+    font-weight: 600 !important;
+  }}
+
+  /* Newsletter-Inspired Floating Card, Click-Box & Photo Frame System (Zero Image Bubble/Warp) */
+  .nrl-hover-box {{
+    background: #F7F5F2;
+    border: 1px solid #D5D3CC;
+    box-shadow: 0 10px 26px -10px rgba(179, 90, 94, 0.16),
+                0 4px 12px -4px rgba(179, 90, 94, 0.08);
+    transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.28s ease,
+                background-color 0.28s ease,
+                box-shadow 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, box-shadow;
+  }}
+  .nrl-hover-box:hover {{
+    transform: translateY(-6px);
+    background: #FAF9F7;
+    border-color: #B35A5E;
+    box-shadow: 0 22px 44px -8px rgba(179, 90, 94, 0.34),
+                0 10px 22px -4px rgba(179, 90, 94, 0.22),
+                0 0 0 1px rgba(179, 90, 94, 0.28);
+  }}
+
+  /* Framed Portrait & Showroom Photo (Crisp 1px Border, Zero Bubble/Scale Warp) */
+  .nrl-framed-photo {{
+    position: relative;
+    overflow: hidden;
+    background: #EFECE6;
+    border: 1px solid #D5D3CC;
+    transition: border-color 0.28s ease;
+  }}
+  .nrl-hover-box:hover .nrl-framed-photo {{
+    border-color: #B35A5E;
+  }}
+
+  /* Ghost-to-Dark Charcoal Buttons (#F7F5F2 Alabaster Default -> #2B2F32 Dark Slate on Hover) */
+  .nrl-float-btn,
+  .search-trigger {{
+    background: #F7F5F2 !important;
+    color: #2B2F32 !important;
+    border: 1px solid #2B2F32 !important;
+    transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.22s ease,
+                background-color 0.22s ease,
+                color 0.22s ease !important;
+    will-change: transform, box-shadow;
+  }}
+  .nrl-float-btn:hover,
+  .search-trigger:hover {{
+    background: #2B2F32 !important;
+    color: #F7F5F2 !important;
+    border-color: #2B2F32 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -6px rgba(43, 47, 51, 0.18);
+  }}
+  .nrl-float-btn.active-portrait-btn {{
+    border-color: #B35A5E !important;
+    font-weight: 600;
+  }}
+
+  .reset-trigger,
+  .hero-curate-btn,
+  .cat-tile,
+  .shipping-option-card,
+  .chapter-card,
+  .collage-tile {{
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.24s ease,
+                background-color 0.24s ease,
+                color 0.24s ease !important;
+    will-change: transform, box-shadow;
+  }}
+  .reset-trigger:hover,
+  .hero-curate-btn:hover {{
+    transform: translateY(-2px);
+  }}
+  .cat-tile:hover,
+  .shipping-option-card:hover,
+  .chapter-card:hover,
+  .collage-tile:hover {{
+    transform: translateY(-5px);
+    border-color: #B35A5E !important;
+    box-shadow: 0 18px 36px -6px rgba(179, 90, 94, 0.32),
+                0 8px 18px -4px rgba(179, 90, 94, 0.20),
+                0 0 0 1px rgba(179, 90, 94, 0.24);
   }}
 
   /* Layer 1 of NRL Curtain Draft: Strictly z-index: 0 behind all foreground cards & photos */
@@ -392,95 +544,107 @@ def main():
     font-weight: 500;
   }}
 
-  /* Centered Crest + Mansour-Style Header (No Giant Phone Icon Next to Contact!) */
+  /* Centered Crest + Mansour-Style Masthead (Stays at Top of Page; Never Drops Down Mid-Scroll) */
   .brand-header {{
     text-align: center;
-    padding: 26px 20px 22px;
+    padding: 26px 20px 6px;
+    background: var(--chaphavian-alabaster);
+    position: relative;
+    z-index: 89;
+  }}
+  /* Slim Sticky Navigation Bar (Glides Gently on Intentional Scroll; Never Yanks Full Masthead Down) */
+  .brand-nav-bar {{
+    text-align: center;
+    padding: 12px 20px 18px;
     border-bottom: 1px solid var(--border-hairline);
-    background: #FFFFFF;
+    background: rgba(247, 245, 242, 0.95);
+    backdrop-filter: blur(8px);
     position: sticky;
     top: 0;
     z-index: 90;
-    transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s ease,
+                padding 0.35s ease;
     will-change: transform;
   }}
-  .brand-header.header-tucked {{
-    transform: translateY(-105%);
+  .brand-nav-bar.header-tucked {{
+    transform: translateY(-108%);
     pointer-events: none;
   }}
-  .brand-header.header-scrolled {{
-    box-shadow: 0 4px 18px rgba(30, 29, 27, 0.06);
+  .brand-nav-bar.header-scrolled {{
+    padding: 10px 20px 12px;
+    box-shadow: 0 8px 24px -8px rgba(179, 90, 94, 0.18);
   }}
   .brand-crest {{
-    width: 68px;
+    width: 78px;
     height: auto;
-    margin: 0 auto 8px;
+    margin: 0 auto 10px;
     display: block;
     cursor: pointer;
   }}
   .brand-title {{
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 400;
-    font-size: 32px;
-    letter-spacing: 0.24em;
+    font-weight: 600;
+    font-size: 42px;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: #1F1F1E;
-    margin-bottom: 4px;
+    color: var(--chaphavian-iron);
+    margin-bottom: 6px;
     cursor: pointer;
   }}
   .brand-subtitle {{
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-style: italic;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 16px;
     letter-spacing: 0.06em;
     color: var(--text-muted);
-    margin-bottom: 18px;
+    margin-bottom: 6px;
   }}
 
-  /* Whisper-Quiet Navigation Bar */
+  /* Unified Chaphavian Navigation Bar (All Buttons Change Color to Dark Iron on Hover & Active) */
   .main-nav {{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 14px;
     list-style: none;
   }}
   .main-nav a {{
+    display: inline-block;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 14px;
+    font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #555553;
+    color: var(--chaphavian-iron);
+    background: var(--chaphavian-alabaster);
     text-decoration: none;
-    padding-bottom: 4px;
-    border-bottom: 1px solid transparent;
-    transition: all 0.2s ease;
+    padding: 7px 16px;
+    border: 1px solid var(--chaphavian-putty);
+    transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+                background-color 0.22s ease,
+                color 0.22s ease,
+                border-color 0.22s ease,
+                box-shadow 0.24s ease;
     cursor: pointer;
   }}
   .main-nav a:hover,
   .main-nav a.active {{
-    color: #111111;
-    border-bottom-color: #111111;
+    background: var(--chaphavian-iron) !important;
+    color: var(--chaphavian-alabaster) !important;
+    border-color: var(--chaphavian-iron) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px -6px rgba(43, 47, 50, 0.18);
   }}
   .nav-curate-cta {{
-    padding: 6px 14px !important;
-    border: 1px solid #3A3835 !important;
-    color: #1F1F1E !important;
-    font-weight: 500;
-  }}
-  .nav-curate-cta:hover, .nav-curate-cta.active {{
-    background: #232220 !important;
-    color: #FFFFFF !important;
+    border-color: var(--chaphavian-putty) !important;
   }}
   .nav-selection-pill {{
     font-family: 'Montserrat', sans-serif !important;
     font-size: 11px !important;
     letter-spacing: 0.14em !important;
-    color: #232220 !important;
-    background: var(--off-greige);
-    padding: 6px 13px !important;
-    border: 1px solid var(--border-hairline) !important;
   }}
 
   /* Views Management */
@@ -497,7 +661,7 @@ def main():
   }}
 
   /* ==========================================================================
-     VIEW 1: HOME (MANSOUR SPLIT HERO CAROUSEL + COLLAGE SPLASH, ZERO PRICES)
+     VIEW 1: HOME (CHAPHAVIAN SPLIT HERO CAROUSEL + COLLAGE SPLASH, ZERO PRICES)
      ========================================================================== */
   .hero-stage-wrap {{
     max-width: 1180px;
@@ -509,8 +673,16 @@ def main():
     width: 100%;
     height: 490px;
     overflow: hidden;
-    background: var(--off-greige);
-    border: 1px solid var(--border-hairline);
+    background: var(--chaphavian-alabaster);
+    border: 1px solid var(--chaphavian-putty);
+    box-shadow: 0 12px 30px -10px rgba(179, 90, 94, 0.18),
+                0 4px 12px -4px rgba(179, 90, 94, 0.08);
+    transition: border-color 0.28s ease, box-shadow 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+  }}
+  .hero-carousel:hover {{
+    border-color: var(--chaphavian-rose);
+    box-shadow: 0 22px 44px -8px rgba(179, 90, 94, 0.32),
+                0 10px 22px -4px rgba(179, 90, 94, 0.20);
   }}
   .hero-slide {{
     position: absolute;
@@ -531,64 +703,76 @@ def main():
     position: relative;
     width: 100%;
     height: 100%;
-    background: var(--off-greige);
+    background: var(--chaphavian-alabaster);
     overflow: hidden;
+    border-right: 1px solid var(--chaphavian-putty);
   }}
-  /* Slide 1: 3-Piece Hero Furniture Triptych on Slate Curved Backdrop */
+  /* Slide 1: 3-Piece Hero Furniture Triptych on Bleached Nordic Alabaster (#F7F5F2) */
   .hero-furniture-triptych {{
     display: grid;
     grid-template-columns: 1.05fr 1fr 1.05fr;
-    gap: 5px;
+    gap: 1px;
     width: 100%;
     height: 100%;
-    background: #FFFFFF;
+    background: #D5D3CC;
   }}
   .hero-furniture-card {{
     position: relative;
     height: 100%;
     overflow: hidden;
-    background: #C4C7CA;
+    background: #F7F5F2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 10px 46px;
     cursor: pointer;
+    transition: background-color 0.25s ease;
+  }}
+  .hero-furniture-card:hover {{
+    background: #FAF9F7;
   }}
   .hero-furniture-card img {{
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: transform 0.65s ease;
-  }}
-  .hero-furniture-card:hover img {{
-    transform: scale(1.04);
+    object-fit: contain;
   }}
   .hero-furniture-tag {{
     position: absolute;
     bottom: 12px;
     left: 12px;
     right: 12px;
-    background: rgba(29, 28, 26, 0.72);
-    backdrop-filter: blur(4px);
-    color: #F6F4F0;
+    background: var(--chaphavian-alabaster);
+    color: var(--chaphavian-iron);
+    border: 1px solid var(--chaphavian-putty);
     padding: 6px 10px;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 13px;
+    font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-align: center;
+    transition: background-color 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+  }}
+  .hero-furniture-card:hover .hero-furniture-tag {{
+    background: var(--chaphavian-iron);
+    color: var(--chaphavian-alabaster);
+    border-color: var(--chaphavian-iron);
   }}
 
-  /* Slide 2 & 3: Macro Collage Grid Over Minimalist Off-Greige */
+  /* Slide 2 & 3: Macro Collage Grid Over Chaphavian Putty Dividers */
   .hero-macro-collage {{
     display: grid;
     grid-template-columns: 1.35fr 1fr;
     grid-template-rows: 1fr 1fr;
-    gap: 5px;
+    gap: 1px;
     width: 100%;
     height: 100%;
-    background: #FFFFFF;
+    background: var(--chaphavian-putty);
   }}
   .hero-macro-cell {{
     position: relative;
     overflow: hidden;
-    background: var(--off-greige);
+    background: var(--chaphavian-alabaster);
     cursor: pointer;
   }}
   .hero-macro-cell.tall {{
@@ -598,13 +782,9 @@ def main():
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.65s ease;
-  }}
-  .hero-macro-cell:hover img {{
-    transform: scale(1.05);
   }}
 
-  /* Slide Right Mansour Geometric Color-Block Panel */
+  /* Slide Right Chaphavian Architectural Editorial Panel */
   .hero-colorblock-panel {{
     position: relative;
     display: flex;
@@ -613,51 +793,38 @@ def main():
     align-items: center;
     padding: 42px 34px;
     text-align: center;
-    color: #FFFFFF;
+    color: var(--chaphavian-iron) !important;
+    background-color: #EFECE6 !important;
+    border-left: 1px solid var(--chaphavian-putty);
     overflow: hidden;
   }}
-  /* Subtle Mansour-style translucent geometric rectangles inside right panel */
-  .hero-colorblock-panel::before {{
-    content: "";
-    position: absolute;
-    top: -30px;
-    left: 28px;
-    width: 170px;
-    height: 160px;
-    background: rgba(255, 255, 255, 0.09);
-    pointer-events: none;
+  /* Lock Hero Right Panels to Chaphavian Putty & Alabaster with Iron Ink + Rose Kickers */
+  .panel-slate-greige,
+  .panel-warm-greige,
+  .panel-gustavian {{
+    background-color: #EFECE6 !important;
+    border-left: 1px solid var(--chaphavian-putty);
+    color: var(--chaphavian-iron) !important;
   }}
-  .hero-colorblock-panel::after {{
-    content: "";
-    position: absolute;
-    bottom: 24px;
-    right: 28px;
-    width: 190px;
-    height: 150px;
-    background: rgba(255, 255, 255, 0.08);
-    pointer-events: none;
-  }}
-  .panel-slate-greige {{ background-color: #9FA8B0; }}
-  .panel-warm-greige  {{ background-color: #B8B1A6; }}
-  .panel-gustavian    {{ background-color: #A6A29A; }}
 
   .hero-kicker {{
     font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.24em;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.88);
+    color: var(--chaphavian-rose) !important;
     margin-bottom: 14px;
     position: relative;
     z-index: 2;
   }}
   .hero-panel-title {{
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 400;
+    font-weight: 600 !important;
     font-size: 36px;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: var(--chaphavian-iron) !important;
     line-height: 1.2;
     margin-bottom: 14px;
     position: relative;
@@ -666,31 +833,36 @@ def main():
   .hero-panel-sub {{
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-style: italic;
-    font-size: 17px;
-    color: rgba(255,255,255,0.92);
+    font-weight: 500;
+    font-size: 18px;
+    color: #52575D !important;
     max-width: 290px;
     margin-bottom: 28px;
+    line-height: 1.55;
     position: relative;
     z-index: 2;
   }}
   .hero-curate-btn {{
     position: relative;
     z-index: 2;
-    background: #FFFFFF;
-    color: #232220;
-    border: 1px solid #FFFFFF;
+    background: var(--chaphavian-alabaster) !important;
+    color: var(--chaphavian-iron) !important;
+    border: 1px solid var(--chaphavian-iron) !important;
     padding: 13px 26px;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 14px;
+    font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.25s ease;
   }}
   .hero-curate-btn:hover {{
-    background: #232220;
-    color: #FFFFFF;
-    border-color: #232220;
+    background: var(--chaphavian-iron) !important;
+    color: var(--chaphavian-alabaster) !important;
+    border-color: var(--chaphavian-iron) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -6px rgba(43, 47, 50, 0.18);
   }}
 
   /* ==========================================================================
@@ -757,87 +929,94 @@ def main():
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 4px 0;
+    padding: 14px 4px 0;
   }}
   .hero-dots {{
     display: flex;
     gap: 10px;
   }}
   .hero-dot {{
-    width: 28px;
+    width: 32px;
     height: 3px;
-    background: #D6D3CD;
+    background: var(--chaphavian-putty);
     border: none;
     cursor: pointer;
     transition: background 0.2s ease;
   }}
   .hero-dot.active {{
-    background: #232220;
+    background: var(--chaphavian-rose);
   }}
   .hero-arrows {{
     display: flex;
-    gap: 14px;
+    gap: 10px;
   }}
   .hero-arrow {{
-    background: none;
-    border: 1px solid var(--border-hairline);
-    padding: 4px 12px;
+    background: var(--chaphavian-alabaster);
+    border: 1px solid var(--chaphavian-putty);
+    padding: 6px 16px;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 13px;
-    letter-spacing: 0.14em;
+    font-weight: 600;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--text-main);
+    color: var(--chaphavian-iron);
     cursor: pointer;
+    transition: all 0.22s ease;
   }}
   .hero-arrow:hover {{
-    border-color: var(--text-main);
+    background: var(--chaphavian-iron);
+    color: var(--chaphavian-alabaster);
+    border-color: var(--chaphavian-iron);
+    transform: translateY(-2px);
   }}
 
-  /* Mansour-Style Editorial Welcome Copy (Replaces Header Phone Clutter) */
+  /* Chaphavian Editorial Welcome Card on Home View */
   .mansour-editorial-intro {{
-    max-width: 1180px;
-    margin: 34px auto 40px;
-    padding: 0 24px;
+    max-width: 1132px;
+    margin: 32px auto 40px;
+    padding: 34px 40px;
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 19px;
-    line-height: 1.75;
-    color: #4A4845;
+    font-size: 19.5px;
+    font-weight: 500;
+    line-height: 1.78;
+    color: var(--chaphavian-iron);
   }}
   .mansour-editorial-intro p + p {{
     margin-top: 16px;
   }}
   .mansour-editorial-intro a {{
-    color: #232220;
+    color: var(--chaphavian-rose);
+    font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 3px;
   }}
 
-  /* MANSOUR-STYLE ASYMMETRIC COLLAGE SPLASH */
+  /* CHAPHAVIAN ASYMMETRIC COLLAGE SPLASH */
   .collage-splash-wrap {{
     max-width: 1180px;
     margin: 10px auto 56px;
     padding: 0 24px;
   }}
   .collage-splash-heading {{
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 15px;
-    font-weight: 400;
-    letter-spacing: 0.18em;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 14px;
+    color: var(--chaphavian-rose);
+    margin-bottom: 16px;
   }}
   .collage-row-3 {{
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    gap: 5px;
-    margin-bottom: 5px;
+    gap: 18px;
+    margin-bottom: 18px;
   }}
   .collage-row-2 {{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 5px;
-    margin-bottom: 5px;
+    gap: 18px;
+    margin-bottom: 18px;
   }}
   .collage-tile {{
     position: relative;
@@ -845,75 +1024,58 @@ def main():
     flex-direction: column;
     cursor: pointer;
     overflow: hidden;
-    background: var(--studio-grey-card);
+    background: var(--chaphavian-alabaster);
+    border: 1px solid var(--chaphavian-putty);
+    padding: 12px 12px 0;
+    box-shadow: 0 8px 20px -8px rgba(179, 90, 94, 0.14);
     text-decoration: none;
   }}
   .collage-tile-img-wrap {{
     width: 100%;
-    height: 300px;
+    height: 290px;
     overflow: hidden;
-    background: #F4F2EE;
+    background: #EFECE6;
+    border: 1px solid var(--chaphavian-putty);
+    transition: border-color 0.25s ease;
+  }}
+  .collage-tile:hover .collage-tile-img-wrap {{
+    border-color: var(--chaphavian-rose);
   }}
   .collage-tile-img-wrap img {{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.55s ease;
   }}
-  .collage-tile:hover .collage-tile-img-wrap img {{
-    transform: scale(1.04);
-  }}
+  /* Lock the 8 Collage Caption Bars to Chaphavian Putty -> Rose/Iron Hover */
   .collage-caption-bar {{
-    background-color: #AFA9A0;
-    color: #FFFFFF;
+    background-color: #EFECE6 !important;
+    color: var(--chaphavian-iron) !important;
+    border-top: 1px solid var(--chaphavian-putty);
     text-align: center;
-    padding: 8px 12px;
+    padding: 12px 12px;
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-size: 15px;
+    font-weight: 600 !important;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    transition: background-color 0.25s ease;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }}
   .collage-tile:hover .collage-caption-bar {{
-    background-color: #8E877E;
+    background-color: var(--chaphavian-iron) !important;
+    color: var(--chaphavian-alabaster) !important;
   }}
 
   /* ==========================================================================
-     VIEW 2: GALLERY (CATEGORIZED LOOKBOOK SLIDES OVER MINIMALIST OFF-GREIGE, ZERO PRICES)
+     VIEW 2: GALLERY (CATEGORIZED LOOKBOOK CHAPTERS ON CHAPHAVIAN ALABASTER)
      ========================================================================== */
   .gallery-lookbook-stage {{
-    background: var(--off-greige);
-    padding: 44px 0 64px;
-    border-bottom: 1px solid var(--border-hairline);
+    background: var(--chaphavian-alabaster);
+    padding: 28px 0 64px;
   }}
   .lookbook-container {{
     max-width: 1180px;
     margin: 0 auto;
     padding: 0 24px;
-  }}
-  .lookbook-top-bar {{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 36px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid #DCD7CE;
-  }}
-  .lookbook-top-bar h2 {{
-    font-weight: 400;
-    font-size: 28px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #1F1F1E;
-  }}
-  .lookbook-top-bar p {{
-    font-style: italic;
-    font-size: 16px;
-    color: var(--text-muted);
-    margin-top: 4px;
   }}
   .lookbook-chapter {{
     margin-bottom: 48px;
@@ -922,14 +1084,18 @@ def main():
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--chaphavian-putty);
   }}
   .chapter-title {{
-    font-size: 19px;
-    font-weight: 500;
+    font-size: 22px;
+    font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #232220;
+    color: var(--chaphavian-iron);
   }}
   .chapter-Controls {{
     display: flex;
@@ -937,74 +1103,88 @@ def main():
     align-items: center;
   }}
   .chapter-curate-link {{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 13px;
+    font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #232220;
-    background: #FFFFFF;
-    border: 1px solid #C9C4BA;
-    padding: 7px 14px;
+    color: var(--chaphavian-iron);
+    background: var(--chaphavian-alabaster);
+    border: 1px solid var(--chaphavian-iron);
+    padding: 8px 16px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.24s ease;
   }}
   .chapter-curate-link:hover {{
-    background: #232220;
-    color: #FFFFFF;
-    border-color: #232220;
+    background: var(--chaphavian-iron);
+    color: var(--chaphavian-alabaster);
+    border-color: var(--chaphavian-iron);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px -6px rgba(43, 47, 50, 0.18);
   }}
   .chapter-track {{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
+    gap: 20px;
   }}
   .lookbook-card {{
-    background: #FFFFFF;
-    border: 1px solid #E5E0D8;
-    padding: 14px 14px 18px;
+    background: var(--chaphavian-alabaster);
+    border: 1px solid var(--chaphavian-putty);
+    padding: 16px 16px 20px;
     cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 8px 20px -8px rgba(179, 90, 94, 0.14);
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.25s ease,
+                background-color 0.25s ease;
     text-align: center;
   }}
   .lookbook-card:hover {{
-    transform: translateY(-3px);
-    box-shadow: 0 10px 24px rgba(35,34,32,0.06);
+    transform: translateY(-5px);
+    background: #FAF9F7;
+    border-color: #B35A5E;
+    box-shadow: 0 18px 36px -6px rgba(179, 90, 94, 0.32),
+                0 8px 18px -4px rgba(179, 90, 94, 0.20),
+                0 0 0 1px rgba(179, 90, 94, 0.24);
   }}
   .lookbook-img-box {{
     width: 100%;
     aspect-ratio: 1 / 1;
-    background: var(--studio-grey-card);
+    background: #EFECE6;
+    border: 1px solid var(--chaphavian-putty);
     overflow: hidden;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    transition: border-color 0.25s ease;
+  }}
+  .lookbook-card:hover .lookbook-img-box {{
+    border-color: var(--chaphavian-rose);
   }}
   .lookbook-img-box img {{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.45s ease;
-  }}
-  .lookbook-card:hover .lookbook-img-box img {{
-    transform: scale(1.04);
   }}
   .lookbook-cat {{
     font-family: 'Montserrat', sans-serif;
-    font-size: 9px;
+    font-size: 9.5px;
+    font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 4px;
+    color: var(--chaphavian-rose);
+    margin-bottom: 6px;
   }}
   .lookbook-name {{
-    font-size: 16px;
-    font-weight: 500;
-    color: #1F1F1E;
-    line-height: 1.3;
-    margin-bottom: 4px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--chaphavian-iron);
+    line-height: 1.35;
+    margin-bottom: 6px;
   }}
   .lookbook-dims {{
     font-style: italic;
-    font-size: 13px;
-    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 14px;
+    color: #52575D;
   }}
 
   /* ==========================================================================
@@ -1239,14 +1419,23 @@ def main():
     cursor: pointer;
   }}
   .reset-trigger {{
-    background: none;
-    border: none;
+    background: var(--chaphavian-alabaster);
+    border: 1px solid var(--chaphavian-putty);
+    padding: 9px 22px;
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic;
     font-size: 14px;
-    color: var(--text-italic-hint);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--chaphavian-iron);
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
+  }}
+  .reset-trigger:hover {{
+    background: var(--chaphavian-iron) !important;
+    color: var(--chaphavian-alabaster) !important;
+    border-color: var(--chaphavian-iron) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -6px rgba(43, 47, 50, 0.16);
   }}
 
   /* Curate Results Grid (With Unlocked Prices + Add to Curated Selection) */
@@ -1287,13 +1476,22 @@ def main():
     display: flex;
     flex-direction: column;
     color: inherit;
-    border: 1px solid transparent;
-    padding: 12px;
-    transition: border-color 0.2s ease, background 0.2s ease;
+    border: 1px solid #D5D3CC;
+    background: #F7F5F2;
+    padding: 14px;
+    box-shadow: 0 8px 20px -8px rgba(179, 90, 94, 0.14);
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.28s ease,
+                background-color 0.28s ease,
+                box-shadow 0.28s ease;
   }}
   .gallery-card:hover {{
-    border-color: var(--border-hairline);
-    background: #FCFBFA;
+    transform: translateY(-4px);
+    border-color: #B35A5E;
+    background: #FAF9F7;
+    box-shadow: 0 18px 36px -6px rgba(179, 90, 94, 0.32),
+                0 8px 18px -4px rgba(179, 90, 94, 0.20),
+                0 0 0 1px rgba(179, 90, 94, 0.24);
   }}
   .card-img-box {{
     width: 100%;
@@ -1718,12 +1916,58 @@ def main():
   }}
 
   @media (max-width: 920px) {{
-    .brand-header {{ padding: 16px 14px 14px; }}
-    .brand-crest {{ width: 52px; margin-bottom: 6px; }}
-    .brand-title {{ font-size: 23px; letter-spacing: 0.16em; }}
-    .brand-subtitle {{ font-size: 12px; margin-bottom: 12px; }}
-    .main-nav {{ gap: 14px; }}
-    .main-nav a {{ font-size: 12px; letter-spacing: 0.14em; }}
+    .brand-header {{ padding: 16px 14px 4px; }}
+    .brand-nav-bar {{ padding: 8px 12px 12px; }}
+    .brand-nav-bar.header-scrolled {{ padding: 8px 12px 10px; }}
+    .brand-crest {{ width: 54px; margin-bottom: 6px; }}
+    .brand-title {{ font-size: 25px; letter-spacing: 0.16em; }}
+    .brand-subtitle {{ font-size: 13px; margin-bottom: 4px; }}
+    /* Symmetrical 2-Row Mobile Button Grid (Row 1: 3 Equal Columns | Row 2: 2 Equal Columns, Flush Outer Edges) */
+    .main-nav {{
+      display: grid !important;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      max-width: 440px;
+      margin: 0 auto;
+    }}
+    .main-nav li {{
+      display: flex;
+    }}
+    .main-nav li:nth-child(1),
+    .main-nav li:nth-child(2),
+    .main-nav li:nth-child(3) {{
+      grid-column: span 2;
+    }}
+    .main-nav li:nth-child(4),
+    .main-nav li:nth-child(5) {{
+      grid-column: span 3;
+    }}
+    /* 1. Give "CURATE YOUR COLLECTION" clean left/right padding inside its 50% column */
+    .main-nav a {{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-size: 10px !important;
+      letter-spacing: 0.065em !important;
+      padding: 10px 4px !important;
+      white-space: nowrap;
+    }}
+
+    /* 2. Match inactive "Curate Your Collection" border to Putty so all inactive tabs match */
+    .nav-curate-cta {{
+      border-color: var(--chaphavian-putty) !important;
+    }}
+
+    /* 3. Keep "EXPLORE THE GALLERY" on one clean horizontal line on mobile */
+    #view-melissa .search-trigger {{
+      font-size: 13px !important;
+      letter-spacing: 0.15em !important;
+      padding: 12px 14px !important;
+      white-space: nowrap;
+    }}
     .hero-carousel {{ height: auto; }}
     .hero-slide {{ position: relative; grid-template-columns: 1fr; display: none; }}
     .hero-slide.active {{ display: grid; }}
@@ -1736,6 +1980,8 @@ def main():
     .editorial-modal {{ grid-template-columns: 1fr; }}
     .concierge-pillars-grid {{ grid-template-columns: 1fr !important; gap: 24px !important; }}
     .footer-bottom-flex {{ flex-direction: column; text-align: center; gap: 14px; }}
+    .melissa-hero-split {{ grid-template-columns: 1fr !important; gap: 32px !important; padding: 8px 0 24px !important; }}
+    .melissa-lower-grid {{ grid-template-columns: 1fr !important; gap: 24px !important; }}
   }}
 
   /* Standard Showroom Footer & Legal Disclaimer Links */
@@ -1746,30 +1992,64 @@ def main():
     color: var(--text-main);
   }}
   .concierge-pillars-grid {{
-    max-width: 1180px;
+    max-width: 820px;
     margin: 0 auto;
-    padding: 44px 24px 36px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 36px;
+    padding: 48px 24px 42px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     border-bottom: 1px solid var(--border-hairline);
   }}
+  .concierge-pillar {{
+    max-width: 680px;
+    margin: 0 auto;
+  }}
   .concierge-pillar h4 {{
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
+    font-size: 22px;
+    font-weight: 600 !important;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    margin-bottom: 8px;
-    color: #1E1D1B;
+    margin-bottom: 12px;
+    color: var(--chaphavian-rose) !important;
   }}
-  .concierge-pillar p {{
-    font-size: 15px;
-    color: var(--text-muted);
-    max-width: 330px;
-    margin: 0 auto;
-    line-height: 1.55;
+  .concierge-pillar .showroom-address-line {{
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--chaphavian-iron);
+    margin-bottom: 6px;
+    line-height: 1.45;
+  }}
+  .concierge-pillar .showroom-hours-line {{
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 16.5px;
+    font-style: italic;
+    font-weight: 500;
+    color: #52575D;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }}
+  .concierge-pillar .showroom-phone-line {{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--chaphavian-iron);
+  }}
+  .concierge-pillar .showroom-phone-line a {{
+    color: var(--chaphavian-rose);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(179, 90, 94, 0.45);
+    padding-bottom: 2px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }}
+  .concierge-pillar .showroom-phone-line a:hover {{
+    color: var(--chaphavian-iron);
+    border-color: var(--chaphavian-iron);
   }}
   .footer-legal-strip {{
     max-width: 1180px;
@@ -1825,36 +2105,34 @@ def main():
 </style>
 </head>
 <body>
-  <!-- NRL Whisper-Fine Sheer Linen Curtain Draft Canvas (Strictly z-index: 0 behind all foreground cards) -->
-  <canvas id="nrl-curtain-draft-canvas" class="nrl-curtain-draft-canvas" aria-hidden="true"></canvas>
-  <div class="nrl-linen-tooth-overlay" aria-hidden="true"></div>
-
   <!-- TOP DEMO BAR SO MATTHEW CAN JUMP OR WATCH THE CLICK-FLOW -->
   <div class="flow-status-bar">
-    <div>THE CHAPMAN COLLECTION // TWO-ROOM CLICK-FLOW &amp; WHITE-GLOVE CHECKOUT PROTOTYPE</div>
+    <div>THE CHAPMAN COLLECTION // RANCHO SANTA FE GALLERY AND WHITE-GLOVE CHECKOUT PROTOTYPE</div>
     <div class="flow-steps">
-      <button type="button" class="flow-step-pill active" id="pill-home" onclick="switchView('home')">1. Landing (No Prices / No Cart)</button>
-      <button type="button" class="flow-step-pill" id="pill-gallery" onclick="switchView('gallery')">2. Gallery Lookbook (No Prices)</button>
-      <button type="button" class="flow-step-pill" id="pill-curate" onclick="switchView('curate')">3. Curate Your Collection (Prices + Filter)</button>
-      <button type="button" class="flow-step-pill" id="pill-checkout" onclick="switchView('checkout')">4. White-Glove Checkout</button>
+      <button type="button" class="flow-step-pill active" id="pill-home" onclick="switchView('home')">Home</button>
+      <button type="button" class="flow-step-pill" id="pill-melissa" onclick="switchView('melissa')">1. About Us</button>
+      <button type="button" class="flow-step-pill" id="pill-gallery" onclick="switchView('gallery')">2. Services</button>
+      <button type="button" class="flow-step-pill" id="pill-curate" onclick="switchView('curate')">3. Inventory</button>
+      <button type="button" class="flow-step-pill" id="pill-shipping" onclick="openDetailsOnShipping()">4. Details on Shipping</button>
+      <button type="button" class="flow-step-pill" id="pill-checkout" onclick="switchView('checkout')">5. Check Out</button>
     </div>
   </div>
 
-  <!-- MANSOUR-STYLE CENTERED HEADER (GOODBYE PHONE NUMBER NEXT TO CONTACT) -->
+  <!-- MANSOUR-STYLE CENTERED HEADER (MASTHEAD AT TOP + SLIM STICKY NAV BAR) -->
   <header class="brand-header">
     <img class="brand-crest" src="https://thechapmancollection.com/wp-content/uploads/2026/10/tcc-oct23-crest.png" onerror="this.style.display='none'" alt="The Chapman Collection Crest" onclick="switchView('home')">
     <h1 class="brand-title" onclick="switchView('home')">The Chapman Collection</h1>
-    <div class="brand-subtitle">Rancho Santa Fe &amp; London Heritage &middot; Fine European Antiques &amp; Carpets</div>
-    <nav>
-      <ul class="main-nav">
-        <li><a id="nav-home" class="active" onclick="switchView('home')">Home</a></li>
-        <li><a id="nav-gallery" onclick="switchView('gallery')">Gallery</a></li>
-        <li><a id="nav-melissa" onclick="switchView('melissa')">Meet Melissa</a></li>
-        <li><a id="nav-curate" class="nav-curate-cta" onclick="switchView('curate')">Curate Your Collection</a></li>
-        <li><a id="nav-selection" class="nav-selection-pill" onclick="toggleDrawer(true)">Curated Selection (<span id="nav-cart-count">0</span>)</a></li>
-      </ul>
-    </nav>
+    <div class="brand-subtitle">Rancho Santa Fe Village &middot; Fine European Antiques and Persian Carpets</div>
   </header>
+  <nav class="brand-nav-bar">
+    <ul class="main-nav">
+      <li><a id="nav-melissa" onclick="switchView('melissa')">About Us</a></li>
+      <li><a id="nav-gallery" onclick="switchView('gallery')">Services</a></li>
+      <li><a id="nav-curate" onclick="switchView('curate')">Inventory</a></li>
+      <li><a id="nav-shipping" onclick="openDetailsOnShipping()">Details on Shipping</a></li>
+      <li><a id="nav-checkout" class="nav-selection-pill" onclick="switchView('checkout')">Check Out (<span id="nav-cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
 
   <!-- ========================================================================
        VIEW 1: HOME (SLIDING CAROUSEL ON NEW SLATE BACKDROP + OFF-GREIGE + COLLAGE SPLASH)
@@ -1863,20 +2141,20 @@ def main():
     <section class="hero-stage-wrap">
       <div class="hero-carousel">
 
-        <!-- SLIDE 1: HERO FURNITURE ON NEW SLATE CURVED BACKDROP -->
+        <!-- SLIDE 1: HERO FURNITURE ON BLEACHED NORDIC ALABASTER (#F7F5F2) -->
         <div class="hero-slide active" id="hero-slide-0">
           <div class="hero-visual-stage">
             <div class="hero-furniture-triptych">
               <div class="hero-furniture-card" onclick="openCurateWithCategory('EUROPEAN FURNITURE', 'spanish')">
-                <img src="assets/spanish-knights-cabinet-slate-curved.jpg" alt="Spanish Carved Armoire with Knights">
+                <img src="assets/tcc-f7f5f2-01-spanish-knights-cabinet.jpg" alt="Spanish Carved Armoire with Knights">
                 <div class="hero-furniture-tag">18th C. Spanish Knights Armoire</div>
               </div>
               <div class="hero-furniture-card" onclick="openCurateWithCategory('EUROPEAN FURNITURE', 'gothic')">
-                <img src="assets/english-gothic-hallstand-slate-curved.jpg" alt="English Tall Gothic Hallstand">
+                <img src="assets/tcc-f7f5f2-02-english-gothic-hallstand.jpg" alt="English Tall Gothic Hallstand">
                 <div class="hero-furniture-tag">English Carved Gothic Hallstand</div>
               </div>
               <div class="hero-furniture-card" onclick="openCurateWithCategory('EUROPEAN FURNITURE', 'boulle')">
-                <img src="assets/boulle-marquetry-credenza-slate-curved.jpg" alt="Napoleon III Marquetry Credenza">
+                <img src="assets/tcc-f7f5f2-03-boulle-marquetry-credenza.jpg" alt="Napoleon III Marquetry Credenza">
                 <div class="hero-furniture-tag">Napoleon III Marquetry Credenza</div>
               </div>
             </div>
@@ -1885,7 +2163,7 @@ def main():
             <div class="hero-kicker">Rancho Santa Fe Showroom</div>
             <h2 class="hero-panel-title">Period Furniture</h2>
             <p class="hero-panel-sub">17th to 19th Century European armoires, architectural hallstands and French marquetry</p>
-            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('EUROPEAN FURNITURE', '')">Curate Your Collection</button>
+            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('EUROPEAN FURNITURE', '')">Browse Inventory</button>
           </div>
         </div>
 
@@ -1895,10 +2173,10 @@ def main():
             <div class="hero-macro-collage" id="hero-carpet-collage"></div>
           </div>
           <div class="hero-colorblock-panel panel-warm-greige">
-            <div class="hero-kicker">Hand-Knotted Masterworks</div>
-            <h2 class="hero-panel-title">Tabriz &amp; Silk Qum</h2>
+            <div class="hero-kicker">Curated Masterworks</div>
+            <h2 class="hero-panel-title">Tabriz and Silk Qum</h2>
             <p class="hero-panel-sub">Palace-sized Persian carpets, corridor runners and Flemish tapestries selected by hand</p>
-            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('CARPETS & RUNNERS', '')">Curate Your Collection</button>
+            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('CARPETS & RUNNERS', '')">Browse Inventory</button>
           </div>
         </div>
 
@@ -1908,10 +2186,10 @@ def main():
             <div class="hero-macro-collage" id="hero-trinket-collage"></div>
           </div>
           <div class="hero-colorblock-panel panel-gustavian">
-            <div class="hero-kicker">Decorative Arts &amp; Objects</div>
-            <h2 class="hero-panel-title">Bronzes &amp; S&egrave;vres</h2>
+            <div class="hero-kicker">Decorative Arts and Objects</div>
+            <h2 class="hero-panel-title">Bronzes and S&egrave;vres</h2>
             <p class="hero-panel-sub">Signed 19th Century French bronzes, giltwood mirrors, marble sculpture and collector objects</p>
-            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('BRONZES & SCULPTURE', '')">Curate Your Collection</button>
+            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('BRONZES & SCULPTURE', '')">Browse Inventory</button>
           </div>
         </div>
 
@@ -1930,70 +2208,172 @@ def main():
       </div>
     </section>
 
-    <!-- MANSOUR-STYLE EDITORIAL INTRO (ZERO CLUTTER, INLINE CONCIERGE) -->
-    <section class="mansour-editorial-intro">
-      <p>
-        For over three decades, Melissa Chapman has sourced museum-caliber European period furniture, hand-knotted Persian and silk carpets, historical tapestries and fine decorative arts from her early showroom roots on Harrington Road in South Kensington, London to the heart of Rancho Santa Fe Village. Every piece is personally vetted for authenticity, architectural proportion and timeless warmth.
-      </p>
-      <p>
-        Explore our editorial <a href="#gallery" onclick="switchView('gallery'); return false;">Gallery Lookbooks</a> or enter <a href="#curate" onclick="switchView('curate'); return false;">Curate Your Collection</a> to filter our live showroom inventory by color palette, historical period and room dimensions. For private in-home trials across Southern California, call or text Melissa directly at <a href="tel:+18583492638">(858) 349-2638</a>.
-      </p>
-    </section>
+    <!-- CHAPHAVIAN EDITORIAL INTRO CARD ON HOME VIEW -->
+    <div style="max-width:1180px; margin:0 auto; padding:0 24px;">
+      <section class="mansour-editorial-intro nrl-hover-box">
+        <div style="font-family:'Montserrat',sans-serif; font-size:10.5px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:#B35A5E; margin-bottom:12px;">
+          Rancho Santa Fe Village &middot; Curated European Antiques and Fine Persian Carpets
+        </div>
+        <p>
+          For over three decades, Melissa Chapman has sourced museum-caliber European period furniture, fine Persian carpets, historical tapestries and decorative arts from her Rancho Santa Fe Village showroom at 6014 La Granada. Every piece is personally vetted for authenticity, architectural proportion and timeless warmth.
+        </p>
+        <p>
+          Explore our <a href="#curate" onclick="switchView('curate'); return false;">Inventory</a> to filter our live showroom collection by category, color palette, historical period and room dimensions, or review our <a href="#shipping" onclick="openDetailsOnShipping(); return false;">Details on Shipping</a>. For private appointments or inquiries, please contact us at <a href="tel:+18583492638">(858) 349-2638</a> or visit our Rancho Santa Fe showroom.
+        </p>
+      </section>
+    </div>
 
     <!-- MANSOUR ASYMMETRIC COLLAGE SPLASH FOR RUGS & TAPESTRIES -->
     <section class="collage-splash-wrap">
-      <div class="collage-splash-heading">Featured Carpets &amp; Tapestries</div>
+      <div class="collage-splash-heading">Featured Carpets and Tapestries</div>
       <div id="collage-splash-mount"></div>
     </section>
   </div>
 
   <!-- ========================================================================
-       VIEW 2: GALLERY (CATEGORIZED LOOKBOOK SLIDES ON MINIMALIST OFF-GREIGE, ZERO PRICES)
+       VIEW 2: GALLERY / SERVICES (CATEGORIZED LOOKBOOK CHAPTERS ON CHAPHAVIAN ALABASTER)
        ======================================================================== -->
   <div id="view-gallery" class="site-view">
     <section class="gallery-lookbook-stage">
       <div class="lookbook-container">
-        <div class="lookbook-top-bar">
-          <div>
-            <h2>The Showroom Gallery</h2>
-            <p>Categorized editorial lookbooks &middot; Click any piece to inspect provenance or open Curate Your Collection to view pricing and acquire</p>
-          </div>
-          <button type="button" class="search-trigger" onclick="switchView('curate')">Curate Your Collection &rarr;</button>
-        </div>
-
         <div id="lookbook-chapters-mount"></div>
       </div>
     </section>
   </div>
 
   <!-- ========================================================================
-       VIEW 2B: MEET MELISSA & THE DESIGNERS (EDITORIAL STORY)
+       VIEW 2B: ABOUT US (SCANDINAVIAN / GUSTAVIAN EDITORIAL SPREAD)
        ======================================================================== -->
   <div id="view-melissa" class="site-view">
-    <section class="console-wrap" style="max-width:920px; padding-top:52px; padding-bottom:72px;">
-      <div class="hero-kicker" style="color:var(--text-muted); text-align:center;">Harrington Road, London to 6014 La Granada, Rancho Santa Fe</div>
-      <h2 class="console-lead" style="text-align:center; margin-bottom:28px;">Meet Melissa Chapman</h2>
-      <div style="background:var(--off-greige); border:1px solid var(--border-hairline); padding:40px; font-size:19px; line-height:1.8; color:#3A3835;">
-        <p style="margin-bottom:18px;">
-          Born and raised in England, Melissa Chapman began her career in the renowned antique district of Harrington Road in South Kensington, London, working alongside master restorers, estate curators and international interior designers. Over the past thirty years, her eye for rare European woodwork, 17th to 19th Century French and Spanish case pieces and luminous Persian carpets has graced private estates of celebrities, statesmen and royalty.
-        </p>
-        <p style="margin-bottom:28px;">
-          At The Chapman Collection in Rancho Santa Fe Village, every acquisition is accompanied by complimentary Southern California in-home placement previews and white-glove nationwide delivery. Whether you are furnishing a single study or curating an entire residence with your interior designer, Melissa personally oversees every detail from showroom floor to final placement.
-        </p>
-        <div style="text-align:center;">
-          <button type="button" class="search-trigger" onclick="switchView('curate')">Curate Your Collection</button>
+    <section class="console-wrap" style="max-width:1180px; padding-top:28px; padding-bottom:76px;">
+      <!-- Main Split Editorial Hero (True 1fr / 1fr 4-Corner Cross Intersection Symmetry with Lower Grid) -->
+      <div class="melissa-hero-split" style="display:grid; grid-template-columns:1fr 1fr; gap:32px; padding:12px 0 32px; align-items:stretch;">
+        <!-- Left Column: Singular Ranch and Coast Portrait Card + Credit + Inventory CTA -->
+        <div class="nrl-hover-box" style="padding:32px; display:flex; flex-direction:column; justify-content:space-between;">
+          <div style="display:flex; flex-direction:column; flex:1;">
+            <div class="nrl-framed-photo" style="flex:1; min-height:480px;">
+              <img id="melissa-about-hero-img" src="https://thechapmancollection.com/wp-content/uploads/2026/11/melissa-chapman-the-hero-nrl-graded-2026-11-07-15.58.30-Cr-1.jpg" alt="Melissa Chapman in The Chapman Collection Rancho Santa Fe Showroom" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;">
+            </div>
+            <div id="melissa-about-caption" style="font-style:italic; font-weight:600; font-size:15.5px; color:#2B2F32; text-align:center; margin-top:14px; line-height:1.45;">
+              Melissa Chapman &middot; Photo courtesy of Ranch and Coast Magazine
+            </div>
+          </div>
+
+          <!-- Explore Inventory Button Underneath the Photo (Flush with Right Column Signature) -->
+          <div style="margin-top:18px; padding-top:18px; border-top:1px solid #D5D3CC; text-align:center; display:flex; flex-direction:column; align-items:center;">
+            <button type="button" class="search-trigger" style="width:100%;" onclick="switchView('curate')">Explore Inventory</button>
+          </div>
+        </div>
+
+        <!-- Right Column: Melissa's Verbatim Approved 6-Paragraph Bio (Exact 1fr Alignment with Lower-Right Card) -->
+        <div style="font-size:20px; font-weight:500; line-height:1.8; color:#2B2F32; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-family:'Montserrat',sans-serif; font-size:10.5px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#B35A5E; margin-bottom:14px;">
+              Rancho Santa Fe Village &middot; Curated European Antiques and Fine Persian Carpets
+            </div>
+
+            <p style="margin-bottom:20px;">
+              Melissa Chapman is an experienced antiques and Persian carpet dealer whose lifelong passion began in her family&rsquo;s Persian carpet stores. At just 19, she opened her first shop on Harrington Road in London, specializing in fine Persian carpets alongside a carefully curated selection of antiques.
+            </p>
+
+            <p style="margin-bottom:20px;">
+              As Melissa&rsquo;s discerning eye and love for timeless design grew, so did her business. She began importing full containers of antique and fine European furniture, establishing herself as a distinguished antiques dealer with an exceptional collection of Persian rugs.
+            </p>
+
+            <p style="margin-bottom:20px;">
+              Over the years, Melissa has opened several successful locations in London and San Diego, building a loyal and prestigious clientele that includes celebrities, politicians and even royalty.
+            </p>
+
+            <p style="margin-bottom:20px;">
+              Today, she runs The Chapman Collection from her elegant showroom in Rancho Santa Fe, California, offering exceptional pieces selected for their history, craftsmanship and beauty, all at remarkable value.
+            </p>
+
+            <p style="margin-bottom:20px;">
+              The Collection brings together classical European antiques, Old World furnishings, tapestries, artwork, decorative accessories and an extraordinary selection of Persian carpets. Whether you are seeking a statement piece or a subtle accent, there is something special to discover.
+            </p>
+
+            <p style="margin-bottom:24px;">
+              Beyond the showroom, Melissa is a devoted single mother to two wonderful sons, with two much-loved dogs completing the family. She also helps manage her family&rsquo;s International Real Estate Portfolio, bringing the same dedication and attention to detail to every aspect of her life.
+            </p>
+          </div>
+
+          <!-- Signature Block (Clean Warm Regards Only — Flush with Left Portrait Card Bottom Edge) -->
+          <div style="padding:20px 0 22px; border-top:1px solid #D5D3CC; border-bottom:1px solid #D5D3CC;">
+            <div style="font-family:'Cormorant Garamond', Georgia, serif; font-size:26px; font-weight:600; font-style:italic; color:#2B2F32; line-height:1.2;">
+              Warm regards, Melissa Chapman
+            </div>
+            <div style="font-family:'Montserrat',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:#52575D; margin-top:4px;">
+              Founder and Principal Curator &middot; The Chapman Collection
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lower Band: The Rancho Santa Fe Showroom & White-Glove Shipping Architecture -->
+      <div class="melissa-lower-grid" style="margin-top:8px; display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:stretch;">
+        <!-- Card 1: 6014 La Granada Showroom & Official Showroom Hours -->
+        <div class="nrl-hover-box" style="padding:32px; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div class="nrl-framed-photo" style="aspect-ratio:16 / 10; margin-bottom:20px;">
+              <img src="assets/showroom-6014-la-granada.jpg" alt="The Chapman Collection Showroom at 6014 La Granada, Rancho Santa Fe" style="width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <div style="font-family:'Montserrat',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#B35A5E; margin-bottom:8px;">
+              Rancho Santa Fe Village &middot; 6014 La Granada, Rancho Santa Fe, CA 92067
+            </div>
+            <h3 style="font-size:24px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#2B2F32; margin-bottom:12px;">
+              Visit Our Rancho Santa Fe Showroom
+            </h3>
+            <p style="font-size:18px; font-weight:500; line-height:1.7; color:#2B2F32; margin-bottom:16px;">
+              Located at the corner of La Granada and Paseo Delicias in the heart of the Rancho Santa Fe Village, our gallery welcomes collectors and interior designers Monday through Thursday from 10:00 AM to 6:00 PM, Friday and Saturday from 10:00 AM to 7:00 PM, and Sunday by appointment. Explore our curated rooms of European antiques, Old World furnishings, fine art and Persian carpets in person.
+            </p>
+          </div>
+          <div style="border-top:1px solid #D5D3CC; padding-top:16px; font-family:'Montserrat',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#52575D;">
+            Recognized in Ranch and Coast Magazine &middot; Private Designer Appointments Available
+          </div>
+        </div>
+
+        <!-- Card 2: Details on Shipping & Preferred Shipping Partners -->
+        <div id="prototype-shipping-card" class="nrl-hover-box" style="padding:32px; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-family:'Montserrat',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#B35A5E; margin-bottom:8px;">
+              Domestic and International Fine-Art Logistics
+            </div>
+            <h3 style="font-size:24px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#2B2F32; margin-bottom:14px;">
+              Details on Shipping and Carrier Coordination
+            </h3>
+            <p style="font-size:18px; font-weight:500; line-height:1.7; color:#2B2F32; margin-bottom:16px;">
+              Because Melissa has imported full containers of European antiques and palace-sized carpets for over thirty years, every acquisition outside Southern California is handled with museum-grade care. Our preferred shipping partners offer professional packing, insurance options and worldwide shipping.
+            </p>
+            <div style="background:#EFECE6; border:1px solid #D5D3CC; padding:18px 20px; margin-bottom:18px;">
+              <div style="font-family:'Montserrat',sans-serif; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:#2B2F32; font-weight:700; margin-bottom:8px;">
+                Three Effortless Fulfillment Pathways
+              </div>
+              <ul style="list-style:none; font-size:17px; font-weight:500; line-height:1.65; color:#2B2F32;">
+                <li style="margin-bottom:6px;"><strong style="color:#B35A5E; font-weight:700;">1. Accessories, Artwork and Carpets:</strong> Professional packing and insured shipping via The UPS Store #0400 in San Diego (858-453-7331).</li>
+                <li style="margin-bottom:6px;"><strong style="color:#B35A5E; font-weight:700;">2. Large Furniture, Accessories, Artwork and Carpets:</strong> White-glove crating and freight via Beejan Hamraz at Navis Pack &amp; Ship #25006CA (858-256-0103).</li>
+                <li><strong style="color:#B35A5E; font-weight:700;">3. International Container Shipping:</strong> Worldwide half-container and full 40-foot container loads arranged directly with our Rancho Santa Fe showroom.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid #D5D3CC; padding-top:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div style="font-size:16px; font-weight:600; font-style:italic; color:#2B2F32;">
+              Contact us at (858) 349-2638 or visit our Rancho Santa Fe showroom to request a shipping quote.
+            </div>
+            <a href="tel:+18583492638" class="reset-trigger" style="text-decoration:none; display:inline-block;">Contact Us: (858) 349-2638</a>
+          </div>
         </div>
       </div>
     </section>
   </div>
 
   <!-- ========================================================================
-       VIEW 3: CURATE YOUR COLLECTION (THE ONLY ROOM WITH PRICES & ACQUISITION CART)
+       VIEW 3: INVENTORY (THE ONLY ROOM WITH PRICES & ACQUISITION CART)
        ======================================================================== -->
   <div id="view-curate" class="site-view">
     <main class="console-wrap" id="search-console">
-      <h2 class="console-lead">Curate Your Collection</h2>
-      <div class="filter-subhint" style="margin-bottom:26px;">Select one or multiple criteria below to filter by category, color palette, historical period and room dimensions. Pricing and direct acquisition are unlocked exclusively in this vault.</div>
+      <h2 class="console-lead">Inventory</h2>
+      <div class="filter-subhint" style="margin-bottom:26px;">Select one or multiple criteria below to filter our Rancho Santa Fe showroom inventory by category, color palette, historical period and room dimensions.</div>
 
       <!-- CATEGORIES -->
       <div class="filter-section">
@@ -2001,48 +2381,53 @@ def main():
         <div class="category-bar" id="category-bar"></div>
       </div>
 
-      <!-- COLORS -->
-      <div class="filter-section">
-        <div class="filter-label">Colors</div>
-        <div class="filter-subhint">You may select multiple colors</div>
-        <div class="swatch-row" id="swatch-row"></div>
+      <!-- SEARCH KEYWORD + COLLAPSIBLE ADVANCED FILTER DRAWER TOGGLE -->
+      <div class="filter-section" style="margin-bottom:18px;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:12px;">
+          <div class="filter-label" style="margin-bottom:6px;">Search Keyword</div>
+          <button type="button" id="toggle-advanced-filters-btn" onclick="const adv=document.getElementById('advanced-curate-drawer'); const open=adv.style.display==='none'; adv.style.display=open?'block':'none'; this.textContent=open?'- Hide Color, Period and Dimension Filters':'+ Refine by Color, Period and Dimensions';" style="background:none; border:1px solid #D5D3CC; padding:5px 14px; font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#2B2F32; cursor:pointer;">+ Refine by Color, Period and Dimensions</button>
+        </div>
+        <input type="text" class="keyword-input" id="keyword-input" placeholder="Enter origin, style, or keyword (e.g., Spanish, Gothic, Tabriz, Heriz, Louis XV, Sèvres)..." oninput="applyFilters()">
       </div>
 
-      <!-- PERIOD & SIZE -->
-      <div class="period-size-grid">
-        <div>
-          <div class="filter-label">Period</div>
-          <div class="filter-subhint">You may select multiple periods</div>
-          <div class="period-pills" id="period-pills"></div>
+      <div id="advanced-curate-drawer" style="display:none; padding-top:12px; border-top:1px solid #D5D3CC;">
+        <!-- COLORS -->
+        <div class="filter-section">
+          <div class="filter-label">Colors</div>
+          <div class="filter-subhint">You may select multiple colors</div>
+          <div class="swatch-row" id="swatch-row"></div>
         </div>
 
-        <div>
-          <div class="size-header">
-            <div class="filter-label" style="margin-bottom:0;">Size</div>
-            <div class="unit-toggle">
-              <button type="button" class="unit-btn active" id="unit-ft" onclick="setUnit('FT')">FT</button>
-              <button type="button" class="unit-btn" id="unit-cm" onclick="setUnit('CM')">CM</button>
+        <!-- PERIOD & SIZE -->
+        <div class="period-size-grid">
+          <div>
+            <div class="filter-label">Period</div>
+            <div class="filter-subhint">You may select multiple periods</div>
+            <div class="period-pills" id="period-pills"></div>
+          </div>
+
+          <div>
+            <div class="size-header">
+              <div class="filter-label" style="margin-bottom:0;">Size</div>
+              <div class="unit-toggle">
+                <button type="button" class="unit-btn active" id="unit-ft" onclick="setUnit('FT')">FT</button>
+                <button type="button" class="unit-btn" id="unit-cm" onclick="setUnit('CM')">CM</button>
+              </div>
+            </div>
+            <div class="size-row">
+              <span>Minimum</span>
+              <input type="number" step="0.5" class="size-input" id="min-w" placeholder="W" oninput="applyFilters()">
+              <span class="size-x">X</span>
+              <input type="number" step="0.5" class="size-input" id="min-l" placeholder="L" oninput="applyFilters()">
+            </div>
+            <div class="size-row">
+              <span>Maximum</span>
+              <input type="number" step="0.5" class="size-input" id="max-w" placeholder="W" oninput="applyFilters()">
+              <span class="size-x">X</span>
+              <input type="number" step="0.5" class="size-input" id="max-l" placeholder="L" oninput="applyFilters()">
             </div>
           </div>
-          <div class="size-row">
-            <span>Minimum</span>
-            <input type="number" step="0.5" class="size-input" id="min-w" placeholder="W" oninput="applyFilters()">
-            <span class="size-x">X</span>
-            <input type="number" step="0.5" class="size-input" id="min-l" placeholder="L" oninput="applyFilters()">
-          </div>
-          <div class="size-row">
-            <span>Maximum</span>
-            <input type="number" step="0.5" class="size-input" id="max-w" placeholder="W" oninput="applyFilters()">
-            <span class="size-x">X</span>
-            <input type="number" step="0.5" class="size-input" id="max-l" placeholder="L" oninput="applyFilters()">
-          </div>
         </div>
-      </div>
-
-      <!-- SEARCH KEYWORD -->
-      <div class="filter-section">
-        <div class="filter-label">Search Keyword</div>
-        <input type="text" class="keyword-input" id="keyword-input" placeholder="Enter origin, style, or keyword (e.g., Spanish, Gothic, Tabriz, Heriz, Louis XV, Sèvres)..." oninput="applyFilters()">
       </div>
 
       <div class="search-actions">
@@ -2053,7 +2438,7 @@ def main():
 
     <section class="results-wrapper" id="gallery-anchor">
       <div class="results-bar">
-        <div class="results-count" id="results-count">Showing All Curated Pieces</div>
+        <div class="results-count" id="results-count">Showing All Showroom Pieces</div>
         <select class="results-sort" id="sort-select" onchange="applyFilters()">
           <option value="featured">Curatorial Order (Featured Slate Studio First)</option>
           <option value="price-desc">Price: High to Low</option>
@@ -2073,17 +2458,17 @@ def main():
     <section class="checkout-wrap">
       <div class="checkout-header-bar">
         <div>
-          <h2>Private Showroom Acquisition &amp; White-Glove Checkout</h2>
-          <p style="font-style:italic; color:var(--text-muted); font-size:16px;">Every piece is backed by Melissa Chapman's Certificate of Provenance &amp; Authenticity</p>
+          <h2>Private Showroom Acquisition and White-Glove Check Out</h2>
+          <p style="font-style:italic; color:var(--text-muted); font-size:16px;">Every piece is backed by The Chapman Collection's Certificate of Provenance and Authenticity</p>
         </div>
-        <button type="button" class="reset-trigger" onclick="switchView('curate')">&larr; Return to Curate Your Collection</button>
+        <button type="button" class="reset-trigger" onclick="switchView('curate')">&larr; Return to Inventory</button>
       </div>
 
       <div id="checkout-live-form" class="checkout-grid">
         <div>
           <!-- STEP 1: COLLECTOR / DESIGNER PROFILE -->
           <div class="checkout-block">
-            <div class="checkout-step-title">1. Collector &amp; Interior Designer Dossier</div>
+            <div class="checkout-step-title">1. Collector and Interior Designer Dossier</div>
             <div class="form-row-2">
               <div class="form-group">
                 <label>First Name</label>
@@ -2096,7 +2481,7 @@ def main():
             </div>
             <div class="form-row-2">
               <div class="form-group">
-                <label>Email Address (For Provenance Dossier &amp; Receipt)</label>
+                <label>Email Address (For Provenance Dossier and Receipt)</label>
                 <input type="email" class="form-control" id="chk-email" value="eleanor@sterlinginteriors-rsf.com">
               </div>
               <div class="form-group">
@@ -2110,16 +2495,16 @@ def main():
             </div>
           </div>
 
-          <!-- STEP 2: WHITE-GLOVE FULFILLMENT & IN-HOME TRIAL OPTIONS (MATCHING OUR LIVE WOOCOMMERCE ZONES) -->
+          <!-- STEP 2: WHITE-GLOVE FULFILLMENT OPTIONS (MATCHING OUR LIVE WOOCOMMERCE ZONES) -->
           <div class="checkout-block">
-            <div class="checkout-step-title">2. White-Glove Delivery, Showroom Pickup or 48-Hour In-Home Preview</div>
+            <div class="checkout-step-title">2. White-Glove Local Delivery, Showroom Pickup or Carrier Shipping</div>
 
             <div class="shipping-option-card active" id="ship-card-preview" onclick="selectShipping('preview')">
               <div>
-                <div class="shipping-option-title">Complimentary 48-Hour Southern California In-Home Preview</div>
-                <div class="shipping-option-desc">Our team brings your curated carpets and furniture into your residence in Rancho Santa Fe, La Jolla, Del Mar or Newport Beach on approval before final settlement.</div>
+                <div class="shipping-option-title">Southern California White-Glove Delivery and Placement</div>
+                <div class="shipping-option-desc">Our showroom team coordinates full White Glove delivery and placement across Rancho Santa Fe, La Jolla, Del Mar and Southern California.</div>
               </div>
-              <div class="shipping-option-badge">Complimentary</div>
+              <div class="shipping-option-badge">Local Concierge</div>
             </div>
 
             <div class="shipping-option-card" id="ship-card-pickup" onclick="selectShipping('pickup')">
@@ -2132,8 +2517,8 @@ def main():
 
             <div class="shipping-option-card" id="ship-card-carrier" onclick="selectShipping('carrier')">
               <div>
-                <div class="shipping-option-title">Client-Arranged Domestic or International White-Glove Shipping (Coordinated Post-Purchase)</div>
-                <div class="shipping-option-desc">Melissa personally coordinates custom crating, blanket-wrap fine-art transport and full-value transit insurance to your estate anywhere in the US or abroad.</div>
+                <div class="shipping-option-title">Domestic or International White-Glove Shipping (Coordinated Post-Purchase)</div>
+                <div class="shipping-option-desc">Our showroom coordinates custom crating, blanket-wrap fine-art transport and full-value transit insurance with our preferred shipping partners.</div>
               </div>
               <div class="shipping-option-badge">Billed at Carrier Cost</div>
             </div>
@@ -2144,7 +2529,7 @@ def main():
                 <input type="text" class="form-control" id="chk-addr" value="16420 Via De Santa Fe">
               </div>
               <div class="form-group">
-                <label>City, State &amp; Postal Code</label>
+                <label>City, State and Postal Code</label>
                 <input type="text" class="form-control" id="chk-city" value="Rancho Santa Fe, CA 92067">
               </div>
             </div>
@@ -2152,7 +2537,7 @@ def main():
 
           <!-- STEP 3: SETTLEMENT METHOD -->
           <div class="checkout-block" style="border-bottom:none;">
-            <div class="checkout-step-title">3. Settlement &amp; Acquisition Method</div>
+            <div class="checkout-step-title">3. Settlement and Acquisition Method</div>
 
             <div class="shipping-option-card active" id="pay-card-cc" onclick="selectPayment('cc')">
               <div>
@@ -2172,8 +2557,8 @@ def main():
 
             <div class="shipping-option-card" id="pay-card-hold" onclick="selectPayment('hold')">
               <div>
-                <div class="shipping-option-title">48-Hour In-Home Trial Authorization Hold ($0 Charged Today)</div>
-                <div class="shipping-option-desc">Places a zero-charge card authorization while Melissa schedules your private in-home room placement.</div>
+                <div class="shipping-option-title">24-Hour Private Showroom Reservation Hold ($0 Charged Today)</div>
+                <div class="shipping-option-desc">Places a zero-charge card authorization while our showroom team confirms your delivery or shipping quote.</div>
               </div>
               <div class="shipping-option-badge">$0 Due Today</div>
             </div>
@@ -2189,7 +2574,7 @@ def main():
                   <input type="text" class="form-control" value="•••• •••• •••• 8842">
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
-                  <label>Expiration &amp; Security Code</label>
+                  <label>Expiration and Security Code</label>
                   <input type="text" class="form-control" value="09 / 29   &middot;   841">
                 </div>
               </div>
@@ -2199,12 +2584,12 @@ def main():
 
         <!-- RIGHT COLUMN: CURATED SELECTION SUMMARY LEDGER -->
         <aside class="checkout-summary-card">
-          <div class="summary-heading">Your Curated Selection</div>
+          <div class="summary-heading">Your Selected Pieces</div>
           <div id="checkout-items-list"></div>
 
           <div style="margin-top:18px;">
             <div class="summary-line">
-              <span>Curated Pieces Subtotal</span>
+              <span>Selected Pieces Subtotal</span>
               <span id="chk-subtotal">$0</span>
             </div>
             <div class="summary-line" id="chk-wire-row" style="display:none; color:#2E6B47;">
@@ -2213,10 +2598,10 @@ def main():
             </div>
             <div class="summary-line">
               <span>White-Glove Fulfillment</span>
-              <span id="chk-shipping-label">Complimentary In-Home Preview</span>
+              <span id="chk-shipping-label">Local White-Glove Delivery</span>
             </div>
             <div class="summary-line">
-              <span>Certificate of Provenance &amp; Appraisal</span>
+              <span>Certificate of Provenance and Appraisal</span>
               <span>Included</span>
             </div>
             <div class="summary-total">
@@ -2247,7 +2632,7 @@ def main():
   <div class="drawer-backdrop" id="drawer-backdrop" onclick="toggleDrawer(false)"></div>
   <aside class="selection-drawer" id="selection-drawer">
     <div class="drawer-header">
-      <h3>Curated Selection</h3>
+      <h3>Selected Pieces</h3>
       <button type="button" class="drawer-close" onclick="toggleDrawer(false)">&times;</button>
     </div>
     <div class="drawer-items" id="drawer-items"></div>
@@ -2256,7 +2641,7 @@ def main():
         <span>Selection Total</span>
         <strong id="drawer-subtotal-val">$0</strong>
       </div>
-      <button type="button" class="drawer-checkout-btn" onclick="proceedToCheckout()">Proceed to White-Glove Checkout &rarr;</button>
+      <button type="button" class="drawer-checkout-btn" onclick="proceedToCheckout()">Proceed to Check Out &rarr;</button>
     </div>
   </aside>
 
@@ -2271,12 +2656,12 @@ def main():
         <h3 id="modal-title" style="font-size:24px; font-weight:400; line-height:1.3; margin-bottom:10px;"></h3>
         <div id="modal-dims" style="font-style:italic; font-size:15px; color:var(--text-muted); margin-bottom:18px;"></div>
         <p style="font-size:16px; color:#4A4845; margin-bottom:24px;">
-          Personally selected by Melissa Chapman for The Chapman Collection in Rancho Santa Fe. Available for private Southern California in-home preview and nationwide white-glove delivery.
+          Personally selected by Melissa Chapman for The Chapman Collection in Rancho Santa Fe. Available for private showroom viewing and nationwide white-glove delivery.
         </p>
         <div style="font-style:italic; font-size:13px; color:var(--text-italic-hint); margin-bottom:14px;">
-          Itemized pricing and direct acquisition are exclusively unlocked inside Curate Your Collection.
+          Itemized pricing and direct acquisition are available inside our Inventory view.
         </div>
-        <button type="button" class="search-trigger" id="modal-curate-btn">Unlock in Curate Your Collection &rarr;</button>
+        <button type="button" class="search-trigger" id="modal-curate-btn">View in Inventory &rarr;</button>
       </div>
     </div>
   </div>
@@ -2285,35 +2670,30 @@ def main():
   <footer class="site-footer-wrap">
     <div class="concierge-pillars-grid">
       <div class="concierge-pillar">
-        <h4>Complimentary In-Home Preview</h4>
-        <p>Experience our carpets and period furnishings inside your own residence across Rancho Santa Fe, La Jolla, Del Mar and Southern California on private approval.</p>
-      </div>
-      <div class="concierge-pillar">
-        <h4>White-Glove Nationwide Delivery</h4>
-        <p>Every acquisition is professionally crated, insured and delivered through our vetted fine-art and antique white-glove carriers throughout the United States.</p>
-      </div>
-      <div class="concierge-pillar">
         <h4>Rancho Santa Fe Village Showroom</h4>
-        <p>6014 La Granada, Rancho Santa Fe, CA 92067 &middot; Private Showroom Concierge: <a href="tel:+18583492638" style="color:inherit;">(858) 349-2638</a></p>
+        <div style="width:44px; height:1px; background:#B35A5E; margin:0 auto 14px;"></div>
+        <div class="showroom-address-line">6014 La Granada, Rancho Santa Fe, CA 92067</div>
+        <div class="showroom-hours-line">Monday through Thursday: 10:00 AM to 6:00 PM &middot; Friday and Saturday: 10:00 AM to 7:00 PM &middot; Sunday: By Appointment</div>
+        <div class="showroom-phone-line">Private Showroom Concierge &middot; <a href="tel:+18583492638">(858) 349-2638</a></div>
       </div>
     </div>
 
     <div class="footer-legal-strip">
       <div class="footer-bottom-flex">
-        <div class="footer-brand-copy">&copy; 2026 The Chapman Collection &middot; All Rights Reserved &middot; Rancho Santa Fe &amp; London Heritage</div>
+        <div class="footer-brand-copy">&copy; 2026 The Chapman Collection &middot; All Rights Reserved &middot; 6014 La Granada, Rancho Santa Fe, CA 92067</div>
         <ul class="footer-policy-links">
           <li><a href="https://thechapmancollection.com/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a></li>
-          <li><a href="https://thechapmancollection.com/terms-and-conditions/" target="_blank" rel="noopener">Terms &amp; Conditions</a></li>
-          <li><a href="https://thechapmancollection.com/refund_returns/" target="_blank" rel="noopener">Shipping, Returns &amp; In-Home Trial Policy</a></li>
-          <li><a href="https://thechapmancollection.com/services/" target="_blank" rel="noopener">Appraisals &amp; Restoration</a></li>
-          <li><a href="https://thechapmancollection.com/contact/" target="_blank" rel="noopener">Contact Showroom</a></li>
+          <li><a href="https://thechapmancollection.com/terms-and-conditions/" target="_blank" rel="noopener">Terms and Conditions</a></li>
+          <li><a href="https://thechapmancollection.com/services/#shipping-and-delivery" target="_blank" rel="noopener">Details on Shipping</a></li>
+          <li><a href="https://thechapmancollection.com/services/" target="_blank" rel="noopener">Appraisals and Restoration</a></li>
+          <li><a href="https://thechapmancollection.com/contact-us/" target="_blank" rel="noopener">Contact Us</a></li>
         </ul>
       </div>
       <div class="footer-disclaimer-fineprint">
-        All period antiques, hand-knotted carpets, tapestries and works of art are offered subject to prior showroom sale. Dimensions are approximate as all pieces are handcrafted and centuries-old masterworks; condition reports and high-resolution macro photography are provided upon request prior to white-glove dispatch.
+        All period antiques, fine Persian carpets, tapestries and works of art are offered subject to prior showroom sale. Dimensions are approximate as all pieces are handcrafted and centuries-old masterworks; condition reports and high-resolution macro photography are provided upon request prior to white-glove dispatch.
       </div>
       <div class="nrl-atelier-colophon">
-        Curatorial Search Architecture &amp; Real-Time Gallery Light Engine by <a href="https://renderwithoutcode.com" target="_blank" rel="noopener">NeverRender Labs</a>
+        Curatorial Search Architecture and Real-Time Gallery Light Engine by <a href="https://renderwithoutcode.com" target="_blank" rel="noopener">NeverRender Labs</a>
       </div>
     </div>
   </footer>
@@ -2324,11 +2704,11 @@ const SWATCHES = {swatches_json};
 const PERIODS = {periods_json};
 
 const CATEGORY_TILES = [
-  {{ id: "CARPETS & RUNNERS", label: "Antique & Vintage Carpets" }},
+  {{ id: "CARPETS & RUNNERS", label: "Antique and Vintage Carpets" }},
   {{ id: "EUROPEAN FURNITURE", label: "European Furniture" }},
   {{ id: "TAPESTRIES", label: "Tapestries" }},
-  {{ id: "FINE ART", label: "Fine Art & Paintings" }},
-  {{ id: "BRONZES & SCULPTURE", label: "Bronzes & Sculpture" }},
+  {{ id: "FINE ART", label: "Fine Art and Paintings" }},
+  {{ id: "BRONZES & SCULPTURE", label: "Bronzes and Sculpture" }},
   {{ id: "ALL", label: "All Collection" }}
 ];
 
@@ -2363,12 +2743,44 @@ function switchView(viewName) {{
     const pill = document.getElementById("pill-" + v);
     if (pill) pill.classList.toggle("active", v === viewName);
   }});
+  const shipNav = document.getElementById("nav-shipping");
+  if (shipNav) shipNav.classList.remove("active");
+  const shipPill = document.getElementById("pill-shipping");
+  if (shipPill) shipPill.classList.remove("active");
   if (viewName === "checkout") {{
     document.getElementById("checkout-live-form").style.display = "grid";
     document.getElementById("checkout-confirmation-box").style.display = "none";
     renderCheckoutSummary();
   }}
   window.scrollTo({{ top: 0, behavior: "smooth" }});
+}}
+
+function openDetailsOnShipping() {{
+  switchView("melissa");
+  const shipNav = document.getElementById("nav-shipping");
+  if (shipNav) shipNav.classList.add("active");
+  const melNav = document.getElementById("nav-melissa");
+  if (melNav) melNav.classList.remove("active");
+  const shipPill = document.getElementById("pill-shipping");
+  if (shipPill) shipPill.classList.add("active");
+  const melPill = document.getElementById("pill-melissa");
+  if (melPill) melPill.classList.remove("active");
+  setTimeout(() => {{
+    const card = document.getElementById("prototype-shipping-card");
+    if (card) card.scrollIntoView({{ behavior: "smooth", block: "start" }});
+  }}, 120);
+}}
+
+function setAboutPortrait(src, caption, activeIdx) {{
+  const img = document.getElementById("melissa-about-hero-img");
+  const cap = document.getElementById("melissa-about-caption");
+  if (img) img.src = src;
+  if (cap) cap.textContent = caption;
+  [1, 2, 3].forEach(i => {{
+    const btn = document.getElementById("about-photo-btn-" + i);
+    if (!btn) return;
+    btn.classList.toggle("active-portrait-btn", i === activeIdx);
+  }});
 }}
 
 function openCurateWithCategory(catId, kw) {{
@@ -2462,10 +2874,10 @@ function initHeroCollages() {{
    ========================================================================== */
 function renderGalleryLookbooks() {{
   const chapters = [
-    {{ title: "European Period Furniture (Studio Slate & Showroom)", cat: "EUROPEAN FURNITURE", items: CATALOG.filter(i => i.top_category === "EUROPEAN FURNITURE").slice(0, 8) }},
-    {{ title: "Court, Palace & Village Carpets", cat: "CARPETS & RUNNERS", items: CATALOG.filter(i => i.top_category === "CARPETS & RUNNERS").slice(0, 8) }},
-    {{ title: "Historic Tapestries & Fine Art", cat: "TAPESTRIES", items: CATALOG.filter(i => i.top_category === "TAPESTRIES" || i.top_category === "FINE ART").slice(0, 8) }},
-    {{ title: "Bronzes, Sèvres Porcelain & Giltwood Objects", cat: "BRONZES & SCULPTURE", items: CATALOG.filter(i => i.top_category === "BRONZES & SCULPTURE" || i.top_category === "DECORATIVE ARTS").slice(0, 8) }}
+    {{ title: "European Period Furniture (Studio Slate and Showroom)", cat: "EUROPEAN FURNITURE", items: CATALOG.filter(i => i.top_category === "EUROPEAN FURNITURE").slice(0, 8) }},
+    {{ title: "Court, Palace and Village Carpets", cat: "CARPETS & RUNNERS", items: CATALOG.filter(i => i.top_category === "CARPETS & RUNNERS").slice(0, 8) }},
+    {{ title: "Historic Tapestries and Fine Art", cat: "TAPESTRIES", items: CATALOG.filter(i => i.top_category === "TAPESTRIES" || i.top_category === "FINE ART").slice(0, 8) }},
+    {{ title: "Bronzes, Sèvres Porcelain and Giltwood Objects", cat: "BRONZES & SCULPTURE", items: CATALOG.filter(i => i.top_category === "BRONZES & SCULPTURE" || i.top_category === "DECORATIVE ARTS").slice(0, 8) }}
   ];
 
   const mount = document.getElementById("lookbook-chapters-mount");
@@ -2473,7 +2885,7 @@ function renderGalleryLookbooks() {{
     <div class="lookbook-chapter">
       <div class="chapter-header">
         <div class="chapter-title">${{ch.title}}</div>
-        <button type="button" class="chapter-curate-link" onclick="openCurateWithCategory('${{ch.cat}}', '')">Curate This Category &rarr;</button>
+        <button type="button" class="chapter-curate-link" onclick="openCurateWithCategory('${{ch.cat}}', '')">Browse This Category &rarr;</button>
       </div>
       <div class="chapter-track">
         ${{ch.items.map(item => `
@@ -2614,7 +3026,7 @@ function applyFilters() {{
   }}
 
   document.getElementById("results-count").textContent =
-    `Showing ${{filtered.length}} of ${{CATALOG.length}} Curated Pieces (Prices Unlocked)`;
+    `Showing ${{filtered.length}} of ${{CATALOG.length}} Showroom Pieces`;
 
   const grid = document.getElementById("gallery-grid");
   grid.innerHTML = filtered.map(item => {{
@@ -2685,7 +3097,7 @@ function getCartSubtotal() {{
 function renderCartDrawer() {{
   const box = document.getElementById("drawer-items");
   if (state.cart.length === 0) {{
-    box.innerHTML = `<p style="font-style:italic; color:var(--text-muted); text-align:center; padding:40px 0;">Your Curated Selection is currently empty. Add pieces inside Curate Your Collection.</p>`;
+    box.innerHTML = `<p style="font-style:italic; color:var(--text-muted); text-align:center; padding:40px 0;">Your selection is currently empty. Add pieces inside our Inventory view.</p>`;
   }} else {{
     box.innerHTML = state.cart.map(item => `
       <div class="drawer-item">
@@ -2745,12 +3157,12 @@ function renderCheckoutSummary() {{
   document.getElementById("chk-wire-discount").textContent = "-" + formatPrice(wireDisc);
 
   const shipLabels = {{
-    preview: "Complimentary 48-Hr In-Home Preview",
+    preview: "Local White-Glove Delivery",
     pickup: "Complimentary RSF Showroom Pickup",
     carrier: "Coordinated Post-Purchase"
   }};
   document.getElementById("chk-shipping-label").textContent = shipLabels[state.shippingMode];
-  document.getElementById("chk-total-label").textContent = state.paymentMode === "hold" ? "Due Today (48-Hr Trial Hold)" : "Total Acquisition";
+  document.getElementById("chk-total-label").textContent = state.paymentMode === "hold" ? "Due Today (24-Hr Showroom Hold)" : "Total Acquisition";
   document.getElementById("chk-total-val").textContent = state.paymentMode === "hold" ? "$0 (Auth Only)" : formatPrice(finalTotal);
 }}
 
@@ -2762,7 +3174,7 @@ function submitWhiteGloveOrder() {{
   document.getElementById("checkout-confirmation-box").style.display = "block";
 
   document.getElementById("confirm-dynamic-copy").innerHTML =
-    `Thank you, ${{fname}}. Your curated selection (${{state.cart.length}} pieces, valued at ${{formatPrice(sub)}}) has been placed on private showroom hold at 6014 La Granada. Melissa Chapman will text your mobile shortly from <strong>(858) 349-2638</strong> to confirm your white-glove appointment at ${{addr}}.`;
+    `Thank you, ${{fname}}. Your selection (${{state.cart.length}} pieces, valued at ${{formatPrice(sub)}}) has been placed on private showroom hold at 6014 La Granada. Our Rancho Santa Fe showroom team will contact you shortly from <strong>(858) 349-2638</strong> to confirm your white-glove delivery or pickup arrangements for ${{addr}}.`;
 
   document.getElementById("confirm-items-recap").innerHTML = state.cart.map(item => `
     <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #EEE; font-size:15px;">
@@ -2813,13 +3225,13 @@ function renderCollageSplash() {{
       ${{tileHtml(tQum,      "Qum Silk",        "CARPETS & RUNNERS", "qum")}}
     </div>
     <div class="collage-row-2">
-      ${{tileHtml(tHeriz,    "Heriz & Serapi",  "CARPETS & RUNNERS", "heriz")}}
+      ${{tileHtml(tHeriz,    "Heriz and Serapi",  "CARPETS & RUNNERS", "heriz")}}
       ${{tileHtml(tTapestry, "Tapestries",      "TAPESTRIES",        "")}}
     </div>
     <div class="collage-row-3">
       ${{tileHtml(tKashan,   "Kashan",          "CARPETS & RUNNERS", "kashan")}}
-      ${{tileHtml(tSarouk,   "Sarouk & Palace", "CARPETS & RUNNERS", "sarouk")}}
-      ${{tileHtml(tBaluch,   "Pictorial & Tribal", "CARPETS & RUNNERS", "baluch")}}
+      ${{tileHtml(tSarouk,   "Sarouk and Palace", "CARPETS & RUNNERS", "sarouk")}}
+      ${{tileHtml(tBaluch,   "Pictorial and Tribal", "CARPETS & RUNNERS", "baluch")}}
     </div>`;
 }}
 
@@ -2831,10 +3243,13 @@ renderControls();
 updateCartBadge();
 applyFilters();
 
-/* Smart Scroll-Direction Header Tuck (Zero layout-height mutation -> zero scroll bounce) */
+/* Smart Scroll-Direction Slim Nav Bar Tuck (Masthead stays at top; only slim nav bar glides gently) */
 (function() {{
-  const headerEl = document.querySelector(".brand-header");
+  const navBarEl = document.querySelector(".brand-nav-bar");
+  if (!navBarEl) return;
   let lastScrollY = window.scrollY || 0;
+  let upScrollAccum = 0;
+  let downScrollAccum = 0;
   let ticking = false;
 
   window.addEventListener("scroll", () => {{
@@ -2843,19 +3258,25 @@ applyFilters();
         const currentY = Math.max(0, window.scrollY || 0);
         const delta = currentY - lastScrollY;
 
-        if (currentY > 40) {{
-          headerEl.classList.add("header-scrolled");
+        if (currentY > 140) {{
+          navBarEl.classList.add("header-scrolled");
         }} else {{
-          headerEl.classList.remove("header-scrolled");
-          headerEl.classList.remove("header-tucked");
+          navBarEl.classList.remove("header-scrolled");
+          navBarEl.classList.remove("header-tucked");
         }}
 
-        if (currentY > 180 && delta > 10) {{
-          // Scrolling down -> GPU-slide header smoothly out of the way (0px DOM layout shift)
-          headerEl.classList.add("header-tucked");
-        }} else if (delta < -8 || currentY <= 80) {{
-          // Scrolling up or near top -> bring header right back
-          headerEl.classList.remove("header-tucked");
+        if (delta > 0) {{
+          downScrollAccum += delta;
+          upScrollAccum = 0;
+          if (currentY > 240 && downScrollAccum > 28) {{
+            navBarEl.classList.add("header-tucked");
+          }}
+        }} else if (delta < 0) {{
+          upScrollAccum += Math.abs(delta);
+          downScrollAccum = 0;
+          if (upScrollAccum > 48 || currentY <= 140) {{
+            navBarEl.classList.remove("header-tucked");
+          }}
         }}
 
         lastScrollY = currentY;
@@ -2866,372 +3287,7 @@ applyFilters();
   }}, {{ passive: true }});
 }})();
 
-/* ==========================================================================
-   THE NRL SUBTLE TOUCH:
-   1. Real-Time WebGL Anisotropic Silk & Giltwood Specular Shader on Hero Colorblocks
-   2. Cursor-Tracking Museum Gallery Spotlight (`--spot-x`, `--spot-y`) Across All Visual Stages
-   ========================================================================== */
-(function initNrlGalleryLightAndSilkShader() {{
-  // 1. Attach WebGL Silk Sheen Canvas to each Hero Colorblock Panel
-  const panels = document.querySelectorAll(".hero-colorblock-panel");
-  const vsSource = `
-    attribute vec2 a_pos;
-    varying vec2 v_uv;
-    void main() {{
-      v_uv = a_pos * 0.5 + 0.5;
-      gl_Position = vec4(a_pos, 0.0, 1.0);
-    }}
-  `;
-  const fsSource = `
-    precision mediump float;
-    varying vec2 v_uv;
-    uniform float u_time;
-    uniform vec2 u_mouse;
-    void main() {{
-      vec2 uv = v_uv;
-      float d = distance(uv, u_mouse);
-      // Soft museum spotlight falloff around cursor
-      float spot = smoothstep(0.68, 0.0, d);
-      // Anisotropic woven silk & giltwood caustic waves
-      float wave1 = sin((uv.x * 11.0 + uv.y * 7.0) + u_time * 0.55) * 0.5 + 0.5;
-      float wave2 = cos((uv.x * 6.0 - uv.y * 13.0) - u_time * 0.38) * 0.5 + 0.5;
-      float silk = pow(wave1 * wave2, 1.6);
-      // Warm champagne-gold museum light (#FFF6E5)
-      vec3 col = vec3(1.0, 0.965, 0.89) * (silk * 0.24 + spot * 0.34);
-      gl_FragColor = vec4(col, silk * 0.26 + spot * 0.30);
-    }}
-  `;
-
-  const glContexts = [];
-  panels.forEach(panel => {{
-    const canvas = document.createElement("canvas");
-    canvas.className = "nrl-silk-webgl-canvas";
-    canvas.width = 360;
-    canvas.height = 360;
-    panel.insertBefore(canvas, panel.firstChild);
-
-    const gl = canvas.getContext("webgl", {{ alpha: true, premultipliedAlpha: false }});
-    if (!gl) return;
-
-    function compileShader(type, src) {{
-      const s = gl.createShader(type);
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
-      return s;
-    }}
-    const prog = gl.createProgram();
-    gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vsSource));
-    gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fsSource));
-    gl.linkProgram(prog);
-    gl.useProgram(prog);
-
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
-    const aPos = gl.getAttribLocation(prog, "a_pos");
-    gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-    const uTime = gl.getUniformLocation(prog, "u_time");
-    const uMouse = gl.getUniformLocation(prog, "u_mouse");
-    const ctxObj = {{ gl, prog, uTime, uMouse, mx: 0.5, my: 0.5, tx: 0.5, ty: 0.5 }};
-    glContexts.push(ctxObj);
-
-    panel.addEventListener("mousemove", e => {{
-      const r = panel.getBoundingClientRect();
-      ctxObj.tx = (e.clientX - r.left) / Math.max(1, r.width);
-      ctxObj.ty = 1.0 - (e.clientY - r.top) / Math.max(1, r.height);
-    }});
-    panel.addEventListener("mouseleave", () => {{
-      ctxObj.tx = 0.5;
-      ctxObj.ty = 0.5;
-    }});
-  }});
-
-  function animateShaders(t) {{
-    const sec = t * 0.001;
-    glContexts.forEach(c => {{
-      c.mx += (c.tx - c.mx) * 0.08;
-      c.my += (c.ty - c.my) * 0.08;
-      c.gl.viewport(0, 0, 360, 360);
-      c.gl.clearColor(0, 0, 0, 0);
-      c.gl.clear(c.gl.COLOR_BUFFER_BIT);
-      c.gl.uniform1f(c.uTime, sec);
-      c.gl.uniform2f(c.uMouse, c.mx, c.my);
-      c.gl.drawArrays(c.gl.TRIANGLES, 0, 6);
-    }});
-    requestAnimationFrame(animateShaders);
-  }}
-  if (glContexts.length > 0) requestAnimationFrame(animateShaders);
-
-  // 2. Attach Cursor-Reactive Museum Gallery Spotlight to Furniture, Carpet Collages & Cards
-  function bindSpotlightTargets() {{
-    const selectors = ".hero-furniture-card, .hero-macro-cell, .collage-tile-img-wrap, .lookbook-img-box, .card-img-box";
-    document.querySelectorAll(selectors).forEach(el => {{
-      if (el.dataset.nrlSpotBound) return;
-      el.dataset.nrlSpotBound = "1";
-      el.classList.add("nrl-spotlight-surface");
-      el.addEventListener("mousemove", e => {{
-        const r = el.getBoundingClientRect();
-        el.style.setProperty("--spot-x", (e.clientX - r.left) + "px");
-        el.style.setProperty("--spot-y", (e.clientY - r.top) + "px");
-      }});
-    }});
-  }}
-  bindSpotlightTargets();
-  // Re-bind whenever filters re-render cards
-  const origApply = window.applyFilters;
-  if (typeof origApply === "function") {{
-    window.applyFilters = function() {{
-      origApply.apply(this, arguments);
-      bindSpotlightTargets();
-    }};
-  }}
-
-  // 3. NRL Butter-Muslin / Cheesecloth Gauze Weave Engine (Strictly z-index: 0 behind all products)
-  const draftCanvas = document.getElementById("nrl-curtain-draft-canvas");
-  if (draftCanvas) {{
-    const ctx = draftCanvas.getContext("2d");
-    const CELL = 18;         // Physics control cell size (18px)
-    const SUB = 4;           // 4 fine cheesecloth yarns per cell (4.5px actual thread pitch)
-    let width = 0, height = 0, cols = 0, rows = 0;
-    let nodes = [];
-    let warpCrimp = [];
-    let weftCrimp = [];
-
-    const pointer = {{ x: -9999, y: -9999, prevX: -9999, prevY: -9999, vx: 0, vy: 0, active: false }};
-
-    function rebuildGrid() {{
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = window.innerWidth;
-      height = window.innerHeight;
-      draftCanvas.width = Math.floor(width * dpr);
-      draftCanvas.height = Math.floor(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      cols = Math.ceil(width / CELL) + 2;
-      rows = Math.ceil(height / CELL) + 2;
-      nodes = new Array(cols * rows);
-      for (let r = 0; r < rows; r++) {{
-        for (let c = 0; c < cols; c++) {{
-          nodes[r * cols + c] = {{
-            bx: c * CELL,
-            by: r * CELL,
-            ox: 0,
-            oy: 0,
-            vx: 0,
-            vy: 0,
-            glow: 0
-          }};
-        }}
-      }}
-
-      const totalRows = rows * SUB;
-      const totalCols = cols * SUB;
-      warpCrimp = new Float32Array(totalRows);
-      weftCrimp = new Float32Array(totalCols);
-      for (let i = 0; i < totalRows; i++) {{
-        warpCrimp[i] = Math.sin(i * 1.73) * 0.42 + Math.cos(i * 0.61) * 0.28;
-      }}
-      for (let j = 0; j < totalCols; j++) {{
-        weftCrimp[j] = Math.cos(j * 1.91) * 0.42 + Math.sin(j * 0.79) * 0.28;
-      }}
-    }}
-    window.addEventListener("resize", rebuildGrid, {{ passive: true }});
-    rebuildGrid();
-
-    window.addEventListener("pointermove", (e) => {{
-      if (!pointer.active) {{
-        pointer.prevX = e.clientX;
-        pointer.prevY = e.clientY;
-        pointer.active = true;
-      }}
-      const rawDx = e.clientX - pointer.prevX;
-      const rawDy = e.clientY - pointer.prevY;
-      pointer.prevX = e.clientX;
-      pointer.prevY = e.clientY;
-      pointer.x = e.clientX;
-      pointer.y = e.clientY;
-
-      pointer.vx = pointer.vx * 0.74 + rawDx * 0.26;
-      pointer.vy = pointer.vy * 0.74 + rawDy * 0.26;
-
-      const speed = Math.hypot(pointer.vx, pointer.vy);
-      const draftRadius = 225;
-      const rSq = draftRadius * draftRadius;
-
-      const minC = Math.max(0, Math.floor((pointer.x - draftRadius) / CELL));
-      const maxC = Math.min(cols - 1, Math.ceil((pointer.x + draftRadius) / CELL));
-      const minR = Math.max(0, Math.floor((pointer.y - draftRadius) / CELL));
-      const maxR = Math.min(rows - 1, Math.ceil((pointer.y + draftRadius) / CELL));
-
-      const clampedSpeed = Math.min(speed, 22);
-      const dirX = speed > 0.1 ? pointer.vx / speed : 0;
-      const dirY = speed > 0.1 ? pointer.vy / speed : 0;
-
-      for (let r = minR; r <= maxR; r++) {{
-        const rowOffset = r * cols;
-        for (let c = minC; c <= maxC; c++) {{
-          const n = nodes[rowOffset + c];
-          const dx = n.bx - pointer.x;
-          const dy = n.by - pointer.y;
-          const dSq = dx * dx + dy * dy;
-          if (dSq < rSq) {{
-            const dist = Math.sqrt(dSq);
-            const falloff = Math.pow(1 - dist / draftRadius, 2.15);
-
-            const pullStrength = falloff * (0.105 * clampedSpeed + 0.15);
-            n.vx += dirX * pullStrength;
-            n.vy += dirY * pullStrength;
-
-            if (dist > 1) {{
-              const radialPush = falloff * 0.085;
-              n.vx += (dx / dist) * radialPush;
-              n.vy += (dy / dist) * radialPush;
-            }}
-
-            const targetGlow = Math.min(1, falloff * (0.38 + clampedSpeed * 0.032));
-            if (targetGlow > n.glow) {{
-              n.glow = n.glow + (targetGlow - n.glow) * 0.32;
-            }}
-          }}
-        }}
-      }}
-    }}, {{ passive: true }});
-
-    const SPRING = 0.013;
-    const DAMPING = 0.968;
-    const GLOW_DECAY = 0.980;
-    const MAX_DISP = 14.5;
-
-    function renderCheeseclothGauze() {{
-      pointer.vx *= 0.92;
-      pointer.vy *= 0.92;
-      ctx.clearRect(0, 0, width, height);
-
-      let maxActiveGlow = 0;
-      for (let i = 0; i < nodes.length; i++) {{
-        const n = nodes[i];
-        n.vx += -n.ox * SPRING;
-        n.vy += -n.oy * SPRING;
-        n.vx *= DAMPING;
-        n.vy *= DAMPING;
-        n.ox += n.vx;
-        n.oy += n.vy;
-
-        const disp = Math.hypot(n.ox, n.oy);
-        if (disp > MAX_DISP) {{
-          const scale = MAX_DISP / disp;
-          n.ox *= scale;
-          n.oy *= scale;
-        }}
-        n.glow *= GLOW_DECAY;
-        if (n.glow < 0.002) n.glow = 0;
-        else if (n.glow > maxActiveGlow) maxActiveGlow = n.glow;
-      }}
-
-      for (let pass = 0; pass < 2; pass++) {{
-        ctx.beginPath();
-        if (pass === 0) {{
-          ctx.lineWidth = 0.55;
-          ctx.strokeStyle = "rgba(174, 160, 138, 0.064)";
-        }} else {{
-          ctx.lineWidth = 0.40;
-          ctx.strokeStyle = "rgba(182, 169, 148, 0.042)";
-        }}
-
-        for (let r = 0; r < rows - 1; r++) {{
-          const r0 = r * cols;
-          const r1 = (r + 1) * cols;
-          for (let s = 0; s < SUB; s++) {{
-            if ((s === 0) !== (pass === 0)) continue;
-            const frac = s / SUB;
-            const crimpY = warpCrimp[r * SUB + s];
-            for (let c = 0; c < cols; c++) {{
-              const n0 = nodes[r0 + c];
-              const n1 = nodes[r1 + c];
-              const ox = n0.ox + (n1.ox - n0.ox) * frac;
-              const oy = n0.oy + (n1.oy - n0.oy) * frac;
-              const wave = Math.sin(c * 0.9 + s * 1.7) * 0.38 + crimpY;
-              const px = n0.bx + ox;
-              const py = n0.by + frac * CELL + oy + wave;
-              if (c === 0) ctx.moveTo(px, py);
-              else ctx.lineTo(px, py);
-            }}
-          }}
-        }}
-
-        for (let c = 0; c < cols - 1; c++) {{
-          for (let s = 0; s < SUB; s++) {{
-            if ((s === 0) !== (pass === 0)) continue;
-            const frac = s / SUB;
-            const crimpX = weftCrimp[c * SUB + s];
-            for (let r = 0; r < rows; r++) {{
-              const rOff = r * cols;
-              const n0 = nodes[rOff + c];
-              const n1 = nodes[rOff + c + 1];
-              const ox = n0.ox + (n1.ox - n0.ox) * frac;
-              const oy = n0.oy + (n1.oy - n0.oy) * frac;
-              const wave = Math.cos(r * 0.9 + s * 1.7) * 0.38 + crimpX;
-              const px = n0.bx + frac * CELL + ox + wave;
-              const py = n0.by + oy;
-              if (r === 0) ctx.moveTo(px, py);
-              else ctx.lineTo(px, py);
-            }}
-          }}
-        }}
-        ctx.stroke();
-      }}
-
-      if (maxActiveGlow > 0.008) {{
-        for (let r = 0; r < rows - 1; r++) {{
-          const r0 = r * cols;
-          const r1 = (r + 1) * cols;
-          for (let c = 0; c < cols - 1; c++) {{
-            const n00 = nodes[r0 + c];
-            const g = n00.glow;
-            if (g < 0.012) continue;
-
-            const n10 = nodes[r0 + c + 1];
-            const n01 = nodes[r1 + c];
-            const n11 = nodes[r1 + c + 1];
-
-            ctx.beginPath();
-            for (let s = 0; s < SUB; s++) {{
-              const f = s / SUB;
-              const hx0 = n00.bx + n00.ox + (n01.ox - n00.ox) * f;
-              const hy0 = n00.by + f * CELL + n00.oy + (n01.oy - n00.oy) * f;
-              const hx1 = n10.bx + n10.ox + (n11.ox - n10.ox) * f;
-              const hy1 = n10.by + f * CELL + n10.oy + (n11.oy - n10.oy) * f;
-              ctx.moveTo(hx0, hy0);
-              ctx.lineTo(hx1, hy1);
-
-              const vx0 = n00.bx + f * CELL + n00.ox + (n10.ox - n00.ox) * f;
-              const vy0 = n00.by + n00.oy + (n10.oy - n00.oy) * f;
-              const vx1 = n01.bx + f * CELL + n01.ox + (n11.ox - n01.ox) * f;
-              const vy1 = n01.by + n01.oy + (n11.oy - n01.oy) * f;
-              ctx.moveTo(vx0, vy0);
-              ctx.lineTo(vx1, vy1);
-            }}
-            ctx.lineWidth = 0.55 + g * 0.35;
-            ctx.strokeStyle = `rgba(176, 148, 98, ${{(g * 0.16).toFixed(3)}})`;
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.moveTo(n00.bx + n00.ox, n00.by + n00.oy);
-            ctx.lineTo(n10.bx + n10.ox, n10.by + n10.oy);
-            ctx.lineWidth = 0.85;
-            ctx.strokeStyle = `rgba(255, 253, 248, ${{(g * 0.52).toFixed(3)}})`;
-            ctx.stroke();
-          }}
-        }}
-      }}
-
-      requestAnimationFrame(renderCheeseclothGauze);
-    }}
-    requestAnimationFrame(renderCheeseclothGauze);
-  }}
-}})();
+/* Pure Chaphavian Surfaces (WebGL Silk Shader Disabled for Clean Alabaster & Putty Consistency) */
 </script>
 </body>
 </html>
@@ -3242,10 +3298,18 @@ applyFilters();
         f.write(html)
     with open(os.path.join(OUT_DIR_NRL, "chapman-curatorial-gallery-search.html"), "w", encoding="utf-8") as f:
         f.write(html)
+    about_html = html.replace('</script>\n</body>', 'switchView("melissa");\n</script>\n</body>')
+    with open(os.path.join(OUT_DIR_NRL, "about-us.html"), "w", encoding="utf-8") as f:
+        f.write(about_html)
+    gallery_html = html.replace('</script>\n</body>', 'switchView("gallery");\n</script>\n</body>')
+    with open(os.path.join(OUT_DIR_NRL, "gallery.html"), "w", encoding="utf-8") as f:
+        f.write(gallery_html)
     with open(OUT_FILE_PMC, "w", encoding="utf-8") as f:
         f.write(html)
-    print("Compiled full 4-view Mansour click-flow & white-glove checkout prototype:")
+    print("Compiled full 5-view Mansour click-flow, About Us & white-glove checkout prototype:")
     print(" ->", os.path.join(OUT_DIR_NRL, "chapman-curatorial-gallery-search.html"))
+    print(" ->", os.path.join(OUT_DIR_NRL, "about-us.html"))
+    print(" ->", os.path.join(OUT_DIR_NRL, "gallery.html"))
     print(" ->", OUT_FILE_PMC)
 
 

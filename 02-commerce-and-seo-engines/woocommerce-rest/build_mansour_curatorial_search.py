@@ -218,6 +218,42 @@ def main():
             "active_price": "6800",
             "search_blob": "napoleon iii ebonized pearwood floral marquetry vitrine credenza ormolu mounts french furniture",
         },
+        {
+            "id": 9904,
+            "name": "19th Century Dutch Floral Marquetry Walnut Armchair with Gold Silk Damask Upholstery",
+            "url": "https://thechapmancollection.com/",
+            "image": "assets/tcc-f7f5f2-04-dutch-marquetry-armchair.jpg",
+            "top_category": "EUROPEAN FURNITURE",
+            "sub_category": "19th Century Dutch Floral Marquetry Seating",
+            "all_categories": ["Furniture", "Seating and Chairs"],
+            "colors": ["walnut", "gold"],
+            "periods": ["19th"],
+            "w_ft": 2.25,
+            "l_ft": 3.33,
+            "size_label": '40" H x 27" W x 23" D',
+            "regular_price": "3400",
+            "sale_price": "2600",
+            "active_price": "2600",
+            "search_blob": "19th century dutch floral marquetry walnut armchair gold silk damask upholstery seating furniture",
+        },
+        {
+            "id": 9905,
+            "name": "Pair of 19th Century French Empire Mahogany and Gilt Bronze Mounted Marble-Top Pedestals",
+            "url": "https://thechapmancollection.com/",
+            "image": "assets/tcc-f7f5f2-05-french-empire-pedestals.jpg",
+            "top_category": "EUROPEAN FURNITURE",
+            "sub_category": "19th Century French Empire Pedestals",
+            "all_categories": ["Furniture", "Pedestals and Columns"],
+            "colors": ["walnut", "gold", "ivory"],
+            "periods": ["19th"],
+            "w_ft": 1.50,
+            "l_ft": 3.83,
+            "size_label": '46" H x 18" W x 18" D',
+            "regular_price": "5800",
+            "sale_price": "4400",
+            "active_price": "4400",
+            "search_blob": "pair 19th century french empire mahogany gilt bronze ormolu marble top pedestals columns furniture",
+        },
     ]
 
     for pid, p in raw.items():
@@ -757,14 +793,18 @@ def main():
     align-items: center;
     padding: 42px 34px;
     text-align: center;
-    color: var(--chaphavian-iron);
-    background-color: var(--chaphavian-alabaster) !important;
+    color: var(--chaphavian-iron) !important;
+    background-color: #EFECE6 !important;
+    border-left: 1px solid var(--chaphavian-putty);
     overflow: hidden;
   }}
+  /* Lock Hero Right Panels to Chaphavian Putty & Alabaster with Iron Ink + Rose Kickers */
   .panel-slate-greige,
   .panel-warm-greige,
   .panel-gustavian {{
-    background-color: var(--chaphavian-alabaster) !important;
+    background-color: #EFECE6 !important;
+    border-left: 1px solid var(--chaphavian-putty);
+    color: var(--chaphavian-iron) !important;
   }}
 
   .hero-kicker {{
@@ -773,7 +813,7 @@ def main():
     font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--chaphavian-rose);
+    color: var(--chaphavian-rose) !important;
     margin-bottom: 14px;
     position: relative;
     z-index: 2;
@@ -795,7 +835,7 @@ def main():
     font-style: italic;
     font-weight: 500;
     font-size: 18px;
-    color: #52575D;
+    color: #52575D !important;
     max-width: 290px;
     margin-bottom: 28px;
     line-height: 1.55;
@@ -805,9 +845,9 @@ def main():
   .hero-curate-btn {{
     position: relative;
     z-index: 2;
-    background: var(--chaphavian-alabaster);
-    color: var(--chaphavian-iron);
-    border: 1px solid var(--chaphavian-iron);
+    background: var(--chaphavian-alabaster) !important;
+    color: var(--chaphavian-iron) !important;
+    border: 1px solid var(--chaphavian-iron) !important;
     padding: 13px 26px;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 14px;
@@ -818,9 +858,9 @@ def main():
     transition: all 0.25s ease;
   }}
   .hero-curate-btn:hover {{
-    background: var(--chaphavian-iron);
-    color: var(--chaphavian-alabaster);
-    border-color: var(--chaphavian-iron);
+    background: var(--chaphavian-iron) !important;
+    color: var(--chaphavian-alabaster) !important;
+    border-color: var(--chaphavian-iron) !important;
     transform: translateY(-2px);
     box-shadow: 0 10px 20px -6px rgba(43, 47, 50, 0.18);
   }}
@@ -1006,21 +1046,23 @@ def main():
     height: 100%;
     object-fit: cover;
   }}
+  /* Lock the 8 Collage Caption Bars to Chaphavian Putty -> Rose/Iron Hover */
   .collage-caption-bar {{
-    background-color: var(--chaphavian-alabaster);
-    color: var(--chaphavian-iron);
+    background-color: #EFECE6 !important;
+    color: var(--chaphavian-iron) !important;
+    border-top: 1px solid var(--chaphavian-putty);
     text-align: center;
     padding: 12px 12px;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 600 !important;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     transition: background-color 0.25s ease, color 0.25s ease;
   }}
   .collage-tile:hover .collage-caption-bar {{
-    background-color: var(--chaphavian-iron);
-    color: var(--chaphavian-alabaster);
+    background-color: var(--chaphavian-iron) !important;
+    color: var(--chaphavian-alabaster) !important;
   }}
 
   /* ==========================================================================
@@ -2065,13 +2107,14 @@ def main():
 <body>
   <!-- TOP DEMO BAR SO MATTHEW CAN JUMP OR WATCH THE CLICK-FLOW -->
   <div class="flow-status-bar">
-    <div>THE CHAPMAN COLLECTION // TWO-ROOM CLICK-FLOW AND WHITE-GLOVE CHECKOUT PROTOTYPE</div>
+    <div>THE CHAPMAN COLLECTION // RANCHO SANTA FE GALLERY AND WHITE-GLOVE CHECKOUT PROTOTYPE</div>
     <div class="flow-steps">
-      <button type="button" class="flow-step-pill active" id="pill-home" onclick="switchView('home')">1. Landing (No Prices / No Cart)</button>
-      <button type="button" class="flow-step-pill" id="pill-gallery" onclick="switchView('gallery')">2. Gallery Lookbook (No Prices)</button>
-      <button type="button" class="flow-step-pill" id="pill-melissa" onclick="switchView('melissa')">3. About Us / Meet Melissa</button>
-      <button type="button" class="flow-step-pill" id="pill-curate" onclick="switchView('curate')">4. Curate Your Collection (Prices + Filter)</button>
-      <button type="button" class="flow-step-pill" id="pill-checkout" onclick="switchView('checkout')">5. White-Glove Checkout</button>
+      <button type="button" class="flow-step-pill active" id="pill-home" onclick="switchView('home')">Home</button>
+      <button type="button" class="flow-step-pill" id="pill-melissa" onclick="switchView('melissa')">1. About Us</button>
+      <button type="button" class="flow-step-pill" id="pill-gallery" onclick="switchView('gallery')">2. Services</button>
+      <button type="button" class="flow-step-pill" id="pill-curate" onclick="switchView('curate')">3. Inventory</button>
+      <button type="button" class="flow-step-pill" id="pill-shipping" onclick="openDetailsOnShipping()">4. Details on Shipping</button>
+      <button type="button" class="flow-step-pill" id="pill-checkout" onclick="switchView('checkout')">5. Check Out</button>
     </div>
   </div>
 
@@ -2079,15 +2122,15 @@ def main():
   <header class="brand-header">
     <img class="brand-crest" src="https://thechapmancollection.com/wp-content/uploads/2026/10/tcc-oct23-crest.png" onerror="this.style.display='none'" alt="The Chapman Collection Crest" onclick="switchView('home')">
     <h1 class="brand-title" onclick="switchView('home')">The Chapman Collection</h1>
-    <div class="brand-subtitle">Rancho Santa Fe and London Heritage &middot; Fine European Antiques and Carpets</div>
+    <div class="brand-subtitle">Rancho Santa Fe Village &middot; Fine European Antiques and Persian Carpets</div>
   </header>
   <nav class="brand-nav-bar">
     <ul class="main-nav">
-      <li><a id="nav-home" class="active" onclick="switchView('home')">Home</a></li>
-      <li><a id="nav-gallery" onclick="switchView('gallery')">Gallery</a></li>
-      <li><a id="nav-melissa" onclick="switchView('melissa')">Meet Melissa</a></li>
-      <li><a id="nav-curate" class="nav-curate-cta" onclick="switchView('curate')">Curate Your Collection</a></li>
-      <li><a id="nav-selection" class="nav-selection-pill" onclick="toggleDrawer(true)">Curated Selection (<span id="nav-cart-count">0</span>)</a></li>
+      <li><a id="nav-melissa" onclick="switchView('melissa')">About Us</a></li>
+      <li><a id="nav-gallery" onclick="switchView('gallery')">Services</a></li>
+      <li><a id="nav-curate" onclick="switchView('curate')">Inventory</a></li>
+      <li><a id="nav-shipping" onclick="openDetailsOnShipping()">Details on Shipping</a></li>
+      <li><a id="nav-checkout" class="nav-selection-pill" onclick="switchView('checkout')">Check Out (<span id="nav-cart-count">0</span>)</a></li>
     </ul>
   </nav>
 
@@ -2120,7 +2163,7 @@ def main():
             <div class="hero-kicker">Rancho Santa Fe Showroom</div>
             <h2 class="hero-panel-title">Period Furniture</h2>
             <p class="hero-panel-sub">17th to 19th Century European armoires, architectural hallstands and French marquetry</p>
-            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('EUROPEAN FURNITURE', '')">Curate Your Collection</button>
+            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('EUROPEAN FURNITURE', '')">Browse Inventory</button>
           </div>
         </div>
 
@@ -2130,10 +2173,10 @@ def main():
             <div class="hero-macro-collage" id="hero-carpet-collage"></div>
           </div>
           <div class="hero-colorblock-panel panel-warm-greige">
-            <div class="hero-kicker">Hand-Knotted Masterworks</div>
-            <h2 class="hero-panel-title">Tabriz and Silk Qum</h2>
-            <p class="hero-panel-sub">Palace-sized Persian carpets, corridor runners and Flemish tapestries selected by hand</p>
-            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('CARPETS & RUNNERS', '')">Curate Your Collection</button>
+            <div class="hero-kicker">Curated Masterworks</div>
+            <h2 class="hero-panel-title">Tabriz and Isfahan</h2>
+            <p class="hero-panel-sub">Palace-sized Persian carpets, antique wool weaves and Flemish tapestries selected by hand</p>
+            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('CARPETS & RUNNERS', '')">Browse Inventory</button>
           </div>
         </div>
 
@@ -2146,7 +2189,7 @@ def main():
             <div class="hero-kicker">Decorative Arts and Objects</div>
             <h2 class="hero-panel-title">Bronzes and S&egrave;vres</h2>
             <p class="hero-panel-sub">Signed 19th Century French bronzes, giltwood mirrors, marble sculpture and collector objects</p>
-            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('BRONZES & SCULPTURE', '')">Curate Your Collection</button>
+            <button type="button" class="hero-curate-btn" onclick="openCurateWithCategory('BRONZES & SCULPTURE', '')">Browse Inventory</button>
           </div>
         </div>
 
@@ -2169,13 +2212,13 @@ def main():
     <div style="max-width:1180px; margin:0 auto; padding:0 24px;">
       <section class="mansour-editorial-intro nrl-hover-box">
         <div style="font-family:'Montserrat',sans-serif; font-size:10.5px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:#B35A5E; margin-bottom:12px;">
-          Rancho Santa Fe and South Kensington Heritage
+          Rancho Santa Fe Village &middot; Curated European Antiques and Fine Persian Carpets
         </div>
         <p>
-          For over three decades, Melissa Chapman has sourced museum-caliber European period furniture, hand-knotted Persian and silk carpets, historical tapestries and fine decorative arts from her early showroom roots on Harrington Road in South Kensington, London to the heart of Rancho Santa Fe Village. Every piece is personally vetted for authenticity, architectural proportion and timeless warmth.
+          For over three decades, Melissa Chapman has sourced museum-caliber European period furniture, fine Persian carpets, historical tapestries and decorative arts from her Rancho Santa Fe Village showroom at 6014 La Granada. Every piece is personally vetted for authenticity, architectural proportion and timeless warmth.
         </p>
         <p>
-          Explore our editorial <a href="#gallery" onclick="switchView('gallery'); return false;">Gallery Lookbooks</a> or enter <a href="#curate" onclick="switchView('curate'); return false;">Curate Your Collection</a> to filter our live showroom inventory by color palette, historical period and room dimensions. For private in-home trials across Southern California, call or text Melissa directly at <a href="tel:+18583492638">(858) 349-2638</a>.
+          Explore our <a href="#curate" onclick="switchView('curate'); return false;">Inventory</a> to filter our live showroom collection by category, color palette, historical period and room dimensions, or review our <a href="#shipping" onclick="openDetailsOnShipping(); return false;">Details on Shipping</a>. For private appointments or inquiries, please contact us at <a href="tel:+18583492638">(858) 349-2638</a> or visit our Rancho Santa Fe showroom.
         </p>
       </section>
     </div>
@@ -2188,7 +2231,7 @@ def main():
   </div>
 
   <!-- ========================================================================
-       VIEW 2: GALLERY (CATEGORIZED LOOKBOOK CHAPTERS ON CHAPHAVIAN ALABASTER)
+       VIEW 2: GALLERY / SERVICES (CATEGORIZED LOOKBOOK CHAPTERS ON CHAPHAVIAN ALABASTER)
        ======================================================================== -->
   <div id="view-gallery" class="site-view">
     <section class="gallery-lookbook-stage">
@@ -2199,26 +2242,26 @@ def main():
   </div>
 
   <!-- ========================================================================
-       VIEW 2B: MEET MELISSA / ABOUT US (SCANDINAVIAN / GUSTAVIAN EDITORIAL SPREAD)
+       VIEW 2B: ABOUT US (SCANDINAVIAN / GUSTAVIAN EDITORIAL SPREAD)
        ======================================================================== -->
   <div id="view-melissa" class="site-view">
     <section class="console-wrap" style="max-width:1180px; padding-top:28px; padding-bottom:76px;">
       <!-- Main Split Editorial Hero (True 1fr / 1fr 4-Corner Cross Intersection Symmetry with Lower Grid) -->
       <div class="melissa-hero-split" style="display:grid; grid-template-columns:1fr 1fr; gap:32px; padding:12px 0 32px; align-items:stretch;">
-        <!-- Left Column: Singular Ranch and Coast Portrait Card + Credit + Curate Your Collection CTA -->
+        <!-- Left Column: Singular Ranch and Coast Portrait Card + Credit + Inventory CTA -->
         <div class="nrl-hover-box" style="padding:32px; display:flex; flex-direction:column; justify-content:space-between;">
           <div style="display:flex; flex-direction:column; flex:1;">
             <div class="nrl-framed-photo" style="flex:1; min-height:480px;">
-              <img id="melissa-about-hero-img" src="assets/melissa-seated-showroom.jpg" alt="Melissa Chapman in The Chapman Collection Rancho Santa Fe Showroom" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;">
+              <img id="melissa-about-hero-img" src="https://thechapmancollection.com/wp-content/uploads/2026/11/melissa-chapman-the-hero-nrl-graded-2026-11-07-15.58.30-Cr-1.jpg" alt="Melissa Chapman in The Chapman Collection Rancho Santa Fe Showroom" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;">
             </div>
             <div id="melissa-about-caption" style="font-style:italic; font-weight:600; font-size:15.5px; color:#2B2F32; text-align:center; margin-top:14px; line-height:1.45;">
               Melissa Chapman &middot; Photo courtesy of Ranch and Coast Magazine
             </div>
           </div>
 
-          <!-- Explore the Gallery Button Underneath the Photo (Flush with Right Column Signature) -->
+          <!-- Explore Inventory Button Underneath the Photo (Flush with Right Column Signature) -->
           <div style="margin-top:18px; padding-top:18px; border-top:1px solid #D5D3CC; text-align:center; display:flex; flex-direction:column; align-items:center;">
-            <button type="button" class="search-trigger" style="width:100%;" onclick="switchView('gallery')">Explore the Gallery</button>
+            <button type="button" class="search-trigger" style="width:100%;" onclick="switchView('curate')">Explore Inventory</button>
           </div>
         </div>
 
@@ -2226,7 +2269,7 @@ def main():
         <div style="font-size:20px; font-weight:500; line-height:1.8; color:#2B2F32; display:flex; flex-direction:column; justify-content:space-between;">
           <div>
             <div style="font-family:'Montserrat',sans-serif; font-size:10.5px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#B35A5E; margin-bottom:14px;">
-              Three Decades of London and California Curatorial Heritage
+              Rancho Santa Fe Village &middot; Curated European Antiques and Fine Persian Carpets
             </div>
 
             <p style="margin-bottom:20px;">
@@ -2266,22 +2309,22 @@ def main():
         </div>
       </div>
 
-      <!-- Lower Band: The Rancho Santa Fe Showroom & White-Glove Shipping / In-Home Trial Architecture (With Floating Hover Elevation) -->
+      <!-- Lower Band: The Rancho Santa Fe Showroom & White-Glove Shipping Architecture -->
       <div class="melissa-lower-grid" style="margin-top:8px; display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:stretch;">
-        <!-- Card 1: 6014 La Granada Showroom & In-Home Preview Promise -->
+        <!-- Card 1: 6014 La Granada Showroom & Official Showroom Hours -->
         <div class="nrl-hover-box" style="padding:32px; display:flex; flex-direction:column; justify-content:space-between;">
           <div>
             <div class="nrl-framed-photo" style="aspect-ratio:16 / 10; margin-bottom:20px;">
               <img src="assets/showroom-6014-la-granada.jpg" alt="The Chapman Collection Showroom at 6014 La Granada, Rancho Santa Fe" style="width:100%; height:100%; object-fit:cover; display:block;">
             </div>
             <div style="font-family:'Montserrat',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#B35A5E; margin-bottom:8px;">
-              Rancho Santa Fe Village &middot; Corner of La Granada and Paseo Delicias
+              Rancho Santa Fe Village &middot; 6014 La Granada, Rancho Santa Fe, CA 92067
             </div>
             <h3 style="font-size:24px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#2B2F32; margin-bottom:12px;">
-              Complimentary In-Home Placement Trials
+              Visit Our Rancho Santa Fe Showroom
             </h3>
             <p style="font-size:18px; font-weight:500; line-height:1.7; color:#2B2F32; margin-bottom:16px;">
-              Seeing a hand-knotted Persian carpet or an 18th Century European armoire in your own natural light is the truest way to know it belongs. Melissa and her showroom team offer complimentary in-home placement trials across Rancho Santa Fe, Del Mar, La Jolla and Coastal San Diego so you and your interior designer can experience pieces in situ before final acquisition.
+              Located at the corner of La Granada and Paseo Delicias in the heart of the Rancho Santa Fe Village, our gallery welcomes collectors and interior designers Monday through Thursday from 10:00 AM to 6:00 PM, Friday and Saturday from 10:00 AM to 7:00 PM, and Sunday by appointment. Explore our curated rooms of European antiques, Old World furnishings, fine art and Persian carpets in person.
             </p>
           </div>
           <div style="border-top:1px solid #D5D3CC; padding-top:16px; font-family:'Montserrat',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#52575D;">
@@ -2289,35 +2332,35 @@ def main():
           </div>
         </div>
 
-        <!-- Card 2: White-Glove Shipping Partners & Trade Concierge -->
-        <div class="nrl-hover-box" style="padding:32px; display:flex; flex-direction:column; justify-content:space-between;">
+        <!-- Card 2: Details on Shipping & Preferred Shipping Partners -->
+        <div id="prototype-shipping-card" class="nrl-hover-box" style="padding:32px; display:flex; flex-direction:column; justify-content:space-between;">
           <div>
             <div style="font-family:'Montserrat',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#B35A5E; margin-bottom:8px;">
               Domestic and International Fine-Art Logistics
             </div>
             <h3 style="font-size:24px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#2B2F32; margin-bottom:14px;">
-              White-Glove Shipping and Carrier Coordination
+              Details on Shipping and Carrier Coordination
             </h3>
             <p style="font-size:18px; font-weight:500; line-height:1.7; color:#2B2F32; margin-bottom:16px;">
-              Because Melissa has imported full containers of European antiques and palace-sized carpets for over thirty years, every acquisition outside Southern California is handled with museum-grade care. We coordinate directly with vetted white-glove blanket-wrap carriers and custom fine-art crating specialists for seamless door-to-room placement nationwide and abroad.
+              Because Melissa has imported full containers of European antiques and palace-sized carpets for over thirty years, every acquisition outside Southern California is handled with museum-grade care. Our preferred shipping partners offer professional packing, insurance options and worldwide shipping.
             </p>
             <div style="background:#EFECE6; border:1px solid #D5D3CC; padding:18px 20px; margin-bottom:18px;">
               <div style="font-family:'Montserrat',sans-serif; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:#2B2F32; font-weight:700; margin-bottom:8px;">
                 Three Effortless Fulfillment Pathways
               </div>
               <ul style="list-style:none; font-size:17px; font-weight:500; line-height:1.65; color:#2B2F32;">
-                <li style="margin-bottom:6px;"><strong style="color:#B35A5E; font-weight:700;">1. Local Estate Preview and Delivery:</strong> Complimentary showroom van delivery and placement across Rancho Santa Fe and San Diego County.</li>
-                <li style="margin-bottom:6px;"><strong style="color:#B35A5E; font-weight:700;">2. Showroom and Designer Warehouse Pickup:</strong> Immediate reservation at 6014 La Granada for client or ASID trade receiver pickup.</li>
-                <li><strong style="color:#B35A5E; font-weight:700;">3. Nationwide White-Glove Freight:</strong> Post-purchase carrier quotes billed at direct net transport cost with full transit insurance.</li>
+                <li style="margin-bottom:6px;"><strong style="color:#B35A5E; font-weight:700;">1. Accessories, Artwork and Carpets:</strong> Professional packing and insured shipping via The UPS Store #0400 in San Diego (858-453-7331).</li>
+                <li style="margin-bottom:6px;"><strong style="color:#B35A5E; font-weight:700;">2. Large Furniture, Accessories, Artwork and Carpets:</strong> White-glove crating and freight via Beejan Hamraz at Navis Pack &amp; Ship #25006CA (858-256-0103).</li>
+                <li><strong style="color:#B35A5E; font-weight:700;">3. International Container Shipping:</strong> Worldwide half-container and full 40-foot container loads arranged directly with our Rancho Santa Fe showroom.</li>
               </ul>
             </div>
           </div>
 
           <div style="border-top:1px solid #D5D3CC; padding-top:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
             <div style="font-size:16px; font-weight:600; font-style:italic; color:#2B2F32;">
-              Request a shipping quote or in-home trial directly with Melissa at (858) 349-2638.
+              Contact us at (858) 349-2638 or visit our Rancho Santa Fe showroom to request a shipping quote.
             </div>
-            <a href="tel:+18583492638" class="reset-trigger" style="text-decoration:none; display:inline-block;">Call (858) 349-2638</a>
+            <a href="tel:+18583492638" class="reset-trigger" style="text-decoration:none; display:inline-block;">Contact Us: (858) 349-2638</a>
           </div>
         </div>
       </div>
@@ -2325,12 +2368,12 @@ def main():
   </div>
 
   <!-- ========================================================================
-       VIEW 3: CURATE YOUR COLLECTION (THE ONLY ROOM WITH PRICES & ACQUISITION CART)
+       VIEW 3: INVENTORY (THE ONLY ROOM WITH PRICES & ACQUISITION CART)
        ======================================================================== -->
   <div id="view-curate" class="site-view">
     <main class="console-wrap" id="search-console">
-      <h2 class="console-lead">Curate Your Collection</h2>
-      <div class="filter-subhint" style="margin-bottom:26px;">Select one or multiple criteria below to filter by category, color palette, historical period and room dimensions. Pricing and direct acquisition are unlocked exclusively in this vault.</div>
+      <h2 class="console-lead">Inventory</h2>
+      <div class="filter-subhint" style="margin-bottom:26px;">Select one or multiple criteria below to filter our Rancho Santa Fe showroom inventory by category, color palette, historical period and room dimensions.</div>
 
       <!-- CATEGORIES -->
       <div class="filter-section">
@@ -2395,7 +2438,7 @@ def main():
 
     <section class="results-wrapper" id="gallery-anchor">
       <div class="results-bar">
-        <div class="results-count" id="results-count">Showing All Curated Pieces</div>
+        <div class="results-count" id="results-count">Showing All Showroom Pieces</div>
         <select class="results-sort" id="sort-select" onchange="applyFilters()">
           <option value="featured">Curatorial Order (Featured Slate Studio First)</option>
           <option value="price-desc">Price: High to Low</option>
@@ -2415,10 +2458,10 @@ def main():
     <section class="checkout-wrap">
       <div class="checkout-header-bar">
         <div>
-          <h2>Private Showroom Acquisition and White-Glove Checkout</h2>
-          <p style="font-style:italic; color:var(--text-muted); font-size:16px;">Every piece is backed by Melissa Chapman's Certificate of Provenance and Authenticity</p>
+          <h2>Private Showroom Acquisition and White-Glove Check Out</h2>
+          <p style="font-style:italic; color:var(--text-muted); font-size:16px;">Every piece is backed by The Chapman Collection's Certificate of Provenance and Authenticity</p>
         </div>
-        <button type="button" class="reset-trigger" onclick="switchView('curate')">&larr; Return to Curate Your Collection</button>
+        <button type="button" class="reset-trigger" onclick="switchView('curate')">&larr; Return to Inventory</button>
       </div>
 
       <div id="checkout-live-form" class="checkout-grid">
@@ -2452,16 +2495,16 @@ def main():
             </div>
           </div>
 
-          <!-- STEP 2: WHITE-GLOVE FULFILLMENT & IN-HOME TRIAL OPTIONS (MATCHING OUR LIVE WOOCOMMERCE ZONES) -->
+          <!-- STEP 2: WHITE-GLOVE FULFILLMENT OPTIONS (MATCHING OUR LIVE WOOCOMMERCE ZONES) -->
           <div class="checkout-block">
-            <div class="checkout-step-title">2. White-Glove Delivery, Showroom Pickup or 48-Hour In-Home Preview</div>
+            <div class="checkout-step-title">2. White-Glove Local Delivery, Showroom Pickup or Carrier Shipping</div>
 
             <div class="shipping-option-card active" id="ship-card-preview" onclick="selectShipping('preview')">
               <div>
-                <div class="shipping-option-title">Complimentary 48-Hour Southern California In-Home Preview</div>
-                <div class="shipping-option-desc">Our team brings your curated carpets and furniture into your residence in Rancho Santa Fe, La Jolla, Del Mar or Newport Beach on approval before final settlement.</div>
+                <div class="shipping-option-title">Southern California White-Glove Delivery and Placement</div>
+                <div class="shipping-option-desc">Our showroom team coordinates full White Glove delivery and placement across Rancho Santa Fe, La Jolla, Del Mar and Southern California.</div>
               </div>
-              <div class="shipping-option-badge">Complimentary</div>
+              <div class="shipping-option-badge">Local Concierge</div>
             </div>
 
             <div class="shipping-option-card" id="ship-card-pickup" onclick="selectShipping('pickup')">
@@ -2474,8 +2517,8 @@ def main():
 
             <div class="shipping-option-card" id="ship-card-carrier" onclick="selectShipping('carrier')">
               <div>
-                <div class="shipping-option-title">Client-Arranged Domestic or International White-Glove Shipping (Coordinated Post-Purchase)</div>
-                <div class="shipping-option-desc">Melissa personally coordinates custom crating, blanket-wrap fine-art transport and full-value transit insurance to your estate anywhere in the US or abroad.</div>
+                <div class="shipping-option-title">Domestic or International White-Glove Shipping (Coordinated Post-Purchase)</div>
+                <div class="shipping-option-desc">Our showroom coordinates custom crating, blanket-wrap fine-art transport and full-value transit insurance with our preferred shipping partners.</div>
               </div>
               <div class="shipping-option-badge">Billed at Carrier Cost</div>
             </div>
@@ -2514,8 +2557,8 @@ def main():
 
             <div class="shipping-option-card" id="pay-card-hold" onclick="selectPayment('hold')">
               <div>
-                <div class="shipping-option-title">48-Hour In-Home Trial Authorization Hold ($0 Charged Today)</div>
-                <div class="shipping-option-desc">Places a zero-charge card authorization while Melissa schedules your private in-home room placement.</div>
+                <div class="shipping-option-title">24-Hour Private Showroom Reservation Hold ($0 Charged Today)</div>
+                <div class="shipping-option-desc">Places a zero-charge card authorization while our showroom team confirms your delivery or shipping quote.</div>
               </div>
               <div class="shipping-option-badge">$0 Due Today</div>
             </div>
@@ -2541,12 +2584,12 @@ def main():
 
         <!-- RIGHT COLUMN: CURATED SELECTION SUMMARY LEDGER -->
         <aside class="checkout-summary-card">
-          <div class="summary-heading">Your Curated Selection</div>
+          <div class="summary-heading">Your Selected Pieces</div>
           <div id="checkout-items-list"></div>
 
           <div style="margin-top:18px;">
             <div class="summary-line">
-              <span>Curated Pieces Subtotal</span>
+              <span>Selected Pieces Subtotal</span>
               <span id="chk-subtotal">$0</span>
             </div>
             <div class="summary-line" id="chk-wire-row" style="display:none; color:#2E6B47;">
@@ -2555,7 +2598,7 @@ def main():
             </div>
             <div class="summary-line">
               <span>White-Glove Fulfillment</span>
-              <span id="chk-shipping-label">Complimentary In-Home Preview</span>
+              <span id="chk-shipping-label">Local White-Glove Delivery</span>
             </div>
             <div class="summary-line">
               <span>Certificate of Provenance and Appraisal</span>
@@ -2589,7 +2632,7 @@ def main():
   <div class="drawer-backdrop" id="drawer-backdrop" onclick="toggleDrawer(false)"></div>
   <aside class="selection-drawer" id="selection-drawer">
     <div class="drawer-header">
-      <h3>Curated Selection</h3>
+      <h3>Selected Pieces</h3>
       <button type="button" class="drawer-close" onclick="toggleDrawer(false)">&times;</button>
     </div>
     <div class="drawer-items" id="drawer-items"></div>
@@ -2598,7 +2641,7 @@ def main():
         <span>Selection Total</span>
         <strong id="drawer-subtotal-val">$0</strong>
       </div>
-      <button type="button" class="drawer-checkout-btn" onclick="proceedToCheckout()">Proceed to White-Glove Checkout &rarr;</button>
+      <button type="button" class="drawer-checkout-btn" onclick="proceedToCheckout()">Proceed to Check Out &rarr;</button>
     </div>
   </aside>
 
@@ -2613,12 +2656,12 @@ def main():
         <h3 id="modal-title" style="font-size:24px; font-weight:400; line-height:1.3; margin-bottom:10px;"></h3>
         <div id="modal-dims" style="font-style:italic; font-size:15px; color:var(--text-muted); margin-bottom:18px;"></div>
         <p style="font-size:16px; color:#4A4845; margin-bottom:24px;">
-          Personally selected by Melissa Chapman for The Chapman Collection in Rancho Santa Fe. Available for private Southern California in-home preview and nationwide white-glove delivery.
+          Personally selected by Melissa Chapman for The Chapman Collection in Rancho Santa Fe. Available for private showroom viewing and nationwide white-glove delivery.
         </p>
         <div style="font-style:italic; font-size:13px; color:var(--text-italic-hint); margin-bottom:14px;">
-          Itemized pricing and direct acquisition are exclusively unlocked inside Curate Your Collection.
+          Itemized pricing and direct acquisition are available inside our Inventory view.
         </div>
-        <button type="button" class="search-trigger" id="modal-curate-btn">Unlock in Curate Your Collection &rarr;</button>
+        <button type="button" class="search-trigger" id="modal-curate-btn">View in Inventory &rarr;</button>
       </div>
     </div>
   </div>
@@ -2630,24 +2673,24 @@ def main():
         <h4>Rancho Santa Fe Village Showroom</h4>
         <div style="width:44px; height:1px; background:#B35A5E; margin:0 auto 14px;"></div>
         <div class="showroom-address-line">6014 La Granada, Rancho Santa Fe, CA 92067</div>
-        <div class="showroom-hours-line">Monday through Saturday &middot; 10:00 AM to 6:00 PM &middot; Sunday by Private Appointment</div>
+        <div class="showroom-hours-line">Monday through Thursday: 10:00 AM to 6:00 PM &middot; Friday and Saturday: 10:00 AM to 7:00 PM &middot; Sunday: By Appointment</div>
         <div class="showroom-phone-line">Private Showroom Concierge &middot; <a href="tel:+18583492638">(858) 349-2638</a></div>
       </div>
     </div>
 
     <div class="footer-legal-strip">
       <div class="footer-bottom-flex">
-        <div class="footer-brand-copy">&copy; 2026 The Chapman Collection &middot; All Rights Reserved &middot; Rancho Santa Fe and London Heritage</div>
+        <div class="footer-brand-copy">&copy; 2026 The Chapman Collection &middot; All Rights Reserved &middot; 6014 La Granada, Rancho Santa Fe, CA 92067</div>
         <ul class="footer-policy-links">
           <li><a href="https://thechapmancollection.com/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a></li>
           <li><a href="https://thechapmancollection.com/terms-and-conditions/" target="_blank" rel="noopener">Terms and Conditions</a></li>
-          <li><a href="https://thechapmancollection.com/refund_returns/" target="_blank" rel="noopener">Shipping, Returns and In-Home Trial Policy</a></li>
+          <li><a href="https://thechapmancollection.com/services/#shipping-and-delivery" target="_blank" rel="noopener">Details on Shipping</a></li>
           <li><a href="https://thechapmancollection.com/services/" target="_blank" rel="noopener">Appraisals and Restoration</a></li>
-          <li><a href="https://thechapmancollection.com/contact/" target="_blank" rel="noopener">Contact Showroom</a></li>
+          <li><a href="https://thechapmancollection.com/contact-us/" target="_blank" rel="noopener">Contact Us</a></li>
         </ul>
       </div>
       <div class="footer-disclaimer-fineprint">
-        All period antiques, hand-knotted carpets, tapestries and works of art are offered subject to prior showroom sale. Dimensions are approximate as all pieces are handcrafted and centuries-old masterworks; condition reports and high-resolution macro photography are provided upon request prior to white-glove dispatch.
+        All period antiques, fine Persian carpets, tapestries and works of art are offered subject to prior showroom sale. Dimensions are approximate as all pieces are handcrafted and centuries-old masterworks; condition reports and high-resolution macro photography are provided upon request prior to white-glove dispatch.
       </div>
       <div class="nrl-atelier-colophon">
         Curatorial Search Architecture and Real-Time Gallery Light Engine by <a href="https://renderwithoutcode.com" target="_blank" rel="noopener">NeverRender Labs</a>
@@ -2700,12 +2743,32 @@ function switchView(viewName) {{
     const pill = document.getElementById("pill-" + v);
     if (pill) pill.classList.toggle("active", v === viewName);
   }});
+  const shipNav = document.getElementById("nav-shipping");
+  if (shipNav) shipNav.classList.remove("active");
+  const shipPill = document.getElementById("pill-shipping");
+  if (shipPill) shipPill.classList.remove("active");
   if (viewName === "checkout") {{
     document.getElementById("checkout-live-form").style.display = "grid";
     document.getElementById("checkout-confirmation-box").style.display = "none";
     renderCheckoutSummary();
   }}
   window.scrollTo({{ top: 0, behavior: "smooth" }});
+}}
+
+function openDetailsOnShipping() {{
+  switchView("melissa");
+  const shipNav = document.getElementById("nav-shipping");
+  if (shipNav) shipNav.classList.add("active");
+  const melNav = document.getElementById("nav-melissa");
+  if (melNav) melNav.classList.remove("active");
+  const shipPill = document.getElementById("pill-shipping");
+  if (shipPill) shipPill.classList.add("active");
+  const melPill = document.getElementById("pill-melissa");
+  if (melPill) melPill.classList.remove("active");
+  setTimeout(() => {{
+    const card = document.getElementById("prototype-shipping-card");
+    if (card) card.scrollIntoView({{ behavior: "smooth", block: "start" }});
+  }}, 120);
 }}
 
 function setAboutPortrait(src, caption, activeIdx) {{
@@ -2822,7 +2885,7 @@ function renderGalleryLookbooks() {{
     <div class="lookbook-chapter">
       <div class="chapter-header">
         <div class="chapter-title">${{ch.title}}</div>
-        <button type="button" class="chapter-curate-link" onclick="openCurateWithCategory('${{ch.cat}}', '')">Curate This Category &rarr;</button>
+        <button type="button" class="chapter-curate-link" onclick="openCurateWithCategory('${{ch.cat}}', '')">Browse This Category &rarr;</button>
       </div>
       <div class="chapter-track">
         ${{ch.items.map(item => `
@@ -2963,7 +3026,7 @@ function applyFilters() {{
   }}
 
   document.getElementById("results-count").textContent =
-    `Showing ${{filtered.length}} of ${{CATALOG.length}} Curated Pieces (Prices Unlocked)`;
+    `Showing ${{filtered.length}} of ${{CATALOG.length}} Showroom Pieces`;
 
   const grid = document.getElementById("gallery-grid");
   grid.innerHTML = filtered.map(item => {{
@@ -3034,7 +3097,7 @@ function getCartSubtotal() {{
 function renderCartDrawer() {{
   const box = document.getElementById("drawer-items");
   if (state.cart.length === 0) {{
-    box.innerHTML = `<p style="font-style:italic; color:var(--text-muted); text-align:center; padding:40px 0;">Your Curated Selection is currently empty. Add pieces inside Curate Your Collection.</p>`;
+    box.innerHTML = `<p style="font-style:italic; color:var(--text-muted); text-align:center; padding:40px 0;">Your selection is currently empty. Add pieces inside our Inventory view.</p>`;
   }} else {{
     box.innerHTML = state.cart.map(item => `
       <div class="drawer-item">
@@ -3094,12 +3157,12 @@ function renderCheckoutSummary() {{
   document.getElementById("chk-wire-discount").textContent = "-" + formatPrice(wireDisc);
 
   const shipLabels = {{
-    preview: "Complimentary 48-Hr In-Home Preview",
+    preview: "Local White-Glove Delivery",
     pickup: "Complimentary RSF Showroom Pickup",
     carrier: "Coordinated Post-Purchase"
   }};
   document.getElementById("chk-shipping-label").textContent = shipLabels[state.shippingMode];
-  document.getElementById("chk-total-label").textContent = state.paymentMode === "hold" ? "Due Today (48-Hr Trial Hold)" : "Total Acquisition";
+  document.getElementById("chk-total-label").textContent = state.paymentMode === "hold" ? "Due Today (24-Hr Showroom Hold)" : "Total Acquisition";
   document.getElementById("chk-total-val").textContent = state.paymentMode === "hold" ? "$0 (Auth Only)" : formatPrice(finalTotal);
 }}
 
@@ -3111,7 +3174,7 @@ function submitWhiteGloveOrder() {{
   document.getElementById("checkout-confirmation-box").style.display = "block";
 
   document.getElementById("confirm-dynamic-copy").innerHTML =
-    `Thank you, ${{fname}}. Your curated selection (${{state.cart.length}} pieces, valued at ${{formatPrice(sub)}}) has been placed on private showroom hold at 6014 La Granada. Melissa Chapman will text your mobile shortly from <strong>(858) 349-2638</strong> to confirm your white-glove appointment at ${{addr}}.`;
+    `Thank you, ${{fname}}. Your selection (${{state.cart.length}} pieces, valued at ${{formatPrice(sub)}}) has been placed on private showroom hold at 6014 La Granada. Our Rancho Santa Fe showroom team will contact you shortly from <strong>(858) 349-2638</strong> to confirm your white-glove delivery or pickup arrangements for ${{addr}}.`;
 
   document.getElementById("confirm-items-recap").innerHTML = state.cart.map(item => `
     <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #EEE; font-size:15px;">
@@ -3137,7 +3200,7 @@ function renderCollageSplash() {{
     return m || carpets[fallbackIdx % carpets.length] || CATALOG[0];
   }};
 
-  const tRunner   = findCarpet("runner", 0);
+  const tIsfahan  = findCarpet("isfahan", 0);
   const tTabriz   = findCarpet("tabriz", 1);
   const tQum      = findCarpet("qum", 2);
   const tHeriz    = findCarpet("heriz", 3);
@@ -3157,9 +3220,9 @@ function renderCollageSplash() {{
   const mount = document.getElementById("collage-splash-mount");
   mount.innerHTML = `
     <div class="collage-row-3">
-      ${{tileHtml(tRunner,   "Gallery Runners", "CARPETS & RUNNERS", "runner")}}
-      ${{tileHtml(tTabriz,   "Tabriz",          "CARPETS & RUNNERS", "tabriz")}}
-      ${{tileHtml(tQum,      "Qum Silk",        "CARPETS & RUNNERS", "qum")}}
+      ${{tileHtml(tIsfahan,  "Isfahan",          "CARPETS & RUNNERS", "isfahan")}}
+      ${{tileHtml(tTabriz,   "Tabriz",           "CARPETS & RUNNERS", "tabriz")}}
+      ${{tileHtml(tQum,      "Persian Qum Wool", "CARPETS & RUNNERS", "qum")}}
     </div>
     <div class="collage-row-2">
       ${{tileHtml(tHeriz,    "Heriz and Serapi",  "CARPETS & RUNNERS", "heriz")}}
