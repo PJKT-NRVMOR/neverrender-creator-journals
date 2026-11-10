@@ -25,11 +25,12 @@ Whenever drafting, editing, or reviewing any client-facing copy for **The Chapma
 - **Short, balanced 2-sentence paragraphs** with gracious, low-pressure hospitality.
 - **Permanent Copy & Social Guardrails (Effective Immediately, Nov 8, 2026)**:
   1. **No In-Home Trial Offers**: Never mention `"48 hour in home trial"`, `"free in home trial"`, or `"complimentary in home preview"` across any social posts, adverts, or website pages.
-  2. **Official Showroom Hours**:
-     - Monday through Thursday: `10:00 AM to 6:00 PM`
-     - Friday and Saturday: `10:00 AM to 7:00 PM`
-     - Sunday: `By Appointment`
-     *(Never write `"10:00 AM to 5:00 PM"`, `"Tuesday through Saturday"`, or `"open seven days a week"`).*
+  2. **Official Holiday Showroom Hours (Effective Nov 9 - Dec 23, 2026; Regular Hours Resume Dec 28, 2026)**:
+     - **Active Holiday Hours (Nov 9 - Dec 23):** Monday through Friday `10:00 AM to 7:00 PM`, Saturday `9:00 AM to 7:00 PM`, Sunday `11:00 AM to 4:00 PM`
+     - **Thanksgiving Week:** Wed Nov 25 `10:00 AM to 4:00 PM`, Thu Nov 26 & Fri Nov 27 `Closed`, Sat Nov 28 `9:00 AM to 7:00 PM`
+     - **Christmas Week:** Thu Dec 24 `10:00 AM to 2:00 PM`, Fri Dec 25 through Sun Dec 27 `Closed`
+     - **Regular Hours (Resuming Mon Dec 28, 2026):** Monday through Friday `10:00 AM to 6:00 PM`, Saturday `9:00 AM to 7:00 PM`, Sunday `By Appointment`
+     *(Never write `"10:00 AM to 5:00 PM"` or `"Tuesday through Saturday"`).*
   3. **Hand-Finished Silk Carpets (PERMANENTLY REMOVED - 09:46 AM PST, Nov 8, 2026)**:
      - Remove 100% of hand-finished silk Qum carpets (`WC-3192, 3105, 3103, 3101, 3098, 3095, 3092, 3090, 3088, 3081`) from the website (`status="draft"`, `catalog_visibility="hidden"`), Meta Catalog, social media, and future email circulars.
      - Redirect all legacy `/product/*hand-finished-silk-qum*` URLs (including the `09:02 AM` newsletter Midnight Blue Runner link) directly (`302`) to `https://thechapmancollection.com/product-category/carpets/`.
@@ -38,7 +39,11 @@ Whenever drafting, editing, or reviewing any client-facing copy for **The Chapma
      - Always write `"contact us"` or `"visit our Rancho Santa Fe showroom"`.
   5. **Pre-Post Social Approval**: Send draft social posts to Melissa via text or email for a quick factual check before publishing.
   6. **Top-Level Navigation**: Never use `"Curate Your Collection"`; keep top-level navigation strictly to the 5 core pages (`About Us`, `Services`, `Inventory` / `Shop`, `Details on Shipping`, `Check Out` / `Contact Us`).
-- **Enshrined 5-Swatch "Chaphavian Palette" (`Chapman + Safe Haven + Gustavian` — Active Default Until Otherwise Noticed)**:
+  7. **Melissa Personal Likeness & `Go Daddy photo shoot` Archive Guardrails (Effective Nov 9, 2026)**:
+     - **Zero Unapproved Photos of Melissa**: Never publish, stage, or use any photograph featuring Melissa Chapman without her explicit prior review and approval of that exact shot first.
+     - **`Go Daddy photo shoot` = Sold / Archive Only**: Most items in the Dropbox `Melissa Chapman - Go Daddy photo shoot` folder are already sold; treat that folder strictly as occasional atmospheric/editorial imagery, never as active inventory for product cards or shop listings.
+  8. **Weekly Flagship Broadcast Slot (`Friday at 2:00 PM PST`)**: Regular weekly Omnisend circulars deploy **Fridays at `2:00 PM PST`** (starting Friday, Nov 13, 2026 with locked subject `"Let The Chapman Collection help you get ready for the Holidays"`, pre-approved and scheduled Thursday evening, Nov 12).
+- **Enshrined 5-Swatch "Chaphavian Palette" (`Chapman + Safe Haven + Gustavian` - Active Default Until Otherwise Noticed)**:
   ```css
   :root {
     /* The Chaphavian Palette (Chapman + Safe Haven + Gustavian) */
