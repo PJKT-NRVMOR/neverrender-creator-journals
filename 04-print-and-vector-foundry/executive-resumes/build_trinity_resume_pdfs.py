@@ -327,7 +327,7 @@ def build_resume_pdf(email_address, location_label, title_subtitle, output_path)
     p1.text_center(
         306.0,
         697.5,
-        "[ AGENT TRINITY // GEMINI 4 ARGON ]   *   [ GOOGLE LABS FEATURED TECHNOLOGIST ]   *   [ 100% DATA SOVEREIGNTY ]",
+        "[ AGENT TRINITY // GEMINI 4 CARBON ]   *   [ GOOGLE LABS FEATURED TECHNOLOGIST ]   *   [ 100% DATA SOVEREIGNTY ]",
         font_key="F4",
         size=7.1,
         rgb=TRINITY_MAG,
@@ -388,7 +388,7 @@ def build_resume_pdf(email_address, location_label, title_subtitle, output_path)
     p1.text(
         margin + 67,
         stack_box_y + 5.0,
-        "Antigravity IDE // Gemini 4 Argon & Flash // NotebookLM RAG // WooCommerce REST v3 // Omnisend SMS/MMS // Python CV",
+        "Antigravity IDE // Gemini 4 Carbon & Flash // NotebookLM RAG // WooCommerce REST v3 // Omnisend SMS/MMS // Python CV",
         font_key="F3",
         size=6.55,
         rgb=OBSIDIAN,
@@ -443,21 +443,17 @@ def build_resume_pdf(email_address, location_label, title_subtitle, output_path)
 
     projects = [
         (
-            "The Chapman Collection // Luxury E-Commerce & Dual-Layer AI Concierge",
-            "[ENTERPRISE CLIENT // OCT 2026]",
+            "Full-Stack Luxury Retail & Omnichannel CRM Engine // Enterprise Architecture",
+            "[ENTERPRISE COMMERCE // 2026]",
             TRINITY_MAG,
-            "https://thechapmancollection.com/",
+            "https://renderwithoutcode.com/front-desk.html",
             [
-                ("Architected the end-to-end digital transformation for a flagship Rancho Santa Fe European antiques and fine Persian carpet gallery (", "F3", OBSIDIAN_BODY),
-                ("thechapmancollection.com", "F4", ARGON_CYAN),
-                ("). Consolidated ", "F3", OBSIDIAN_BODY),
+                ("Architected the end-to-end digital commerce transformation for a Southern California European antiques and fine art gallery. Consolidated ", "F3", OBSIDIAN_BODY),
                 ("1,434 collector profiles", "F4", OBSIDIAN),
                 (" and ", "F3", OBSIDIAN_BODY),
                 ("225 carrier-verified E.164 VIP mobile numbers", "F4", OBSIDIAN),
-                ("; scaled the live WooCommerce catalog to ", "F3", OBSIDIAN_BODY),
-                ("81 fine art and antique listings", "F4", OBSIDIAN),
-                (" via headless Python/REST automation with planar homography photo rectification and 100% green Yoast SEO/AEO schema; resolved Meta Commerce checkout routing via a server-side PHP cart handler and TSV shipping feed override; and deployed a 24/7 air-gapped ", "F3", OBSIDIAN_BODY),
-                ("NotebookLM + Gemini 4 Argon", "F4", ULTRAVIOLET),
+                ("; scaled the live WooCommerce catalog via headless Python/REST automation with planar homography photo rectification and 100% green Yoast SEO/AEO schema; resolved Meta Commerce checkout routing via a server-side PHP cart handler and TSV shipping feed override; and deployed a 24/7 air-gapped ", "F3", OBSIDIAN_BODY),
+                ("NotebookLM + Gemini 4 Carbon", "F4", ULTRAVIOLET),
                 (" curatorial concierge (DEE). Inaugural Omnisend broadcast achieved a ", "F3", OBSIDIAN_BODY),
                 ("99.5% True Delivered rate", "F4", TRINITY_MAG),
                 (", ", "F3", OBSIDIAN_BODY),
@@ -513,12 +509,12 @@ def build_resume_pdf(email_address, location_label, title_subtitle, output_path)
         (
             "PRINCIPAL AI SYSTEMS ARCHITECT & TECHNICAL DIRECTOR",
             " // NEVERRENDER LABS",
-            "Retained Enterprise Architect (The Chapman Collection, Rancho Santa Fe, CA) | 2025 - Present",
+            "Founder & Principal Systems Architect (San Diego, CA) | 2025 - Present",
             TRINITY_MAG,
             [
                 "Lead full-stack digital infrastructure, WooCommerce/WordPress REST API v3 automation, Meta Commerce catalog synchronization, and Omnisend email/SMS/MMS architecture for luxury retail clientele.",
-                "Engineered custom Python computer-vision pipelines for planar homography perspective rectification, storefront glass frosting, and unified studio backdrop compositing across 81+ fine art and antique assets.",
-                "Built dual-layer NotebookLM + Gemini 4 Argon autonomous reception and operational intelligence vaults (DEE) alongside living multimodal voice-corpus copywriting skills with strict AI-tell sanitization.",
+                "Engineered custom Python computer-vision pipelines for planar homography perspective rectification, storefront glass frosting, and unified studio backdrop compositing across high-value fine art and antique assets.",
+                "Built dual-layer NotebookLM + Gemini 4 Carbon autonomous reception and operational intelligence vaults (DEE) alongside living multimodal voice-corpus copywriting skills with strict AI-tell sanitization.",
             ],
         ),
         (
@@ -601,7 +597,7 @@ def build_resume_pdf(email_address, location_label, title_subtitle, output_path)
 
     v_rows = [
         ("• Interactive Resume:   ", "F4", OBSIDIAN, "renderwithoutcode.com/resume.html", "F4", ARGON_CYAN, "  |  24/7 AI Concierge: renderwithoutcode.com/front-desk.html", "F3", OBSIDIAN_BODY),
-        ("• Client Storefront:    ", "F4", OBSIDIAN, "thechapmancollection.com", "F4", TRINITY_MAG, "  |  81 Curated Listings // 99.5% True Delivered CRM Engine", "F3", OBSIDIAN_BODY),
+        ("• Commerce Architecture:", "F4", OBSIDIAN, "Headless WooCommerce REST v3 + Omnisend", "F4", TRINITY_MAG, "  |  1,434 Profiles // 99.5% True Delivered CRM Engine", "F3", OBSIDIAN_BODY),
         ("• Google Labs Feature:  ", "F4", OBSIDIAN, "labs.google/fx/tools/flow (RETRO-TERM 80)", "F4", ULTRAVIOLET, "  |  Research Vaults: renderwithoutcode.com/notebook-research.html", "F3", OBSIDIAN_BODY),
         ("• Security & Hardware:  ", "F4", OBSIDIAN, "AMD Ryzen 6800U APU // WireGuard VPN", "F4", OBSIDIAN_BODY, "  |  Zero-PII Air-Gapped Dual-Layer NotebookLM RAG", "F3", OBSIDIAN_BODY),
     ]
@@ -625,7 +621,7 @@ if __name__ == "__main__":
     for sp in studio_paths:
         build_resume_pdf(
             email_address="creator@renderwithoutcode.com",
-            location_label="Oceanside & Rancho Santa Fe, CA",
+            location_label="Oceanside & San Diego, CA",
             title_subtitle="AGENTIC SYSTEMS ARCHITECT, FULL-STACK E-COMMERCE DIRECTOR & LEAD OF VISUAL SYNTHESIS",
             output_path=sp,
         )
