@@ -31,6 +31,7 @@ $Tree2 = "c:\Users\Saturn\Desktop\project-marshall-college"
 $WebsiteRepo = "c:\Users\Saturn\Desktop\G_AG_FLDR\NEVERRENDER_LABS_WEBSITE"
 
 Copy-Item -Path "$Tree1\AGENTS.md" -Destination "$Tree2\AGENTS.md" -Force
+Copy-Item -Path "$Tree1\.agents\skills\caelum-daily-drive-context-sweep\SKILL.md" -Destination "$Tree2\.agents\skills\caelum-daily-drive-context-sweep\SKILL.md" -Force
 Copy-Item -Path "$Tree1\.agents\skills\wyatt-nrl-voice-copywriter\SKILL.md" -Destination "$Tree2\.agents\skills\wyatt-nrl-voice-copywriter\SKILL.md" -Force
 Copy-Item -Path "$Tree1\.agents\skills\wyatt-nrl-voice-copywriter\references\wyatt-voice-corpus.md" -Destination "$Tree2\.agents\skills\wyatt-nrl-voice-copywriter\references\wyatt-voice-corpus.md" -Force
 Copy-Item -Path "$Tree1\.agents\skills\melissa-tone-copywriter\SKILL.md" -Destination "$Tree2\.agents\skills\melissa-tone-copywriter\SKILL.md" -Force
@@ -40,6 +41,9 @@ function Resolve-CorpusRebaseIfNeeded {
     param([string]$RepoPath, [string]$Tag)
     $RebaseMerge = Join-Path $RepoPath ".git\rebase-merge"
     $RebaseApply = Join-Path $RepoPath ".git\rebase-apply"
+    if ((Test-Path $RebaseMerge) -and -not (Test-Path (Join-Path $RebaseMerge "head-name"))) {
+        Remove-Item -Path $RebaseMerge -Recurse -Force -ErrorAction SilentlyContinue
+    }
     if ((Test-Path $RebaseMerge) -or (Test-Path $RebaseApply)) {
         Write-SyncLog "  [$Tag-AutoResolve] Detected active rebase conflict on append-only corpus; union-merging both blocks..."
         $CorpusFiles = @(
@@ -85,7 +89,7 @@ git -C $Tree1 push origin main 2>&1 | ForEach-Object { Write-SyncLog "  [Tree1-P
 # ------------------------------------------------------------------------------
 Write-SyncLog "--- Syncing Tree 2 (project-marshall-college) ---"
 Resolve-CorpusRebaseIfNeeded -RepoPath $Tree2 -Tag "Tree2"
-git -C $Tree2 add .gitattributes AGENTS.md .agents/ scripts/ "project-marshall-college/00-iskenderun/headmaster/04-agents/seo-aeo-weekly-audits/" "project-marshall-college/04-campaigns-outreach-drops/chapman-curatorial-gallery-search.html" "project-marshall-college/04-campaigns-outreach-drops/2026-11-04-scandinavian-gustavian-gallery/index.html" "project-marshall-college/04-campaigns-outreach-drops/2026-11-04-scandinavian-gustavian-gallery/2026-11-04-Omnisend_Scandinavian_Gustavian_Gallery_Full_Import.html" "project-marshall-college/04-campaigns-outreach-drops/approved-active-drops/2026-10-25_Automated_Post_Click_Showroom_Touchpoint/2026-11-09_Automated_Post_Click_Showroom_Touchpoint_Chaphavian.html" "project-marshall-college/04-campaigns-outreach-drops/approved-active-drops/2026-11-09_Chaphavian_Automations_Refresh/"
+git -C $Tree2 add .gitattributes AGENTS.md .agents/ scripts/ "project-marshall-college/00-iskenderun/headmaster/04-agents/seo-aeo-weekly-audits/" "project-marshall-college/04-campaigns-outreach-drops/chapman-curatorial-gallery-search.html" "project-marshall-college/04-campaigns-outreach-drops/2026-11-04-scandinavian-gustavian-gallery/index.html" "project-marshall-college/04-campaigns-outreach-drops/2026-11-04-scandinavian-gustavian-gallery/2026-11-04-Omnisend_Scandinavian_Gustavian_Gallery_Full_Import.html" "project-marshall-college/04-campaigns-outreach-drops/approved-active-drops/2026-10-25_Automated_Post_Click_Showroom_Touchpoint/2026-11-09_Automated_Post_Click_Showroom_Touchpoint_Chaphavian.html" "project-marshall-college/04-campaigns-outreach-drops/approved-active-drops/2026-11-09_Chaphavian_Automations_Refresh/" "project-marshall-college/04-campaigns-outreach-drops/2026-11-10-Chaphavian HTML Email Spec Going Forward.md" "project-marshall-college/04-campaigns-outreach-drops/drafts-for-chapman-marshall-college-approval/2026-11-11-veterans-day-tribute/2026-11-11_Omnisend_Veterans_Day_Tribute_Chaphavian_Import.html" "project-marshall-college/04-campaigns-outreach-drops/drafts-for-chapman-marshall-college-approval/2026-11-11-veterans-day-tribute/2026-11-11_Veterans_Day_Omnisend_and_Social_Brief.md" "project-marshall-college/04-campaigns-outreach-drops/drafts-for-chapman-marshall-college-approval/2026-11-11-veterans-day-tribute/index.html" "project-marshall-college/04-campaigns-outreach-drops/drafts-for-chapman-marshall-college-approval/2026-11-11-veterans-day-tribute/mms-preview.html"
 $Status2 = git -C $Tree2 diff --cached --name-only
 if ($Status2) {
     git -C $Tree2 commit -m "chore(pmc): auto-sync Chaphavian guardrails, voice corpuses & compilers [$Timestamp]"
