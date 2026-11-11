@@ -59,6 +59,9 @@ function Resolve-CorpusRebaseIfNeeded {
         git -C $RepoPath add -u
         $env:GIT_EDITOR = "true"
         git -C $RepoPath -c core.editor=true rebase --continue 2>&1 | ForEach-Object { Write-SyncLog "  [$Tag-AutoResolve] $_" }
+        if ((Test-Path $RebaseMerge) -and -not (Test-Path (Join-Path $RebaseMerge "head-name"))) {
+            Remove-Item -Path $RebaseMerge -Recurse -Force -ErrorAction SilentlyContinue
+        }
     }
 }
 
