@@ -102,10 +102,11 @@ git -C $Tree2 push origin main 2>&1 | ForEach-Object { Write-SyncLog "  [Tree2-P
 # Repo 3: Website (NEVERRENDER_LABS_WEBSITE -> PJKT-NRVMOR/neverrender-labs-website)
 # ------------------------------------------------------------------------------
 Write-SyncLog "--- Syncing Website Repo (neverrender-labs-website) ---"
+git -C $WebsiteRepo add AGENTS.md
 git -C $WebsiteRepo add -u
 $Status3 = git -C $WebsiteRepo diff --cached --name-only
 if ($Status3) {
-    git -C $WebsiteRepo commit -m "chore(web): auto-sync website & PMC approval previews [$Timestamp]"
+    git -C $WebsiteRepo commit -m "chore(web): auto-sync NeverRender Labs website & studio rules [$Timestamp]"
 }
 git -C $WebsiteRepo pull --rebase --autostash origin main 2>&1 | ForEach-Object { Write-SyncLog "  [Website-Pull] $_" }
 git -C $WebsiteRepo push origin main 2>&1 | ForEach-Object { Write-SyncLog "  [Website-Push] $_" }
