@@ -388,7 +388,7 @@ def draw_front_page(pdf, pal, email="creator@renderwithoutcode.com"):
     # Subtitle with multi-color accents
     sub1 = "CREATIVE TECHNOLOGIST & AI SYSTEMS ARCHITECT "
     sub2 = "//"
-    sub3 = " v3.1 ARGON"
+    sub3 = " v4.2 CARBON"
     pdf.text(16.0, 54.0, sub1, "F4", 6.1, pal["cyan"])
     w_sub1 = str_width(sub1, "F4", 6.1)
     pdf.text(16.0 + w_sub1, 54.0, sub2, "F4", 6.1, pal["magenta"])
@@ -428,7 +428,7 @@ def draw_front_page(pdf, pal, email="creator@renderwithoutcode.com"):
 
     # Footer micro-line: email + location
     pdf.text(16.0, 129.5, f"MAIL // {email}", "F4", 4.65, pal["obsidian_soft"])
-    loc_txt = "SAN DIEGO, CA // [GEMINI 4 ARGON]"
+    loc_txt = "SAN DIEGO, CA // [GEMINI 4 CARBON]"
     loc_w = str_width(loc_txt, "F4", 4.55)
     pdf.text(PAGE_W - 16.0 - loc_w, 129.5, loc_txt, "F4", 4.55, pal["slate"])
 
@@ -439,7 +439,7 @@ def draw_back_page(pdf, pal, email="creator@renderwithoutcode.com"):
 
     # Left Column: CONNECT TERMINAL + Endpoints
     lx = 16.0
-    pdf.text(lx, 21.5, "SYSTEM DETECTED // AGENT TRINITY v3.1", "F4", 4.85, pal["cyan"])
+    pdf.text(lx, 21.5, "SYSTEM DETECTED // AGENT TRINITY v4.2", "F4", 4.85, pal["cyan"])
     pdf.text(lx, 33.5, "NEVERRENDER LABS", "F2", 11.0, pal["obsidian"])
     pdf.text(lx, 41.5, "AUTONOMOUS AI & GENERATIVE MEDIA", "F4", 5.1, pal["magenta"])
 
@@ -581,9 +581,6 @@ def build_all_pdfs():
         (pdf_light, r"c:\Users\Saturn\Desktop\G_AG_FLDR\8_BIT_THEATHER_DISTRICT_MEDIA\01a_AGENTS_EYES_ONLY\DEBUGGING_LIFE\job-search\Matthew_Cole_Wyatt_Business_Card_Trinity_Light.pdf"),
         (pdf_dark,  r"c:\Users\Saturn\Desktop\G_AG_FLDR\8_BIT_THEATHER_DISTRICT_MEDIA\01a_AGENTS_EYES_ONLY\DEBUGGING_LIFE\job-search\Matthew_Cole_Wyatt_Business_Card_Trinity_Dark.pdf"),
         (pdf_univ,  r"c:\Users\Saturn\Desktop\G_AG_FLDR\8_BIT_THEATHER_DISTRICT_MEDIA\01a_AGENTS_EYES_ONLY\DEBUGGING_LIFE\job-search\Matthew_Cole_Wyatt_Business_Card_Universal.pdf"),
-        # Artifact directory for inspection
-        (pdf_light, r"C:\Users\Saturn\.gemini\antigravity\brain\6bc72944-3e6d-4eee-bcc9-120072c5f5c2\Matthew_Wyatt_Business_Card_Trinity_Light_PRINT_READY.pdf"),
-        (pdf_dark,  r"C:\Users\Saturn\.gemini\antigravity\brain\6bc72944-3e6d-4eee-bcc9-120072c5f5c2\Matthew_Wyatt_Business_Card_Trinity_Dark_PRINT_READY.pdf"),
     ]
     for canvas_obj, p in paths:
         canvas_obj.save(p)
