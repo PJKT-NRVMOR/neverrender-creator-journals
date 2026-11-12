@@ -273,7 +273,7 @@ def is_safe_phone(phone_str: str) -> bool:
         return True
     if digits[3:6] == "555":
         return True
-    if digits.startswith(("000", "123", "800", "888", "877", "866", "858000")):
+    if digits.startswith(("000", "123", "800", "888", "877", "866", "855", "844", "858000")):
         return True
     return False
 
@@ -407,6 +407,17 @@ def sanitize_text(text: str, name_re: re.Pattern | None) -> Tuple[str, int]:
     if name_re is not None:
         out, n_subs = name_re.subn("[REDACTED_CLIENT]", out)
         changes += n_subs
+
+    # Scrub bold markdown client names paired with TC-XXXX database IDs:
+    # e.g. **Beatriz Ridgley (`TC-1084` or **Randall and Teri Sutton** (`TC-1213`
+    if "`TC-" in out:
+        tc_bold_1 = re.compile(r"\*\*([A-Z][^*\n]{2,45}?)\s*\(`TC-(\d{4})`")
+        out, c1 = tc_bold_1.subn(r"**[REDACTED_CLIENT] (`TC-\2`", out)
+        changes += c1
+
+        tc_bold_2 = re.compile(r"\*\*([A-Z][^*\n]{2,45}?)\*\*\s*\(`TC-(\d{4})`")
+        out, c2 = tc_bold_2.subn(r"**[REDACTED_CLIENT]** (`TC-\2`", out)
+        changes += c2
 
     return out, changes
 
