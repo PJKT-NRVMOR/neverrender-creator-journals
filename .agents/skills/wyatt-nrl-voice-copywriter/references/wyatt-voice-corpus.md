@@ -2847,3 +2847,8 @@
   - **Industry Peer Warmth & High-Craft Validation (`Aug 22 - Sep 28, 2026`, ingested `Nov 14, 2026`, `07:08 PST`)**:
     - **Verbatim `@neverrenderlabs` IG DM to BBC Natural History DP Vianet Djenguet (`Aug 27, 2026`)**: ***"You do awesome work, mate! Very inspirational! thank you for being around for this adventure!"***
     - **Signature Contrast (`Peers vs. Grifters`)**: Uses genuine, egalitarian Aussie/Kiwi-inflected warmth (*"mate!"*) with elite working cinematographers (`Vianet Djenguet`, *Planet Earth III* / *Silverback*) and National Emmy-winning virtual production leaders (`Mark D. Allen` at `Allucinari`, `Sep 28, 2026` Google Meet), standing in sharp contrast to the guarded *"Crack of Doom"* containment register reserved for deceptive clients or bad-faith operators.
+  - **Studio Devblog Pivot & Boundaries (`Nov 15, 2026`, `04:21 PST`)**:
+    - **Verbatim Morning Check-In & Direction**:
+      - ***"Hey Good Morning and long time no see! The Chap is out of our lives and moving briefly to studio work... So I am thinking mabye we should have a 'In works/Follow along' blog! so far I have these assests for it"***
+      - ***"yes about our project NOT the invites"***
+    - **Editorial & Confidentiality Posture**: Signals crisp operational gear-shifting out of client maintenance back into original NeverRender Labs worldbuilding (`Outpost Cruise Night` / `NRL 21067 SD`), paired with an instant "open the hood while it is running" transparency model (`"In works/Follow along" blog`) for creative pipelines, C2PA masters, and scored stems while drawing an iron boundary keeping private inbox milestones strictly off public channels (`"NOT the invites"`).
