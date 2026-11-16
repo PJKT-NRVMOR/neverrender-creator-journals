@@ -172,6 +172,13 @@ AUDIO_STEMS: tuple[AudioStemSpec, ...] = (
     ),
 )
 
+NOV16_MASTER_AUDIO: tuple[AudioStemSpec, ...] = (
+    AudioStemSpec(
+        src_name="Attention Is Servitude (NRL Master).wav",
+        mp3_name="attention-is-servitude-nrl-master.mp3",
+    ),
+)
+
 
 def parse_args() -> argparse.Namespace:
     """Parse CLI arguments with environment-backed defaults."""
@@ -180,9 +187,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--batch",
-        choices=("initial", "nov16"),
+        choices=("initial", "nov16", "nov16-audio"),
         default="initial",
-        help="Asset batch to package ('initial' for 16 plates + 2 WAVs, 'nov16' for Neon Kipple Hero + Jax POV).",
+        help="Asset batch to package ('initial', 'nov16' visuals, or 'nov16-audio' NRL master).",
     )
     parser.add_argument(
         "--src-dir",
@@ -282,6 +289,7 @@ def transcode_audio(
             "-y",
             "-i",
             str(src_path),
+            "-vn",
             "-codec:a",
             "libmp3lame",
             "-b:a",
@@ -307,17 +315,24 @@ def main() -> None:
     for directory in (web_dir, c2pa_dir, audio_dir):
         directory.mkdir(parents=True, exist_ok=True)
 
-    visual_specs = NOV16_KIPPLE_ASSETS if args.batch == "nov16" else VISUAL_ASSETS
+    visual_specs: tuple[VisualAssetSpec, ...] = ()
+    audio_specs: tuple[AudioStemSpec, ...] = ()
+    if args.batch == "initial":
+        visual_specs = VISUAL_ASSETS
+        audio_specs = AUDIO_STEMS
+    elif args.batch == "nov16":
+        visual_specs = NOV16_KIPPLE_ASSETS
+    elif args.batch == "nov16-audio":
+        audio_specs = NOV16_MASTER_AUDIO
+
     c2pa_verified = package_visuals(
         visual_specs, args.src_dir, web_dir, c2pa_dir, args.max_dim
     )
-    audio_count = 0
-    if args.batch == "initial":
-        transcode_audio(AUDIO_STEMS, args.src_dir, audio_dir)
-        audio_count = len(AUDIO_STEMS)
+    if audio_specs:
+        transcode_audio(audio_specs, args.src_dir, audio_dir)
     print(
         f"Packaging complete ({args.batch}): {len(visual_specs)} web/master pairs "
-        f"({len(c2pa_verified)} C2PA JUMBF verified), {audio_count} MP3 stems."
+        f"({len(c2pa_verified)} C2PA JUMBF verified), {len(audio_specs)} MP3 stems."
     )
 
 
