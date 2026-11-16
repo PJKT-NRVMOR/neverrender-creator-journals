@@ -144,6 +144,23 @@ VISUAL_ASSETS: tuple[VisualAssetSpec, ...] = (
     ),
 )
 
+NOV16_KIPPLE_ASSETS: tuple[VisualAssetSpec, ...] = (
+    VisualAssetSpec(
+        src_name="ocn-attention-is-servitude (5x4) (nrl graded) - Cr.jpg",
+        web_name="kipple-01-attention-is-servitude.jpg",
+        master_name="kipple-01-attention-is-servitude-cr.jpg",
+        c2pa_signed=True,
+        quality=88,
+    ),
+    VisualAssetSpec(
+        src_name="ocn-we-are-what-you-see (5x4) (nrl graded) - Cr.jpg",
+        web_name="kipple-02-we-are-what-you-see-jax-pov.jpg",
+        master_name="kipple-02-we-are-what-you-see-jax-pov-cr.jpg",
+        c2pa_signed=True,
+        quality=88,
+    ),
+)
+
 AUDIO_STEMS: tuple[AudioStemSpec, ...] = (
     AudioStemSpec(
         src_name="Neo Arcade Chase.wav",
@@ -160,6 +177,12 @@ def parse_args() -> argparse.Namespace:
     """Parse CLI arguments with environment-backed defaults."""
     parser = argparse.ArgumentParser(
         description="Package visual plates, byte-identical C2PA masters, and web MP3 stems."
+    )
+    parser.add_argument(
+        "--batch",
+        choices=("initial", "nov16"),
+        default="initial",
+        help="Asset batch to package ('initial' for 16 plates + 2 WAVs, 'nov16' for Neon Kipple Hero + Jax POV).",
     )
     parser.add_argument(
         "--src-dir",
@@ -276,7 +299,7 @@ def transcode_audio(
 
 
 def main() -> None:
-    """Execute visual packaging and audio stem transcoding."""
+    """Execute visual packaging and optional audio stem transcoding by batch."""
     args = parse_args()
     web_dir = args.dest_dir / "web"
     c2pa_dir = args.dest_dir / "c2pa"
@@ -284,13 +307,17 @@ def main() -> None:
     for directory in (web_dir, c2pa_dir, audio_dir):
         directory.mkdir(parents=True, exist_ok=True)
 
+    visual_specs = NOV16_KIPPLE_ASSETS if args.batch == "nov16" else VISUAL_ASSETS
     c2pa_verified = package_visuals(
-        VISUAL_ASSETS, args.src_dir, web_dir, c2pa_dir, args.max_dim
+        visual_specs, args.src_dir, web_dir, c2pa_dir, args.max_dim
     )
-    transcode_audio(AUDIO_STEMS, args.src_dir, audio_dir)
+    audio_count = 0
+    if args.batch == "initial":
+        transcode_audio(AUDIO_STEMS, args.src_dir, audio_dir)
+        audio_count = len(AUDIO_STEMS)
     print(
-        f"Packaging complete: {len(VISUAL_ASSETS)} web/master pairs "
-        f"({len(c2pa_verified)} C2PA JUMBF verified), {len(AUDIO_STEMS)} MP3 stems."
+        f"Packaging complete ({args.batch}): {len(visual_specs)} web/master pairs "
+        f"({len(c2pa_verified)} C2PA JUMBF verified), {audio_count} MP3 stems."
     )
 
 
