@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>NeverRender Labs // The Room (Hybrid Cryogenic Glassworks v2.0)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --abs-zero: #000000;
+            --clay-petrol: #132C35;
+            --clay-card: rgba(9, 21, 27, 0.90);
+            --brass: #C88A3B;
+            --copper: #B86B35;
+            --ne-sienna: #E8451E;
+            --ne-molten: #FF6B2B;
+            --ne-core: #FFE6CC;
+            --hg-cyan: #2CE5F6;
+            --text-main: #E7F1F5;
+            --text-muted: #93B0BC;
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --active-accent: #FF6B2B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--abs-zero);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+            user-select: none;
+        }
+
+        /* Outer Stage (Centers Desktop Fullscreen OR Optional Mobile Frame Preview) */
+        .studio-shell {
+            width: 100vw;
+            height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* The Room Viewport */
+        .room-stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000000;
+            transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        border-radius 0.45s ease,
+                        box-shadow 0.45s ease;
+        }
+
+        /* Desktop Toggleable Live Phone Preview Frame (390x844) */
+        .studio-shell.mobile-sim .room-stage {
+            width: min(394px, 94vw);
+            height: min(844px, 94dvh);
+            border-radius: 34px;
+            box-shadow: 0 0 0 2px rgba(200, 138, 59, 0.45), 0 30px 90px rgba(0, 0, 0, 0.95);
+        }
+
+        /* Layer 0: The Photographed Architectural Room Plate */
+        .room-plate-wrap {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            overflow: hidden;
+        }
+
+        #room-plate {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center center;
+            pointer-events: none;
+            filter: contrast(1.04) brightness(0.95);
+            transition: filter 0.6s ease;
+        }
+
+        .room-stage.is-mobile-layout #room-plate {
+            object-fit: cover;
+            object-position: center 52%;
+        }
+
+        .room-stage.excited #room-plate {
+            filter: contrast(1.08) brightness(0.84);
+        }
+
+        /* Smooth Pitch-Black Edge Vignette So Any Ultrawide Monitor Melts Into #000000 */
+        .abs-zero-vignette {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background:
+                linear-gradient(90deg, #000000 0%, rgba(0,0,0,0) 11%, rgba(0,0,0,0) 89%, #000000 100%),
+                linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0) 14%, rgba(0,0,0,0) 86%, rgba(0,0,0,0.58) 100%);
+        }
+
+        /* Layer 1: Live 60fps Photogrammetrically Registered Physics + Glass Excitation Canvas */
+        #room-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 4;
+            display: block;
+            cursor: crosshair;
+        }
+
+        /* Layer 2: Minimal Studio Crown HUD */
+        .crown-hud {
+            position: absolute;
+            top: max(12px, env(safe-area-inset-top));
+            left: 14px;
+            right: 14px;
+            z-index: 20;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .crown-badge {
+            pointer-events: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 11px;
+            border-radius: 3px;
+            background: rgba(5, 11, 15, 0.76);
+            border: 1px solid rgba(200, 138, 59, 0.34);
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            letter-spacing: 0.08em;
+            color: #DCE9EF;
+            backdrop-filter: blur(8px);
+        }
+
+        .ne-stamp {
+            padding: 1px 5px;
+            border: 1px solid var(--brass);
+            color: var(--ne-molten);
+            font-weight: 700;
+            background: rgba(200, 138, 59, 0.14);
+        }
+
+        .state-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 11px;
+            border-radius: 3px;
+            background: rgba(5, 11, 15, 0.78);
+            border: 1px solid rgba(147, 176, 188, 0.24);
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            letter-spacing: 0.07em;
+            color: var(--text-muted);
+            backdrop-filter: blur(8px);
+            transition: border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .state-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #5B7D8A;
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .room-stage.excited .state-pill {
+            border-color: var(--active-accent);
+            color: #FFF3E8;
+            box-shadow: 0 0 18px color-mix(in srgb, var(--active-accent) 42%, transparent);
+        }
+
+        .room-stage.excited .state-dot {
+            background: var(--active-accent);
+            box-shadow: 0 0 10px var(--active-accent);
+        }
+
+        /* Layer 3: Sculptural WU WEI Carved Stoneware Navigation Orbs */
+        .orb-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 14;
+            pointer-events: none;
+        }
+
+        .wuwei-orb-node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            pointer-events: auto;
+            transition: left 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        top 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .wuwei-orb-node.side-left {
+            flex-direction: row-reverse;
+        }
+
+        /* Projected Radial Gobo Light Spill Onto the Photographed Clay Walls */
+        .orb-gobo {
+            position: absolute;
+            width: 196px;
+            height: 196px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.72) rotate(0deg);
+            pointer-events: none;
+            opacity: 0.22;
+            border-radius: 50%;
+            background:
+                repeating-conic-gradient(
+                    from 0deg,
+                    var(--orb-glow, #FF6B2B) 0deg 5deg,
+                    transparent 5deg 20deg,
+                    var(--orb-glow, #FF6B2B) 20deg 23deg,
+                    transparent 23deg 45deg
+                );
+            -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,0.95) 20%, rgba(0,0,0,0.28) 54%, transparent 72%);
+            mask-image: radial-gradient(circle, rgba(0,0,0,0.95) 20%, rgba(0,0,0,0.28) 54%, transparent 72%);
+            filter: blur(5px);
+            mix-blend-mode: screen;
+            transition: opacity 0.45s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 0;
+        }
+
+        .wuwei-orb-btn {
+            position: relative;
+            z-index: 2;
+            display: block;
+            flex-shrink: 0;
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            border: none;
+            padding: 0;
+            background: transparent;
+            cursor: pointer;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                        width 0.35s ease,
+                        height 0.35s ease;
+        }
+
+        .wuwei-orb-btn:hover {
+            transform: scale(1.11) translateY(-2px);
+        }
+
+        .wuwei-orb-btn.selected {
+            transform: scale(1.18);
+        }
+
+        .wuwei-orb-btn:hover .orb-gobo,
+        .wuwei-orb-btn.selected .orb-gobo {
+            opacity: 0.9;
+            transform: translate(-50%, -50%) scale(1.28) rotate(32deg);
+        }
+
+        .orb-clay-canvas {
+            position: relative;
+            z-index: 2;
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow:
+                0 16px 32px rgba(0, 0, 0, 0.85),
+                0 0 18px color-mix(in srgb, var(--orb-glow, #FF6B2B) 22%, transparent);
+            transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                        box-shadow 0.4s ease,
+                        filter 0.4s ease;
+        }
+
+        .wuwei-orb-btn:hover .orb-clay-canvas {
+            transform: rotate(18deg);
+            filter: brightness(1.14);
+            box-shadow:
+                0 18px 36px rgba(0, 0, 0, 0.9),
+                0 0 28px color-mix(in srgb, var(--orb-glow, #FF6B2B) 62%, transparent);
+        }
+
+        .wuwei-orb-btn.selected .orb-clay-canvas {
+            transform: rotate(38deg);
+            filter: brightness(1.24);
+            box-shadow:
+                0 18px 40px rgba(0, 0, 0, 0.92),
+                0 0 36px color-mix(in srgb, var(--orb-glow, #FF6B2B) 85%, transparent);
+        }
+
+        .orb-code-stamp {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: #FFF5EA;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.98), 0 0 12px var(--orb-glow, #FF6B2B);
+            pointer-events: none;
+        }
+
+        .orb-caption {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            cursor: pointer;
+            pointer-events: auto;
+            white-space: nowrap;
+        }
+
+        .wuwei-orb-node.side-left .orb-caption {
+            text-align: right;
+        }
+
+        .orb-title {
+            font-family: var(--font-mono);
+            font-size: 0.73rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: #DFECEF;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
+            transition: color 0.25s ease;
+        }
+
+        .orb-sub {
+            font-family: var(--font-mono);
+            font-size: 0.59rem;
+            letter-spacing: 0.06em;
+            color: rgba(168, 196, 206, 0.78);
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
+        }
+
+        .wuwei-orb-node:hover .orb-title,
+        .wuwei-orb-node.active .orb-title {
+            color: var(--orb-glow, #FF6B2B);
+        }
+
+        /* Mobile Layout: One-Handed Thumb-Zone Sculptural V-Dock Above the Puddle */
+        .room-stage.is-mobile-layout .crown-badge span:last-child {
+            display: none;
+        }
+
+        .room-stage.is-mobile-layout .state-pill {
+            font-size: 0.56rem;
+            padding: 5px 8px;
+        }
+
+        .room-stage.is-mobile-layout .wuwei-orb-node {
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .room-stage.is-mobile-layout .wuwei-orb-btn {
+            width: 52px;
+            height: 52px;
+        }
+
+        .room-stage.is-mobile-layout .orb-gobo {
+            width: 112px;
+            height: 112px;
+        }
+
+        .room-stage.is-mobile-layout .orb-code-stamp {
+            font-size: 0.62rem;
+        }
+
+        .room-stage.is-mobile-layout .orb-caption {
+            text-align: center !important;
+        }
+
+        .room-stage.is-mobile-layout .orb-title {
+            font-size: 0.53rem;
+            letter-spacing: 0.04em;
+        }
+
+        .room-stage.is-mobile-layout .orb-sub {
+            display: none;
+        }
+
+        /* Layer 4: Center Clear Chamber Interior (Dormant Monolith + Bottom-Up Puddle Projection Deck) */
+        .chamber-interior {
+            position: absolute;
+            top: 9%;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(500px, 52vw);
+            z-index: 12;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            padding: 12px;
+        }
+
+        .room-stage.is-mobile-layout .chamber-interior {
+            top: 60px;
+            bottom: 186px;
+            width: calc(100% - 28px);
+            padding: 6px;
+        }
+
+        /* Dormant State Identity Inside the Quiet Unlit Glass V */
+        .dormant-monolith {
+            text-align: center;
+            max-width: 390px;
+            padding-bottom: 12%;
+            transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+        }
+
+        .room-stage.deck-open .dormant-monolith {
+            opacity: 0;
+            transform: translateY(-22px) scale(0.95);
+        }
+
+        .dormant-kicker {
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            letter-spacing: 0.22em;
+            color: rgba(214, 158, 86, 0.9);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+        }
+
+        .dormant-title {
+            font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+            font-weight: 900;
+            letter-spacing: 0.07em;
+            line-height: 1.08;
+            color: rgba(238, 246, 249, 0.93);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-shadow: 0 10px 28px rgba(0, 0, 0, 0.85);
+        }
+
+        .room-stage.is-mobile-layout .dormant-title {
+            font-size: 1.75rem;
+        }
+
+        .dormant-sub {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            line-height: 1.6;
+            color: rgba(196, 219, 228, 0.82);
+            margin-bottom: 14px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+        }
+
+        .dormant-hint {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            letter-spacing: 0.09em;
+            color: rgba(255, 196, 158, 0.88);
+            padding: 6px 11px;
+            border: 1px solid rgba(255, 107, 43, 0.34);
+            border-radius: 2px;
+            background: rgba(5, 13, 18, 0.56);
+            backdrop-filter: blur(6px);
+        }
+
+        /* Bottom-Up Puddle Projection Content Deck (Rises Directly Up Out of the Bottom Neon Puddle!) */
+        .page-content-deck {
+            position: absolute;
+            inset: 6px 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 20px 22px;
+            border-radius: 4px;
+            background: linear-gradient(180deg, rgba(8, 20, 26, 0.86) 0%, rgba(7, 17, 23, 0.94) 78%, color-mix(in srgb, var(--active-accent) 16%, rgba(6, 14, 19, 0.96)) 100%);
+            border: 1px solid color-mix(in srgb, var(--active-accent) 48%, rgba(255, 255, 255, 0.14));
+            border-bottom: 2px solid var(--active-accent);
+            box-shadow:
+                0 24px 60px rgba(0, 0, 0, 0.86),
+                0 12px 34px color-mix(in srgb, var(--active-accent) 26%, transparent),
+                inset 0 -22px 42px color-mix(in srgb, var(--active-accent) 14%, transparent);
+            backdrop-filter: blur(12px);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            user-select: text;
+
+            /* Emerges Upward From the Bottom Puddle Ember */
+            opacity: 0;
+            transform: translateY(88px) scaleY(0.86) scaleX(0.95);
+            transform-origin: center bottom;
+            pointer-events: none;
+            transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.62s cubic-bezier(0.22, 1, 0.36, 1),
+                        border-color 0.35s ease;
+        }
+
+        .room-stage.deck-open .page-content-deck {
+            opacity: 1;
+            transform: translateY(0) scaleY(1) scaleX(1);
+            pointer-events: auto;
+        }
+
+        .room-stage.is-mobile-layout .page-content-deck {
+            padding: 15px 15px 16px;
+            gap: 10px;
+        }
+
+        .deck-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(164, 198, 210, 0.18);
+            padding-bottom: 10px;
+        }
+
+        .deck-kicker {
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--active-accent);
+            text-transform: uppercase;
+        }
+
+        .release-stasis-btn {
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            padding: 5px 10px;
+            border-radius: 2px;
+            border: 1px solid var(--active-accent);
+            background: rgba(6, 15, 20, 0.85);
+            color: #FFF4E8;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .release-stasis-btn:hover {
+            background: var(--active-accent);
+            color: #061016;
+        }
+
+        .deck-heading {
+            font-size: clamp(1.15rem, 2vw, 1.55rem);
+            font-weight: 800;
+            line-height: 1.2;
+            color: #F2F8FA;
+        }
+
+        .deck-summary {
+            font-size: 0.86rem;
+            line-height: 1.58;
+            color: #C4D8E0;
+        }
+
+        .deck-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .room-stage.is-mobile-layout .deck-metrics {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .deck-metric {
+            padding: 8px 10px;
+            border-radius: 3px;
+            background: rgba(5, 13, 18, 0.72);
+            border: 1px solid rgba(147, 176, 188, 0.18);
+            font-family: var(--font-mono);
+        }
+
+        .deck-metric-label {
+            display: block;
+            font-size: 0.56rem;
+            letter-spacing: 0.07em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .deck-metric-val {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--active-accent);
+        }
+
+        .deck-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .deck-list li {
+            font-size: 0.81rem;
+            line-height: 1.48;
+            color: #D2E3EA;
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .deck-list li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--active-accent);
+        }
+
+        .deck-actions {
+            margin-top: auto;
+            padding-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .deck-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding: 8px 12px;
+            border-radius: 3px;
+            border: 1px solid var(--active-accent);
+            background: var(--active-accent);
+            color: #061016;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .deck-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 18px color-mix(in srgb, var(--active-accent) 45%, transparent);
+        }
+
+        .deck-cta.ghost {
+            background: rgba(8, 20, 27, 0.82);
+            color: #E6F0F4;
+            border-color: rgba(164, 198, 210, 0.34);
+        }
+
+        .deck-cta.ghost:hover {
+            border-color: var(--active-accent);
+            color: var(--active-accent);
+        }
+
+        /* Layer 5: Studio Lab Control Dock (Bottom Corners) */
+        .lab-dock {
+            position: absolute;
+            bottom: max(10px, env(safe-area-inset-bottom));
+            right: 14px;
+            z-index: 25;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 6px;
+        }
+
+        .lab-btn {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding: 5px 9px;
+            border-radius: 2px;
+            border: 1px solid rgba(200, 138, 59, 0.38);
+            background: rgba(5, 11, 15, 0.82);
+            color: #D9E7EE;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            transition: all 0.2s ease;
+        }
+
+        .lab-btn:hover,
+        .lab-btn.active {
+            border-color: var(--ne-molten);
+            color: #061016;
+            background: var(--ne-molten);
+        }
+
+        .physics-readout {
+            position: absolute;
+            bottom: max(10px, env(safe-area-inset-bottom));
+            left: 14px;
+            z-index: 25;
+            font-family: var(--font-mono);
+            font-size: 0.61rem;
+            letter-spacing: 0.07em;
+            color: rgba(168, 198, 210, 0.74);
+            background: rgba(5, 10, 14, 0.74);
+            padding: 5px 9px;
+            border: 1px solid rgba(147, 176, 188, 0.18);
+            border-radius: 2px;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .room-stage.is-mobile-layout .physics-readout {
+            display: none;
+        }
+
+        .room-stage.clean-mode .crown-hud,
+        .room-stage.clean-mode .physics-readout {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Drag-and-Drop Plate Swap Toast */
+        .drop-overlay {
+            position: absolute;
+            inset: 16px;
+            z-index: 40;
+            border: 2px dashed var(--ne-molten);
+            border-radius: 8px;
+            background: rgba(5, 14, 20, 0.86);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            color: #FFE6CC;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .drop-overlay.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="studio-shell" id="studio-shell">
+        <div class="room-stage" id="room-stage">
+            <!-- Layer 0: Photographed Borosilicate Chamber Plate -->
+            <div class="room-plate-wrap">
+                <img id="room-plate" src="room-assets/chamber-inspo-16x9.jpg" alt="NeverRender Labs Cryogenic Borosilicate Glass Chamber">
+            </div>
+            <div class="abs-zero-vignette"></div>
+
+            <!-- Layer 1: Live Photogrammetric 27.1 K Liquid Neon + V-Rail Excitation Canvas -->
+            <canvas id="room-canvas" aria-label="27.1 K Liquid Neon Glass-Rail Thermosiphon Canvas"></canvas>
+
+            <!-- Layer 2: Minimal Crown HUD -->
+            <header class="crown-hud">
+                <div class="crown-badge">
+                    <span class="ne-stamp">Ne 10</span>
+                    <span>NEVERRENDER LABS // THE ROOM v2.0</span>
+                </div>
+                <div class="state-pill">
+                    <span class="state-dot"></span>
+                    <span id="state-text">BREATHING IDLE // 27.1 K CLEAR GLASS</span>
+                </div>
+            </header>
+
+            <!-- Layer 3: Sculptural Carved Stoneware WU WEI Navigation Orbs -->
+            <nav class="orb-layer" id="orb-layer" aria-label="NeverRender Labs Wing Spheres"></nav>
+
+            <!-- Layer 4: Center Chamber Interior (Dormant Monolith + Bottom-Up Puddle Projection Deck) -->
+            <main class="chamber-interior">
+                <div class="dormant-monolith">
+                    <div class="dormant-kicker">NEVERRENDER LABS // ASTACKWORK NEON</div>
+                    <h1 class="dormant-title">THE ROOM</h1>
+                    <p class="dormant-sub">
+                        Unlit borosilicate glass at rest. Mirror-black liquid Neon at 27.1 K.<br>
+                        Tap any carved sphere to drip down the glass into the puddle and wake the chamber.
+                    </p>
+                    <span class="dormant-hint">[ TAP ANY SPHERE TO PROJECT FROM PUDDLE // TAP GLASS TO DRIP ]</span>
+                </div>
+
+                <section class="page-content-deck" id="page-content-deck" aria-live="polite">
+                    <div class="deck-top-row">
+                        <span class="deck-kicker" id="deck-kicker">// WING TELEMETRY</span>
+                        <button type="button" class="release-stasis-btn" id="release-stasis-btn">[&#9654; RELEASE STASIS]</button>
+                    </div>
+                    <h2 class="deck-heading" id="deck-heading">Wing Title</h2>
+                    <p class="deck-summary" id="deck-summary"></p>
+                    <div class="deck-metrics" id="deck-metrics"></div>
+                    <ul class="deck-list" id="deck-list"></ul>
+                    <div class="deck-actions" id="deck-actions"></div>
+                </section>
+            </main>
+
+            <!-- Live Telemetry Readout -->
+            <div class="physics-readout" id="physics-readout">
+                BREATH: 0.00 // T: 27.1 K // TIMESCALE: 1.00x [FLOW ACTIVE]
+            </div>
+
+            <!-- Studio Lab Controls -->
+            <div class="lab-dock">
+                <button type="button" class="lab-btn" id="btn-drip">[+ DRIP RAIL]</button>
+                <button type="button" class="lab-btn" id="btn-stasis">[&#10052; FREEZE FRAME]</button>
+                <button type="button" class="lab-btn" id="btn-mobile-sim">[&#128241; MOBILE VIEW]</button>
+                <button type="button" class="lab-btn" id="btn-clean">[CLEAN VIEW]</button>
+            </div>
+
+            <!-- Drag-and-Drop Plate Hot-Swap Overlay -->
+            <div class="drop-overlay" id="drop-overlay">
+                DROP FULL-RES CHAMBER PLATE (.PNG / .JPG) TO HOT-SWAP ROOM
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (() => {
+        'use strict';
+
+        /* =====================================================================
+           1. STUDIO WING ROSTER (6 LARGE CARVED WU WEI STONEWARE ORBS)
+           ===================================================================== */
+        const WINGS = [
+            {
+                id: 'area-33',
+                side: 'left',
+                slot: 0,
+                code: 'A-33',
+                title: 'Area 33',
+                sub: 'Rindersin, NV',
+                accent: '#FF5522',
+                secondary: '#FFB48A',
+                kicker: 'SECTOR A-33 // RINDERSIN, NEVADA // THE RINDER-FILES',
+                heading: 'Area 33: Declassified AI Physics Anomalies & Fixes',
+                summary: 'The proving ground where broken generative physics gets pinned to the shop wall and solved through deterministic camera geometry, opposed horizon locking, and plain-text optical prompting.',
+                metrics: [
+                    { label: 'EPISODES', val: '04 PLAYABLE' },
+                    { label: 'LATEST DROP', val: 'GRANNY THEFT' },
+                    { label: 'TOOLKIT', val: 'DRIVE SWEEP' }
+                ],
+                bullets: [
+                    'Episode 04: Granny Theft Jax 21067 (GTA-1 bridge hit-and-run, convertible T-bar, Stargate louver breach).',
+                    'Episode 03: Russian Blair d\'Etat & the 14-second 360-degree Anthropolis eggbeater drift.',
+                    'Episodes 01 & 02: Bassakwards Jaxwards, Jax-Ellington Spiral Hill, and Draft Parade marquee runs.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/area-33/',
+                primaryLabel: 'ENTER AREA 33',
+                secondaryHref: 'https://renderwithoutcode.com/area-33/ep-04-granny-theft-jax/',
+                secondaryLabel: 'EPISODE 04'
+            },
+            {
+                id: 'club-19',
+                side: 'left',
+                slot: 1,
+                code: 'C-19',
+                title: 'Club 19',
+                sub: 'Keystone Labs',
+                accent: '#00FF88',
+                secondary: '#7CFFD0',
+                kicker: 'SECTOR KL-19 // KEYSTONE LABS // ZERO-SIN RINDERWINS',
+                heading: 'Club 19: Velvet-Rope Vault of Certified RinderWins',
+                summary: 'Across the midnight highway from Area 33 sits Keystone Labs: strictly first-pass, zero-sin generative cinema victories shipped with C2PA hero plates and one-click open-source prompts.',
+                metrics: [
+                    { label: 'SINS ALLOWED', val: '000 LOCKED' },
+                    { label: 'HERO STUNT', val: '180 PASS-THRU' },
+                    { label: 'PROMPTS', val: 'OPEN SOURCE' }
+                ],
+                bullets: [
+                    'Entry #01 ("7 Seconds to Heavom"): unbroken 180-degree interior-to-hood windshield pass-through locking Jax at redline.',
+                    'Zero gatekeeping: steal all 3 verified prompts and plate recipes directly in one click.',
+                    'Directly powers the Fog Bridge saxophone solo climax in the "We Are What You See" music video.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/club-19/',
+                primaryLabel: 'ENTER CLUB 19',
+                secondaryHref: 'https://renderwithoutcode.com/club-19/ep-01-jaxs-keystone-win/',
+                secondaryLabel: 'STEAL PROMPTS'
+            },
+            {
+                id: 'in-the-works',
+                side: 'left',
+                slot: 2,
+                code: 'ITW',
+                title: 'In The Works',
+                sub: 'Outpost Cruise',
+                accent: '#FF6B2B',
+                secondary: '#FFE6CC',
+                kicker: 'LIVE PRODUCTION DEVBLOG // NRL 21067 SD ("SUPER DROSS")',
+                heading: 'Outpost Cruise Night & "We Are What You See" Premiere',
+                summary: 'Hood popped open across Entries #01 through #07: our debut full-length 9:16 vertical music video streaming live with 7 frame-verified chapter cues, 4 lossless synth stems, and 23 C2PA graded plates.',
+                metrics: [
+                    { label: 'PREMIERE', val: '1080x1920 24P' },
+                    { label: 'AUDIO MASTER', val: '-14.4 LUFS' },
+                    { label: 'GRADED VAULT', val: '23 PLATES' }
+                ],
+                bullets: [
+                    'Entry #07: Debut vertical music video "We Are What You See" with 7 interactive jump cues.',
+                    'Entry #06: Synced dual-deck RenderSin vs. RenderWin optical-parallax breakdown.',
+                    'Interactive 4-stem studio master deck plus the 6-panel anti-drift Super Dross CAD blueprint.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/in-the-works.html#wawys-music-video',
+                primaryLabel: 'WATCH PREMIERE',
+                secondaryHref: 'https://youtube.com/shorts/MNsWd_qygUo',
+                secondaryLabel: 'YOUTUBE CUT'
+            },
+            {
+                id: 'rendersins',
+                side: 'right',
+                slot: 0,
+                code: 'SINS',
+                title: 'RenderSins',
+                sub: '*ding!* Archive',
+                accent: '#FF3B30',
+                secondary: '#FF9E96',
+                kicker: 'BLUE TEAM QA // RENDERSINS *DING!* HALL OF SHAME',
+                heading: 'RenderSins *ding!*: Every Physics Crime Caught On Camera',
+                summary: 'Real generative failure forensics scored with an interactive zero-KB Web Audio bell counter. No highlight reel without showing what shattered and exactly how we fixed it.',
+                metrics: [
+                    { label: 'AUDIT ENGINE', val: 'BLUE TEAM QA' },
+                    { label: 'BELL SYNTH', val: '0 KB AUDIO' },
+                    { label: 'PROTOCOL', val: 'LAWS 1 TO 4' }
+                ],
+                bullets: [
+                    'Reverse-gear Super Dross under tactical teal smoke screens caused by cropped billboard spelling tokens.',
+                    'Mutant side-pipes, UFO sky cranes, Knights of WEE/NEE typography drift, and Wahl-clipper wind tunnels.',
+                    'Every sin links straight to the verified deterministic prompt fix that killed it.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/rendersins.html',
+                primaryLabel: 'OPEN RENDERSINS',
+                secondaryHref: 'https://renderwithoutcode.com/in-the-works.html#wawys-rendersin',
+                secondaryLabel: 'DUAL-DECK AUDIT'
+            },
+            {
+                id: 'front-desk',
+                side: 'right',
+                slot: 1,
+                code: '24/7',
+                title: 'Front Desk',
+                sub: 'AI Concierge',
+                accent: '#2CE5F6',
+                secondary: '#B2F7FF',
+                kicker: 'AUTONOMOUS RECEPTION // ZERO AGENCY LAG',
+                heading: '24/7 Sovereign AI Front Desk & Client Architecture',
+                summary: 'Dual-layer studio reception handling off-hours inquiries, technical dossier lookup, and luxury e-commerce engineering with strict client data sovereignty and air-gapped telemetry.',
+                metrics: [
+                    { label: 'UPTIME', val: '24/7 LIVE' },
+                    { label: 'DATA POLICY', val: '100% OWNED' },
+                    { label: 'COMPUTE', val: 'RYZEN 6800U' }
+                ],
+                bullets: [
+                    'Zero bloated agency layers: direct architect execution from color science to WooCommerce and Omnisend.',
+                    'Live NotebookLM studio concierge paired with Streamable-HTTP MCP automation.',
+                    'Direct digital executive card (.VCF) and studio contact pipeline.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/front-desk.html',
+                primaryLabel: 'OPEN FRONT DESK',
+                secondaryHref: 'https://renderwithoutcode.com/card/index.html',
+                secondaryLabel: 'DIGITAL CARD'
+            },
+            {
+                id: 'tech-logs',
+                side: 'right',
+                slot: 2,
+                code: 'LOGS',
+                title: 'Tech Logs',
+                sub: 'Proofs & Specs',
+                accent: '#FFB48A',
+                secondary: '#FFE6CC',
+                kicker: 'SRE KERNEL // PHYSICS BENCHMARKS & TELEMETRY',
+                heading: 'Tech Logs, Physics Proofs & Studio Research Vault',
+                summary: 'Verified Python and KaTeX hardware benchmarks, YouTube Music algorithmic telemetry dossiers, color science XMP calibration recipes, and multi-agent systems documentation.',
+                metrics: [
+                    { label: 'COMPENDIUM', val: '5-PART OMNIBUS' },
+                    { label: 'BENCHMARK', val: '6800U & DSP' },
+                    { label: 'COLOR SPEC', val: 'ASTACKWORK v5' }
+                ],
+                bullets: [
+                    'Making Gemini 4 Neon Extra Stop and Think: InGaN vs. AlInGaP decoherence, 75 GB/s bus proofs, and Haas DSP.',
+                    'YouTube Music debut audit: how "From NeverRender; With Sludge, Jackson." mapped into a 51-track mix.',
+                    'Open-source studio toolkit spanning Lightroom XMP LUTs, matting pipelines, and email compilers.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/tech-logs.html',
+                primaryLabel: 'READ TECH LOGS',
+                secondaryHref: 'https://renderwithoutcode.com/neon-physics-benchmark.html',
+                secondaryLabel: 'PHYSICS PROOF'
+            }
+        ];
+
+        /* =====================================================================
+           2. PROCEDURAL CARVED UNFIRED-CLAY STONEWARE ORB TEXTURE GENERATOR
+           ===================================================================== */
+        function hexToRgb(hex) {
+            const c = hex.replace('#', '');
+            return {
+                r: parseInt(c.slice(0, 2), 16) || 255,
+                g: parseInt(c.slice(2, 4), 16) || 107,
+                b: parseInt(c.slice(4, 6), 16) || 43
+            };
+        }
+
+        function paintCarvedStonewareOrb(canvasEl, accentHex, secHex, variantIdx) {
+            const size = 200;
+            canvasEl.width = size;
+            canvasEl.height = size;
+            const c = canvasEl.getContext('2d');
+            const half = size / 2;
+            const radius = size * 0.48;
+            const rgb = hexToRgb(accentHex);
+
+            c.save();
+            c.beginPath();
+            c.arc(half, half, radius, 0, Math.PI * 2);
+            c.clip();
+
+            /* Base Velvety Leather-Hard Greenware Sphere Shading (Oren-Nayar Matte Wrap) */
+            const baseGrad = c.createRadialGradient(half * 0.68, half * 0.56, size * 0.04, half, half, radius * 1.05);
+            baseGrad.addColorStop(0.0, '#8A7E70');
+            baseGrad.addColorStop(0.32, '#5F574D');
+            baseGrad.addColorStop(0.68, '#302C28');
+            baseGrad.addColorStop(0.92, '#161514');
+            baseGrad.addColorStop(1.0, '#09090A');
+            c.fillStyle = baseGrad;
+            c.fillRect(0, 0, size, size);
+
+            /* Fine Ceramic Mineral Grit (Deterministic Micro-Speckle) */
+            let seed = 1337 + variantIdx * 97;
+            const rand = () => {
+                seed = (seed * 16807) % 2147483647;
+                return (seed - 1) / 2147483646;
+            };
+            for (let i = 0; i < 1600; i++) {
+                const gx = rand() * size;
+                const gy = rand() * size;
+                const bright = rand() > 0.5;
+                c.fillStyle = bright ? 'rgba(225, 210, 192, 0.065)' : 'rgba(8, 7, 6, 0.11)';
+                c.fillRect(gx, gy, 1.4, 1.4);
+            }
+
+            /* Carved Organic WU WEI Spiral / Maze Channels (Dark Shadow Wall -> Inner Ember Glow) */
+            const drawGrooves = () => {
+                c.beginPath();
+                if (variantIdx % 3 === 0) {
+                    c.moveTo(34, 72);
+                    c.bezierCurveTo(64, 42, 118, 40, 146, 76);
+                    c.bezierCurveTo(170, 108, 144, 152, 98, 158);
+                    c.bezierCurveTo(54, 162, 40, 126, 62, 98);
+                    c.bezierCurveTo(82, 74, 122, 82, 116, 112);
+                    c.moveTo(24, 120);
+                    c.bezierCurveTo(46, 168, 104, 186, 154, 166);
+                    c.moveTo(52, 34);
+                    c.bezierCurveTo(96, 14, 152, 32, 174, 82);
+                } else if (variantIdx % 3 === 1) {
+                    c.moveTo(32, 98);
+                    c.bezierCurveTo(56, 52, 124, 42, 156, 82);
+                    c.bezierCurveTo(180, 114, 158, 160, 108, 166);
+                    c.bezierCurveTo(64, 170, 36, 138, 56, 106);
+                    c.bezierCurveTo(76, 74, 128, 78, 128, 114);
+                    c.bezierCurveTo(128, 138, 94, 142, 84, 122);
+                    c.moveTo(42, 46);
+                    c.bezierCurveTo(88, 18, 150, 30, 172, 74);
+                } else {
+                    c.moveTo(34, 62);
+                    c.quadraticCurveTo(100, 26, 166, 62);
+                    c.moveTo(22, 100);
+                    c.quadraticCurveTo(100, 64, 178, 100);
+                    c.moveTo(32, 138);
+                    c.quadraticCurveTo(100, 104, 168, 138);
+                    c.moveTo(58, 30);
+                    c.bezierCurveTo(78, 74, 72, 126, 54, 168);
+                    c.moveTo(138, 30);
+                    c.bezierCurveTo(122, 74, 126, 126, 148, 168);
+                }
+            };
+
+            c.lineCap = 'round';
+            c.lineJoin = 'round';
+
+            /* 1. Deep Carved Clay Shadow Recess */
+            drawGrooves();
+            c.strokeStyle = 'rgba(10, 7, 5, 0.92)';
+            c.lineWidth = 11.5;
+            c.stroke();
+
+            /* 2. Warm Internal Core Bloom Spilling Up the Carved Clay Bevels */
+            c.save();
+            c.globalCompositeOperation = 'lighter';
+            drawGrooves();
+            c.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.58)`;
+            c.lineWidth = 8.2;
+            c.shadowColor = accentHex;
+            c.shadowBlur = 14;
+            c.stroke();
+
+            /* 3. Glowing Molten Filament Deep Inside Groove */
+            drawGrooves();
+            c.strokeStyle = secHex;
+            c.lineWidth = 3.2;
+            c.shadowBlur = 8;
+            c.stroke();
+
+            /* 4. Incandescent Pin-Core */
+            drawGrooves();
+            c.strokeStyle = 'rgba(255, 246, 232, 0.9)';
+            c.lineWidth = 1.2;
+            c.shadowBlur = 0;
+            c.stroke();
+            c.restore();
+
+            /* Subtle Outer Matte Spherical Limb Darkening */
+            const limb = c.createRadialGradient(half, half, radius * 0.62, half, half, radius);
+            limb.addColorStop(0, 'rgba(0,0,0,0)');
+            limb.addColorStop(1, 'rgba(0,0,0,0.68)');
+            c.fillStyle = limb;
+            c.fillRect(0, 0, size, size);
+
+            c.restore();
+        }
+
+        /* =====================================================================
+           3. DOM REFERENCES & PHOTOGRAMMETRIC ROOM COORDINATES
+           ===================================================================== */
+        const studioShell = document.getElementById('studio-shell');
+        const roomStage = document.getElementById('room-stage');
+        const roomPlate = document.getElementById('room-plate');
+        const canvas = document.getElementById('room-canvas');
+        const ctx = canvas.getContext('2d');
+        const orbLayer = document.getElementById('orb-layer');
+        const stateText = document.getElementById('state-text');
+        const physicsReadout = document.getElementById('physics-readout');
+
+        const deckKicker = document.getElementById('deck-kicker');
+        const deckHeading = document.getElementById('deck-heading');
+        const deckSummary = document.getElementById('deck-summary');
+        const deckMetrics = document.getElementById('deck-metrics');
+        const deckList = document.getElementById('deck-list');
+        const deckActions = document.getElementById('deck-actions');
+        const releaseStasisBtn = document.getElementById('release-stasis-btn');
+
+        const btnDrip = document.getElementById('btn-drip');
+        const btnStasis = document.getElementById('btn-stasis');
+        const btnMobileSim = document.getElementById('btn-mobile-sim');
+        const btnClean = document.getElementById('btn-clean');
+        const dropOverlay = document.getElementById('drop-overlay');
+
+        /* Measured Exact Normalized (u, v) Geometry of the Photographed Borosilicate Chamber */
+        const PLATE_GEO = {
+            aspect: 16 / 9,
+            leftTopOuter:  { u: 0.260, v: 0.000 },
+            leftBotOuter:  { u: 0.452, v: 0.900 },
+            leftTopInner:  { u: 0.292, v: 0.000 },
+            leftBotInner:  { u: 0.460, v: 0.785 },
+            rightTopOuter: { u: 0.740, v: 0.000 },
+            rightBotOuter: { u: 0.548, v: 0.900 },
+            rightTopInner: { u: 0.708, v: 0.000 },
+            rightBotInner: { u: 0.540, v: 0.785 },
+            clampLeft:     { u: 0.282, v: 0.102 },
+            clampRight:    { u: 0.718, v: 0.102 },
+            emberCenter:   { u: 0.500, v: 0.878 },
+            poolFloorV:    0.896
+        };
+
+        let W = 1280;
+        let H = 720;
+        let DPR = 1;
+        let isMobileLayout = false;
+        let plateRect = { x: 0, y: 0, w: 1280, h: 720 };
+
+        function uvToScreen(u, v) {
+            return {
+                x: plateRect.x + u * plateRect.w,
+                y: plateRect.y + v * plateRect.h
+            };
+        }
+
+        function getRailPoint(side, t) {
+            const top = side === 'left' ? PLATE_GEO.leftTopOuter : PLATE_GEO.rightTopOuter;
+            const bot = side === 'left' ? PLATE_GEO.leftBotOuter : PLATE_GEO.rightBotOuter;
+            const u = top.u + (bot.u - top.u) * t;
+            const v = top.v + (bot.v - top.v) * t;
+            return uvToScreen(u, v);
+        }
+
+        /* =====================================================================
+           4. BUILD LARGE SCULPTURAL WU WEI ORBS & POSITIONING
+           ===================================================================== */
+        let activeWing = null;
+        let manualStasis = false;
+        const orbNodes = [];
+
+        WINGS.forEach((wing, idx) => {
+            const node = document.createElement('div');
+            node.className = 'wuwei-orb-node side-' + wing.side;
+            node.style.setProperty('--orb-glow', wing.accent);
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'wuwei-orb-btn';
+            btn.setAttribute('aria-label', 'Select ' + wing.title);
+
+            const gobo = document.createElement('span');
+            gobo.className = 'orb-gobo';
+
+            const clayCanvas = document.createElement('canvas');
+            clayCanvas.className = 'orb-clay-canvas';
+            paintCarvedStonewareOrb(clayCanvas, wing.accent, wing.secondary, idx);
+
+            const codeStamp = document.createElement('span');
+            codeStamp.className = 'orb-code-stamp';
+            codeStamp.textContent = wing.code;
+
+            btn.appendChild(gobo);
+            btn.appendChild(clayCanvas);
+            btn.appendChild(codeStamp);
+
+            const caption = document.createElement('div');
+            caption.className = 'orb-caption';
+            caption.innerHTML =
+                '<span class="orb-title">' + wing.title + '</span>' +
+                '<span class="orb-sub">' + wing.sub + '</span>';
+
+            const onActivate = () => {
+                if (activeWing && activeWing.id === wing.id) {
+                    clearSelection();
+                } else {
+                    selectWing(wing);
+                }
+            };
+
+            btn.addEventListener('click', onActivate);
+            caption.addEventListener('click', onActivate);
+
+            btn.addEventListener('mouseenter', () => {
+                if (isStasisActive()) return;
+                const railT = 0.24 + wing.slot * 0.22;
+                spawnRailDrip(wing.side, railT, wing.accent, 4.6);
+            });
+
+            node.appendChild(btn);
+            node.appendChild(caption);
+            orbLayer.appendChild(node);
+
+            orbNodes.push({ wing, node, btn });
+        });
+
+        function layoutOrbs() {
+            if (!isMobileLayout) {
+                /* Desktop: Float Large 84px Carved Spheres Directly Over the Photographed Matte Clay Side Walls Following the V-Glass Slope! */
+                const slotsV = [0.30, 0.50, 0.70];
+                const leftU  = [0.215, 0.255, 0.302];
+                const rightU = [0.785, 0.745, 0.698];
+
+                orbNodes.forEach(({ wing, node }) => {
+                    const u = wing.side === 'left' ? leftU[wing.slot] : rightU[wing.slot];
+                    const v = slotsV[wing.slot];
+                    const pt = uvToScreen(u, v);
+                    /* Clamp safely inside viewport even on narrow desktop windows */
+                    const safeX = Math.max(58, Math.min(W - 58, pt.x));
+                    const safeY = Math.max(82, Math.min(H - 96, pt.y));
+                    node.style.left = safeX.toFixed(1) + 'px';
+                    node.style.top = safeY.toFixed(1) + 'px';
+                });
+            } else {
+                /* Mobile Portrait: 6 Tactile Carved Orbs Arranged in a Gentle One-Handed Thumb-Zone V-Arc Right Above the Bottom Neon Puddle! */
+                const mobileOrder = ['area-33', 'club-19', 'in-the-works', 'rendersins', 'front-desk', 'tech-logs'];
+                const baseY = H - 120;
+                const padX = 34;
+                const spanX = Math.max(120, W - padX * 2);
+
+                orbNodes.forEach(({ wing, node }) => {
+                    const i = mobileOrder.indexOf(wing.id);
+                    const frac = i / (mobileOrder.length - 1);
+                    const x = padX + frac * spanX;
+                    /* Gentle V-cradle dipping slightly toward the central ember */
+                    const vDip = (1 - Math.abs(frac - 0.5) * 2) * 20;
+                    const y = baseY + vDip;
+                    node.style.left = x.toFixed(1) + 'px';
+                    node.style.top = y.toFixed(1) + 'px';
+                });
+            }
+        }
+
+        function isStasisActive() {
+            return Boolean(activeWing) || manualStasis;
+        }
+
+        function selectWing(wing) {
+            activeWing = wing;
+            manualStasis = false;
+            btnStasis.classList.remove('active');
+
+            /* Launch a bright trigger bead down that orb's glass rail + flash the bottom puddle ember! */
+            const startT = 0.24 + wing.slot * 0.22;
+            spawnRailDrip(wing.side, startT, wing.accent, 6.0);
+            spawnPuddleBurstAtEmber(wing.accent, 1.0);
+
+            roomStage.style.setProperty('--active-accent', wing.accent);
+            roomStage.classList.add('excited', 'deck-open');
+
+            orbNodes.forEach(({ wing: w, node, btn }) => {
+                const match = w.id === wing.id;
+                node.classList.toggle('active', match);
+                btn.classList.toggle('selected', match);
+            });
+
+            stateText.textContent = 'CHAMBER EXCITED (' + wing.code + ') // ALIVE FREEZE-FRAME';
+
+            deckKicker.textContent = '// ' + wing.kicker;
+            deckHeading.textContent = wing.heading;
+            deckSummary.textContent = wing.summary;
+            deckMetrics.innerHTML = wing.metrics.map(m =>
+                '<div class="deck-metric">' +
+                    '<span class="deck-metric-label">' + m.label + '</span>' +
+                    '<span class="deck-metric-val">' + m.val + '</span>' +
+                '</div>'
+            ).join('');
+            deckList.innerHTML = wing.bullets.map(b => '<li>' + b + '</li>').join('');
+            deckActions.innerHTML =
+                '<a href="' + wing.primaryHref + '" target="_blank" rel="noopener" class="deck-cta">[&#8599; ' + wing.primaryLabel + ']</a>' +
+                '<a href="' + wing.secondaryHref + '" target="_blank" rel="noopener" class="deck-cta ghost">[&#9654; ' + wing.secondaryLabel + ']</a>';
+        }
+
+        function clearSelection() {
+            activeWing = null;
+            manualStasis = false;
+            btnStasis.classList.remove('active');
+            roomStage.classList.remove('excited', 'deck-open');
+            roomStage.style.setProperty('--active-accent', '#FF6B2B');
+
+            orbNodes.forEach(({ node, btn }) => {
+                node.classList.remove('active');
+                btn.classList.remove('selected');
+            });
+
+            stateText.textContent = 'BREATHING IDLE // 27.1 K CLEAR GLASS';
+        }
+
+        releaseStasisBtn.addEventListener('click', clearSelection);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isStasisActive()) clearSelection();
+        });
+
+        /* =====================================================================
+           5. 27.1 K HYBRID PHYSICS ENGINE + 8.5-SECOND DELIBERATE BREATH
+           ===================================================================== */
+        const railDrips = [];     // Molten beads clinging & sliding down the EXACT photographed V-glass slopes!
+        const satellites = [];    // 18.34x Weber shatter low-angle splash micro-beads
+        const puddleSlicks = [];  // Slowly melting streaks riding inward current -> submerged bottom ember
+        const puddleRings = [];   // 9.3x underdamped elliptical perspective puddle ripples
+        const gasRibbons = [];    // Soft translucent rising 640.2 nm vapor inside the V-chamber
+        const arcs = [];          // Refined 15 kV submerged brass-trough arcs
+
+        let timeScale = 1.0;
+        let excitation = 0.0;
+        let activeRgb = { r: 255, g: 107, b: 43 };
+        let targetRgb = { r: 255, g: 107, b: 43 };
+        let realTime = 0;
+        let simTime = 0;
+        let breathLevel = 0;
+        let nextAutoDrip = 1.2;
+
+        /* Deliberate 8.5-Second Hypnotic Breath Curve (Inhale -> Hold -> Exhale -> Quiet Stillness) */
+        function computeDeliberateBreath(tSec) {
+            const cycle = tSec % 8.5;
+            if (cycle < 2.2) {
+                const p = cycle / 2.2;
+                return 0.5 - 0.5 * Math.cos(p * Math.PI);
+            }
+            if (cycle < 4.0) {
+                return 1.0 - 0.05 * Math.sin(((cycle - 2.2) / 1.8) * Math.PI);
+            }
+            if (cycle < 6.0) {
+                const p = (cycle - 4.0) / 2.0;
+                return 0.5 + 0.5 * Math.cos(p * Math.PI);
+            }
+            return 0.0;
+        }
+
+        function spawnRailDrip(side, startT, accentHex, radius) {
+            const chosenSide = side || (Math.random() < 0.5 ? 'left' : 'right');
+            const rgb = hexToRgb(accentHex || '#FF6B2B');
+            railDrips.push({
+                side: chosenSide,
+                t: typeof startT === 'number' ? startT : 0.11, // Starts right at photographed brass clamp!
+                vt: 0.045 + Math.random() * 0.035,
+                r: radius || (4.2 + Math.random() * 1.8),
+                rgb: rgb,
+                phase: Math.random() * Math.PI * 2,
+                trailT: []
+            });
+        }
+
+        function spawnPuddleSplash(screenX, screenY, rgb, radius) {
+            /* Perspective Elliptical Capillary Ring (9.3x Underdamped Liquid Neon) */
+            puddleRings.push({
+                x: screenX,
+                y: screenY,
+                rx: 6,
+                ry: 2.2,
+                vr: 52 + radius * 6,
+                life: 1.0,
+                rgb: rgb
+            });
+
+            /* 18.34x Weber Shatter Micro-Beads */
+            const count = 8 + Math.floor(radius * 1.2);
+            for (let i = 0; i < count; i++) {
+                const dir = i % 2 === 0 ? -1 : 1;
+                const ang = (16 + Math.random() * 34) * Math.PI / 180;
+                const spd = 54 + Math.random() * 88;
+                satellites.push({
+                    x: screenX + (Math.random() - 0.5) * 4,
+                    y: screenY - 2,
+                    vx: dir * Math.cos(ang) * spd,
+                    vy: -Math.sin(ang) * spd,
+                    r: Math.max(1.0, radius * (0.2 + Math.random() * 0.2)),
+                    life: 1.0,
+                    rgb: rgb,
+                    phase: Math.random() * Math.PI * 2
+                });
+            }
+
+            /* Slow Melt Into Luminous Pool Current Flowing Straight Into Center Bottom Ember */
+            puddleSlicks.push({
+                x: screenX,
+                y: screenY,
+                rx: radius * 3.0,
+                ry: radius * 0.9,
+                melt: 0.0,
+                rgb: rgb,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+
+        function spawnPuddleBurstAtEmber(accentHex, intensity) {
+            const rgb = hexToRgb(accentHex || '#FF6B2B');
+            const emb = uvToScreen(PLATE_GEO.emberCenter.u, PLATE_GEO.emberCenter.v);
+
+            puddleRings.push({
+                x: emb.x,
+                y: emb.y + 4,
+                rx: 12,
+                ry: 3.5,
+                vr: 78,
+                life: 1.0,
+                rgb: rgb
+            });
+
+            /* Subtle 15 kV Submerged Arc Inside Bottom Glass Trough */
+            const leftLip = uvToScreen(PLATE_GEO.leftBotOuter.u, PLATE_GEO.emberCenter.v);
+            const rightLip = uvToScreen(PLATE_GEO.rightBotOuter.u, PLATE_GEO.emberCenter.v);
+            const pts = [];
+            const segs = 9;
+            for (let i = 0; i <= segs; i++) {
+                const f = i / segs;
+                const px = leftLip.x + (rightLip.x - leftLip.x) * f;
+                const arch = -Math.sin(f * Math.PI) * (10 + Math.random() * 12);
+                const jitter = (i === 0 || i === segs) ? 0 : (Math.random() - 0.5) * 14;
+                pts.push({ x: px, y: emb.y + arch + jitter });
+            }
+            arcs.push({ pts, life: 1.0, rgb: rgb });
+
+            /* Translucent Rising 640.2 nm Gas Ribbons Up Inside the V-Chamber */
+            const plumes = 5 + Math.floor((intensity || 0.7) * 5);
+            const halfSpan = Math.max(18, (rightLip.x - leftLip.x) * 0.45);
+            for (let i = 0; i < plumes; i++) {
+                gasRibbons.push({
+                    x: emb.x + (Math.random() - 0.5) * halfSpan * 1.6,
+                    y: emb.y - 6 - Math.random() * 12,
+                    vx: (Math.random() - 0.5) * 14,
+                    vy: -(48 + Math.random() * 68),
+                    r: 14 + Math.random() * 20,
+                    phase: Math.random() * Math.PI * 2,
+                    freq: 1.4 + Math.random() * 1.6,
+                    life: 1.0,
+                    rgb: Math.random() < 0.7 ? { r: 232, g: 69, b: 30 } : rgb
+                });
+            }
+        }
+
+        function updateLayout() {
+            const rect = roomStage.getBoundingClientRect();
+            DPR = Math.min(window.devicePixelRatio || 1, 2);
+            W = Math.max(300, rect.width);
+            H = Math.max(400, rect.height);
+            canvas.width = Math.floor(W * DPR);
+            canvas.height = Math.floor(H * DPR);
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+            isMobileLayout = (W <= 900) || (W / H < 0.92);
+            roomStage.classList.toggle('is-mobile-layout', isMobileLayout);
+
+            const natW = roomPlate.naturalWidth || 1920;
+            const natH = roomPlate.naturalHeight || 1080;
+            const imgAspect = natW / natH;
+            const stageAspect = W / H;
+
+            if (!isMobileLayout) {
+                /* Desktop: object-fit: contain (Full V-Chamber Visible, Black Edges Blend Into #000000 Margins!) */
+                if (stageAspect > imgAspect) {
+                    const drawH = H;
+                    const drawW = drawH * imgAspect;
+                    plateRect = { x: (W - drawW) * 0.5, y: 0, w: drawW, h: drawH };
+                } else {
+                    const drawW = W;
+                    const drawH = drawW / imgAspect;
+                    plateRect = { x: 0, y: (H - drawH) * 0.5, w: drawW, h: drawH };
+                }
+            } else {
+                /* Mobile: object-fit: cover centered on the V-Glass Chamber + Bottom Ember */
+                if (stageAspect < imgAspect) {
+                    const drawH = H;
+                    const drawW = drawH * imgAspect;
+                    plateRect = { x: (W - drawW) * 0.5, y: (H - drawH) * 0.52, w: drawW, h: drawH };
+                } else {
+                    const drawW = W;
+                    const drawH = drawW / imgAspect;
+                    plateRect = { x: 0, y: (H - drawH) * 0.52, w: drawW, h: drawH };
+                }
+            }
+
+            layoutOrbs();
+        }
+
+        function stepPhysics(dtReal) {
+            realTime += dtReal;
+            breathLevel = computeDeliberateBreath(realTime);
+
+            const stasisOn = isStasisActive();
+            const targetScale = stasisOn ? 0.022 : 1.0;
+            timeScale += (targetScale - timeScale) * Math.min(1, dtReal * 5.8);
+
+            const targetExcite = stasisOn ? 1.0 : 0.0;
+            excitation += (targetExcite - excitation) * Math.min(1, dtReal * 4.8);
+
+            targetRgb = activeWing ? hexToRgb(activeWing.accent) : { r: 255, g: 107, b: 43 };
+            activeRgb.r += (targetRgb.r - activeRgb.r) * Math.min(1, dtReal * 5.5);
+            activeRgb.g += (targetRgb.g - activeRgb.g) * Math.min(1, dtReal * 5.5);
+            activeRgb.b += (targetRgb.b - activeRgb.b) * Math.min(1, dtReal * 5.5);
+
+            const dt = dtReal * timeScale;
+            simTime += dt;
+
+            /* Unhurried, Deliberate Glass-Rail Drip Tempo Matching the Slow Breath */
+            nextAutoDrip -= dt;
+            if (nextAutoDrip <= 0) {
+                nextAutoDrip = 3.2 + Math.random() * 2.6;
+                spawnRailDrip(Math.random() < 0.5 ? 'left' : 'right', 0.105, '#FF6B2B', 4.3 + Math.random() * 1.4);
+            }
+
+            /* 1. Droplets Clinging & Sliding Down the Photographed Borosilicate V-Rails */
+            for (let i = railDrips.length - 1; i >= 0; i--) {
+                const d = railDrips[i];
+                d.trailT.push(d.t);
+                if (d.trailT.length > 9) d.trailT.shift();
+
+                /* Capillary adhesion at first, then smooth gravity acceleration down the slope */
+                d.vt = Math.min(0.75, d.vt + 0.32 * dt);
+                d.t += d.vt * dt;
+
+                if (d.t >= 1.0) {
+                    const hit = getRailPoint(d.side, 1.0);
+                    spawnPuddleSplash(hit.x, hit.y, d.rgb, d.r);
+                    railDrips.splice(i, 1);
+                }
+            }
+
+            /* 2. Weber Shatter Micro-Beads */
+            const poolY = uvToScreen(0.5, PLATE_GEO.poolFloorV).y;
+            for (let i = satellites.length - 1; i >= 0; i--) {
+                const s = satellites[i];
+                s.vy += 310 * dt;
+                s.x += s.vx * dt;
+                s.y += s.vy * dt;
+                s.life -= dt * 0.9;
+                if (s.y >= poolY + 4 && s.vy > 0) {
+                    satellites.splice(i, 1);
+                } else if (s.life <= 0) {
+                    satellites.splice(i, 1);
+                }
+            }
+
+            /* 3. Slow Melt -> Inward Current Straight Into Central Bottom Ember */
+            const emb = uvToScreen(PLATE_GEO.emberCenter.u, PLATE_GEO.emberCenter.v);
+            for (let i = puddleSlicks.length - 1; i >= 0; i--) {
+                const sk = puddleSlicks[i];
+                sk.melt = Math.min(1.0, sk.melt + dt * 0.55);
+                sk.rx += dt * (14 * (1 - sk.melt * 0.45));
+                sk.ry = Math.max(1.8, sk.ry - dt * 0.6);
+
+                const dx = emb.x - sk.x;
+                const dy = (emb.y + 3) - sk.y;
+                const dist = Math.hypot(dx, dy);
+                if (dist > 1) {
+                    const speed = 34 + Math.min(62, dist * 0.42);
+                    sk.x += (dx / dist) * speed * dt * (0.35 + sk.melt * 0.85);
+                    sk.y += (dy / dist) * speed * dt * (0.35 + sk.melt * 0.85);
+                }
+
+                if (dist < 14) {
+                    const hex = '#' +
+                        sk.rgb.r.toString(16).padStart(2, '0') +
+                        sk.rgb.g.toString(16).padStart(2, '0') +
+                        sk.rgb.b.toString(16).padStart(2, '0');
+                    spawnPuddleBurstAtEmber(hex, 0.72);
+                    puddleSlicks.splice(i, 1);
+                }
+            }
+
+            /* 4. Underdamped Perspective Capillary Ripples */
+            for (let i = puddleRings.length - 1; i >= 0; i--) {
+                const r = puddleRings[i];
+                r.rx += r.vr * dt;
+                r.ry += r.vr * 0.24 * dt;
+                r.vr *= Math.pow(0.68, dt);
+                r.life -= dt * 0.36; // 9.3x underdamped long ring!
+                if (r.life <= 0) puddleRings.splice(i, 1);
+            }
+
+            /* 5. Rising 640.2 nm Translucent Vapor Ribbons Inside the Glass V */
+            for (let i = gasRibbons.length - 1; i >= 0; i--) {
+                const g = gasRibbons[i];
+                g.phase += g.freq * dt;
+                g.x += (g.vx + Math.sin(g.phase) * 18) * dt;
+                g.y += g.vy * dt;
+                g.r += dt * 7.5;
+                g.life -= dt * 0.24;
+                if (g.life <= 0 || g.y < plateRect.y) gasRibbons.splice(i, 1);
+            }
+
+            /* 6. 15 kV Submerged Arcs */
+            for (let i = arcs.length - 1; i >= 0; i--) {
+                arcs[i].life -= dt * 3.6;
+                if (arcs[i].life <= 0) arcs.splice(i, 1);
+            }
+
+            physicsReadout.textContent =
+                'BREATH: ' + breathLevel.toFixed(2) +
+                ' // T: 27.1 K // TIMESCALE: ' + timeScale.toFixed(2) + 'x' +
+                (stasisOn ? ' [ALIVE STASIS]' : ' [DELIBERATE FLOW]');
+        }
+
+        /* =====================================================================
+           6. RENDER OVERLAY REGISTERED PIXEL-EXACT TO THE PHOTOGRAPHED CHAMBER
+           ===================================================================== */
+        function renderFrame(nowMs) {
+            requestAnimationFrame(renderFrame);
+            if (document.hidden) return;
+
+            const dtReal = Math.min(0.05, Math.max(0.001, (nowMs - lastMs) / 1000));
+            lastMs = nowMs;
+            stepPhysics(dtReal);
+
+            ctx.clearRect(0, 0, W, H);
+
+            const lTop = uvToScreen(PLATE_GEO.leftTopOuter.u, PLATE_GEO.leftTopOuter.v);
+            const lBot = uvToScreen(PLATE_GEO.leftBotOuter.u, PLATE_GEO.leftBotOuter.v);
+            const rTop = uvToScreen(PLATE_GEO.rightTopOuter.u, PLATE_GEO.rightTopOuter.v);
+            const rBot = uvToScreen(PLATE_GEO.rightBotOuter.u, PLATE_GEO.rightBotOuter.v);
+            const emb  = uvToScreen(PLATE_GEO.emberCenter.u, PLATE_GEO.emberCenter.v);
+
+            const rC = Math.round(activeRgb.r);
+            const gC = Math.round(activeRgb.g);
+            const bC = Math.round(activeRgb.b);
+
+            ctx.save();
+            ctx.globalCompositeOperation = 'lighter';
+
+            /* 1. Slow Deliberate 8.5s Hypnotic Breathing Glow on Submerged Center Ember & Puddle Floor */
+            const idleEmberAlpha = 0.14 + breathLevel * 0.24 + excitation * 0.45;
+            const embRad = (isMobileLayout ? 90 : 145) * (0.88 + breathLevel * 0.24 + excitation * 0.45);
+            const eGrad = ctx.createRadialGradient(emb.x, emb.y, 0, emb.x, emb.y, embRad);
+            eGrad.addColorStop(0.0, `rgba(255, 232, 204, ${Math.min(0.95, idleEmberAlpha * 1.15)})`);
+            eGrad.addColorStop(0.26, `rgba(${rC}, ${gC}, ${bC}, ${idleEmberAlpha * 0.78})`);
+            eGrad.addColorStop(0.62, `rgba(${rC}, ${gC}, ${bC}, ${idleEmberAlpha * 0.22})`);
+            eGrad.addColorStop(1.0, `rgba(${rC}, ${gC}, ${bC}, 0)`);
+            ctx.fillStyle = eGrad;
+            ctx.beginPath();
+            ctx.ellipse(emb.x, emb.y + 4, embRad, embRad * 0.36, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            /* Subtle Upward Projection Cone Rising From the Bottom Puddle Ember When Page Is Open */
+            if (excitation > 0.04) {
+                const beamGrad = ctx.createLinearGradient(emb.x, emb.y, emb.x, plateRect.y + plateRect.h * 0.18);
+                beamGrad.addColorStop(0.0, `rgba(${rC}, ${gC}, ${bC}, ${excitation * 0.28})`);
+                beamGrad.addColorStop(0.42, `rgba(${rC}, ${gC}, ${bC}, ${excitation * 0.08})`);
+                beamGrad.addColorStop(1.0, `rgba(${rC}, ${gC}, ${bC}, 0)`);
+                ctx.fillStyle = beamGrad;
+                ctx.beginPath();
+                ctx.moveTo(lBot.x, lBot.y);
+                ctx.lineTo(rBot.x, rBot.y);
+                ctx.lineTo(rTop.x, rTop.y + plateRect.h * 0.12);
+                ctx.lineTo(lTop.x, lTop.y + plateRect.h * 0.12);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            /* 2. Soft Rising 640.2 nm Translucent Vapor Ribbons Inside the V-Chamber */
+            for (let i = 0; i < gasRibbons.length; i++) {
+                const g = gasRibbons[i];
+                const breathScale = isStasisActive() ? 1 + 0.1 * Math.sin(realTime * 3.2 + g.phase) : 1;
+                const rad = g.r * breathScale;
+                const alpha = Math.max(0, g.life * (0.11 + breathLevel * 0.05 + excitation * 0.07));
+                ctx.save();
+                ctx.translate(g.x, g.y);
+                ctx.rotate(Math.sin(g.phase) * 0.22);
+                ctx.scale(0.58, 1.9);
+                const vGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, rad);
+                vGrad.addColorStop(0, `rgba(255, 224, 190, ${alpha * 0.65})`);
+                vGrad.addColorStop(0.4, `rgba(${g.rgb.r}, ${g.rgb.g}, ${g.rgb.b}, ${alpha})`);
+                vGrad.addColorStop(1, `rgba(${g.rgb.r}, ${g.rgb.g}, ${g.rgb.b}, 0)`);
+                ctx.fillStyle = vGrad;
+                ctx.beginPath();
+                ctx.arc(0, 0, rad, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            /* 3. Underdamped Perspective Capillary Ripples + Melted Inward Current Slicks */
+            for (let i = 0; i < puddleRings.length; i++) {
+                const r = puddleRings[i];
+                const pulse = isStasisActive() ? (0.82 + 0.18 * Math.sin(realTime * 5 + i)) : 1.0;
+                ctx.strokeStyle = `rgba(${r.rgb.r}, ${r.rgb.g}, ${r.rgb.b}, ${r.life * 0.58 * pulse})`;
+                ctx.lineWidth = 1.4;
+                ctx.beginPath();
+                ctx.ellipse(r.x, r.y, r.rx, r.ry, 0, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            for (let i = 0; i < puddleSlicks.length; i++) {
+                const sk = puddleSlicks[i];
+                const pulse = isStasisActive() ? (0.85 + 0.2 * Math.sin(realTime * 5 + sk.phase)) : 1.0;
+                const sGrad = ctx.createRadialGradient(sk.x, sk.y, 0, sk.x, sk.y, sk.rx);
+                sGrad.addColorStop(0, `rgba(255, 236, 214, ${0.88 * pulse})`);
+                sGrad.addColorStop(0.38, `rgba(${sk.rgb.r}, ${sk.rgb.g}, ${sk.rgb.b}, ${0.72 * pulse})`);
+                sGrad.addColorStop(1, `rgba(${sk.rgb.r}, ${sk.rgb.g}, ${sk.rgb.b}, 0)`);
+                ctx.fillStyle = sGrad;
+                ctx.beginPath();
+                ctx.ellipse(sk.x, sk.y, sk.rx, Math.max(2.2, sk.ry * 2.1), 0, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            /* 4. PHOTOGRAMMETRICALLY REGISTERED GLASS-EDGE EXCITATION (Exact V-Glass Panels!) */
+            const glassBreathAlpha = 0.06 + breathLevel * 0.14;
+            const totalRailGlow = glassBreathAlpha + excitation * 0.92;
+            const railPulse = 0.90 + 0.10 * Math.sin(realTime * 6.2);
+
+            const drawGlassRails = (strokeStyle, width, blur) => {
+                ctx.strokeStyle = strokeStyle;
+                ctx.lineWidth = width;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.shadowBlur = blur || 0;
+                if (blur) ctx.shadowColor = `rgb(${rC}, ${gC}, ${bC})`;
+                ctx.beginPath();
+                ctx.moveTo(lTop.x, lTop.y);
+                ctx.lineTo(lBot.x, lBot.y);
+                ctx.lineTo(rBot.x, rBot.y);
+                ctx.lineTo(rTop.x, rTop.y);
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            };
+
+            if (totalRailGlow > 0.04) {
+                /* Broad Optical Glass Halo */
+                drawGlassRails(`rgba(${rC}, ${gC}, ${bC}, ${totalRailGlow * 0.22 * railPulse})`, 20, 0);
+                /* Mid-Voltage Excited Borosilicate Tube Glow */
+                drawGlassRails(`rgba(${rC}, ${gC}, ${bC}, ${totalRailGlow * 0.68 * railPulse})`, 5.5, 18 * excitation);
+                /* Razor-Sharp Excimer Core Strictly Along the Glass Bevel When Excited */
+                if (excitation > 0.08) {
+                    drawGlassRails(`rgba(255, 242, 226, ${excitation * 0.92 * railPulse})`, 1.7, 0);
+
+                    /* Living High-Voltage Corona Spark Climbing Both Photographed V-Glass Slopes */
+                    for (const side of ['left', 'right']) {
+                        const travelT = 1 - ((realTime * 0.42 + (side === 'right' ? 0.5 : 0)) % 1.0);
+                        const pt = getRailPoint(side, travelT);
+                        const cGrad = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 28);
+                        cGrad.addColorStop(0, `rgba(255, 250, 244, ${excitation * 0.92})`);
+                        cGrad.addColorStop(0.35, `rgba(44, 229, 246, ${excitation * 0.52})`);
+                        cGrad.addColorStop(1, 'rgba(44, 229, 246, 0)');
+                        ctx.fillStyle = cGrad;
+                        ctx.beginPath();
+                        ctx.arc(pt.x, pt.y, 28, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+
+            /* 5. Droplets Clinging & Running Down the Exterior Photographed Glass Slopes */
+            for (let i = 0; i < railDrips.length; i++) {
+                const d = railDrips[i];
+                const pt = getRailPoint(d.side, d.t);
+                const aliveJx = isStasisActive() ? Math.sin(realTime * 11 + d.phase) * 0.95 : 0;
+                const aliveJy = isStasisActive() ? Math.cos(realTime * 7.5 + d.phase) * 1.15 : 0;
+                const pulse = isStasisActive() ? (1 + 0.16 * Math.sin(realTime * 5.8 + d.phase)) : 1.0;
+
+                /* Wet Luminous Meniscus Trail Clinging to the Photographed Glass Bevel */
+                if (d.trailT.length > 1) {
+                    ctx.beginPath();
+                    for (let k = 0; k < d.trailT.length; k++) {
+                        const tp = getRailPoint(d.side, d.trailT[k]);
+                        if (k === 0) ctx.moveTo(tp.x, tp.y);
+                        else ctx.lineTo(tp.x, tp.y);
+                    }
+                    ctx.strokeStyle = `rgba(${d.rgb.r}, ${d.rgb.g}, ${d.rgb.b}, ${isStasisActive() ? 0.56 : 0.36})`;
+                    ctx.lineWidth = d.r * 0.62;
+                    ctx.lineCap = 'round';
+                    ctx.stroke();
+                }
+
+                const px = pt.x + aliveJx;
+                const py = pt.y + aliveJy;
+                const haloR = d.r * 3.6 * pulse;
+                const dGrad = ctx.createRadialGradient(px, py, 0, px, py, haloR);
+                dGrad.addColorStop(0, 'rgba(255, 240, 222, 0.98)');
+                dGrad.addColorStop(0.28, `rgba(${d.rgb.r}, ${d.rgb.g}, ${d.rgb.b}, 0.86)`);
+                dGrad.addColorStop(1, `rgba(${d.rgb.r}, ${d.rgb.g}, ${d.rgb.b}, 0)`);
+                ctx.fillStyle = dGrad;
+                ctx.beginPath();
+                ctx.arc(px, py, haloR, 0, Math.PI * 2);
+                ctx.fill();
+
+                /* Subtle Alive Stasis Halo Ring Around Suspended Glass-Clinging Bead */
+                if (excitation > 0.15) {
+                    ctx.strokeStyle = `rgba(${d.rgb.r}, ${d.rgb.g}, ${d.rgb.b}, ${excitation * 0.62 * pulse})`;
+                    ctx.lineWidth = 1.0;
+                    ctx.beginPath();
+                    ctx.arc(px, py, d.r * (2.1 + 0.35 * Math.sin(realTime * 4.5 + d.phase)), 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+            }
+
+            /* 6. Weber Shatter Micro-Beads */
+            for (let i = 0; i < satellites.length; i++) {
+                const s = satellites[i];
+                const jitter = isStasisActive() ? Math.sin(realTime * 13 + s.phase) * 0.85 : 0;
+                ctx.fillStyle = `rgba(255, 232, 208, ${Math.max(0, s.life * 0.92)})`;
+                ctx.beginPath();
+                ctx.arc(s.x + jitter, s.y - jitter * 0.5, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            /* 7. 15 kV Submerged Brass-Trough Electric Arcs */
+            for (let i = 0; i < arcs.length; i++) {
+                const a = arcs[i];
+                ctx.beginPath();
+                for (let p = 0; p < a.pts.length; p++) {
+                    if (p === 0) ctx.moveTo(a.pts[p].x, a.pts[p].y);
+                    else ctx.lineTo(a.pts[p].x, a.pts[p].y);
+                }
+                ctx.strokeStyle = `rgba(44, 229, 246, ${a.life * 0.88})`;
+                ctx.lineWidth = 2.4;
+                ctx.shadowColor = '#2CE5F6';
+                ctx.shadowBlur = 14;
+                ctx.stroke();
+                ctx.strokeStyle = `rgba(255, 246, 238, ${a.life})`;
+                ctx.lineWidth = 1.0;
+                ctx.shadowBlur = 0;
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        /* =====================================================================
+           7. CONTROLS, INTERACTIVE GLASS TAP & DRAG-AND-DROP PLATE HOT-SWAP
+           ===================================================================== */
+        canvas.addEventListener('click', (e) => {
+            const rect = roomStage.getBoundingClientRect();
+            const lx = e.clientX - rect.left;
+            const ly = e.clientY - rect.top;
+            const side = lx < W * 0.5 ? 'left' : 'right';
+            const t = Math.max(0.08, Math.min(0.82, (ly - plateRect.y) / Math.max(1, plateRect.h)));
+            spawnRailDrip(side, t, activeWing ? activeWing.accent : '#FF6B2B', 5.2);
+        });
+
+        btnDrip.addEventListener('click', () => {
+            const side = Math.random() < 0.5 ? 'left' : 'right';
+            spawnRailDrip(side, 0.105, activeWing ? activeWing.accent : '#FF6B2B', 5.6);
+        });
+
+        btnStasis.addEventListener('click', () => {
+            if (activeWing) {
+                clearSelection();
+                return;
+            }
+            manualStasis = !manualStasis;
+            btnStasis.classList.toggle('active', manualStasis);
+            roomStage.classList.toggle('excited', manualStasis);
+            stateText.textContent = manualStasis
+                ? 'CHAMBER EXCITED // ALIVE FREEZE-FRAME (DEMO)'
+                : 'BREATHING IDLE // 27.1 K CLEAR GLASS';
+            if (manualStasis) {
+                spawnPuddleBurstAtEmber('#FF6B2B', 0.9);
+            }
+        });
+
+        btnMobileSim.addEventListener('click', () => {
+            const on = studioShell.classList.toggle('mobile-sim');
+            btnMobileSim.classList.toggle('active', on);
+            btnMobileSim.textContent = on ? '[\uD83D\uDDA5 DESKTOP VIEW]' : '[\uD83D\uDCF1 MOBILE VIEW]';
+            setTimeout(updateLayout, 480);
+            updateLayout();
+        });
+
+        btnClean.addEventListener('click', () => {
+            const on = roomStage.classList.toggle('clean-mode');
+            btnClean.classList.toggle('active', on);
+            btnClean.textContent = on ? '[SHOW HUD]' : '[CLEAN VIEW]';
+        });
+
+        /* Drag-and-Drop Any Full-Res Graded Chamber Plate Directly Into Browser! */
+        ['dragenter', 'dragover'].forEach(evt => {
+            window.addEventListener(evt, (e) => {
+                e.preventDefault();
+                dropOverlay.classList.add('visible');
+            });
+        });
+        ['dragleave', 'drop'].forEach(evt => {
+            window.addEventListener(evt, (e) => {
+                e.preventDefault();
+                dropOverlay.classList.remove('visible');
+            });
+        });
+        window.addEventListener('drop', (e) => {
+            const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+            if (!file || !file.type.startsWith('image/')) return;
+            const url = URL.createObjectURL(file);
+            roomPlate.onload = () => updateLayout();
+            roomPlate.src = url;
+        });
+
+        /* Resize Observer (Catches Both Window Resize & Mobile Simulator Transition) */
+        const ro = new ResizeObserver(() => updateLayout());
+        ro.observe(roomStage);
+        roomPlate.addEventListener('load', updateLayout);
+        window.addEventListener('resize', updateLayout);
+
+        updateLayout();
+        spawnRailDrip('left', 0.14, '#FF6B2B', 5.0);
+        spawnRailDrip('right', 0.42, '#FF6B2B', 4.6);
+
+        let lastMs = performance.now();
+        requestAnimationFrame(renderFrame);
+    })();
+    </script>
+</body>
+</html>
