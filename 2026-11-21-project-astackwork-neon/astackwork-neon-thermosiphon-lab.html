@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeverRender Labs // Cryogenic Neon Thermosiphon Prototype (v5.0)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --abs-zero: #000000;
+            --clay-void: #070C10;
+            --clay-petrol: #102631;
+            --clay-slate: #1C3542;
+            --clay-card: rgba(11, 24, 32, 0.90);
+            --clay-border: rgba(164, 198, 210, 0.22);
+            --brass: #C88A3B;
+            --copper: #B86B35;
+            --ne-sienna: #E8451E;
+            --ne-molten: #FF6B2B;
+            --ne-core: #FFE6CC;
+            --hg-cyan: #2CE5F6;
+            --text-main: #E6F0F4;
+            --text-muted: #93ADB9;
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --active-accent: #FF6B2B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--abs-zero);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+            user-select: none;
+        }
+
+        /* Layer 0: Absolute Zero Margins -> Powdery Matte Leather-Hard Greenware Penumbra */
+        .chamber-env {
+            position: relative;
+            width: 100vw;
+            height: 100dvh;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse 46% 78% at 50% 48%, rgba(28, 53, 66, 0.42) 0%, rgba(12, 27, 36, 0.28) 44%, rgba(2, 5, 7, 0.92) 72%, #000000 100%),
+                #000000;
+        }
+
+        /* Subtle Matte Unfired-Clay Micro-Grain Overlay (Kills Plastic Gloss) */
+        .clay-grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.045;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+
+        /* Layer 1: Full-Viewport 60fps 27.1 K Liquid Neon + Sharp Y-Chamber Canvas */
+        #thermo-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: block;
+            cursor: crosshair;
+        }
+
+        /* Layer 2: Top Subtle Studio Telemetry Crown */
+        .crown-hud {
+            position: fixed;
+            top: 14px;
+            left: 18px;
+            right: 18px;
+            z-index: 20;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            gap: 12px;
+        }
+
+        .crown-badge {
+            pointer-events: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 13px;
+            border-radius: 3px;
+            background: rgba(7, 13, 18, 0.82);
+            border: 1px solid rgba(200, 138, 59, 0.35);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            color: #DCE9EF;
+            backdrop-filter: blur(8px);
+        }
+
+        .ne-stamp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px 6px;
+            border: 1px solid var(--brass);
+            color: var(--ne-molten);
+            font-weight: 700;
+            font-size: 0.72rem;
+            background: rgba(200, 138, 59, 0.12);
+        }
+
+        .state-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 12px;
+            border-radius: 3px;
+            background: rgba(7, 13, 18, 0.84);
+            border: 1px solid rgba(147, 173, 185, 0.28);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            transition: border-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .state-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #587886;
+            transition: background 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .chamber-env.excited .state-pill {
+            border-color: var(--active-accent);
+            color: #FFF3E8;
+            box-shadow: 0 0 18px color-mix(in srgb, var(--active-accent) 38%, transparent);
+        }
+
+        .chamber-env.excited .state-dot {
+            background: var(--active-accent);
+            box-shadow: 0 0 10px var(--active-accent);
+        }
+
+        /* Layer 3: Large Sculptural WU WEI Carved Stoneware Navigation Spheres */
+        .orb-rail {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 15;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            pointer-events: none;
+        }
+
+        .orb-rail.left {
+            left: max(22px, calc(50% - 470px));
+            align-items: flex-end;
+        }
+
+        .orb-rail.right {
+            right: max(22px, calc(50% - 470px));
+            align-items: flex-start;
+        }
+
+        .wuwei-orb-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            pointer-events: auto;
+        }
+
+        .orb-rail.left .wuwei-orb-wrap {
+            flex-direction: row-reverse;
+        }
+
+        /* Projected Radial Gobo Light Caustic Spill Behind Each Sphere */
+        .orb-gobo {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.72) rotate(0deg);
+            pointer-events: none;
+            opacity: 0.14;
+            border-radius: 50%;
+            background:
+                repeating-conic-gradient(
+                    from 0deg,
+                    var(--orb-glow, #FF6B2B) 0deg 6deg,
+                    transparent 6deg 22deg,
+                    var(--orb-glow, #FF6B2B) 22deg 25deg,
+                    transparent 25deg 45deg
+                );
+            -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,0.95) 22%, rgba(0,0,0,0.28) 54%, transparent 72%);
+            mask-image: radial-gradient(circle, rgba(0,0,0,0.95) 22%, rgba(0,0,0,0.28) 54%, transparent 72%);
+            filter: blur(5px);
+            transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 0;
+        }
+
+        .wuwei-orb-btn {
+            position: relative;
+            z-index: 2;
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            background: transparent;
+            outline: none;
+            transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .wuwei-orb-btn:hover {
+            transform: scale(1.11) translateY(-2px);
+        }
+
+        .wuwei-orb-btn.selected {
+            transform: scale(1.16);
+        }
+
+        .wuwei-orb-btn:hover .orb-gobo,
+        .wuwei-orb-btn.selected .orb-gobo {
+            opacity: 0.72;
+            transform: translate(-50%, -50%) scale(1.18) rotate(28deg);
+        }
+
+        /* Matte Unfired Stoneware Shell + Glowing Carved Inner Core */
+        .orb-sphere {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 34% 28%, #776E64 0%, #4E4943 38%, #282726 74%, #111214 100%);
+            box-shadow:
+                inset 2px 3px 8px rgba(255, 240, 224, 0.18),
+                inset -8px -10px 18px rgba(0, 0, 0, 0.85),
+                0 14px 28px rgba(0, 0, 0, 0.78),
+                0 0 0 1px rgba(200, 138, 59, 0.24);
+            transition: box-shadow 0.35s ease;
+        }
+
+        .wuwei-orb-btn:hover .orb-sphere,
+        .wuwei-orb-btn.selected .orb-sphere {
+            box-shadow:
+                inset 2px 3px 10px rgba(255, 232, 206, 0.25),
+                inset -8px -10px 18px rgba(0, 0, 0, 0.88),
+                0 16px 34px rgba(0, 0, 0, 0.85),
+                0 0 26px color-mix(in srgb, var(--orb-glow, #FF6B2B) 55%, transparent),
+                0 0 0 1.5px var(--orb-glow, #FF6B2B);
+        }
+
+        /* Carved Spiral / Maze Channels Glowing From Deep Inside the Clay Sphere */
+        .orb-carve-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), filter 0.35s ease;
+            filter: drop-shadow(0 0 4px var(--orb-glow, #FF6B2B));
+        }
+
+        .wuwei-orb-btn:hover .orb-carve-svg {
+            transform: rotate(22deg) scale(1.03);
+            filter: drop-shadow(0 0 8px var(--orb-glow, #FF6B2B)) brightness(1.25);
+        }
+
+        .wuwei-orb-btn.selected .orb-carve-svg {
+            transform: rotate(45deg) scale(1.05);
+            filter: drop-shadow(0 0 11px var(--orb-glow, #FF6B2B)) brightness(1.4);
+        }
+
+        .orb-code-center {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: #FFF4E8;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.95), 0 0 10px var(--orb-glow, #FF6B2B);
+            pointer-events: none;
+        }
+
+        /* Minimal Sculptural Label Beside Large Orb */
+        .orb-caption {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .orb-rail.left .orb-caption {
+            text-align: right;
+        }
+
+        .orb-title {
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: #D7E5EC;
+            text-transform: uppercase;
+            transition: color 0.25s ease;
+        }
+
+        .orb-sub {
+            font-family: var(--font-mono);
+            font-size: 0.61rem;
+            letter-spacing: 0.06em;
+            color: rgba(147, 173, 185, 0.72);
+            text-transform: uppercase;
+        }
+
+        .wuwei-orb-wrap:hover .orb-title,
+        .wuwei-orb-wrap.active .orb-title {
+            color: var(--orb-glow, #FF6B2B);
+        }
+
+        /* Layer 4: Center Clear Borosilicate Chamber Interior */
+        .chamber-interior {
+            position: fixed;
+            top: 13vh;
+            bottom: 16vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(580px, calc(100vw - 44px));
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            padding: 18px 22px;
+        }
+
+        /* Dormant State: Clear, Whisper-Quiet Wu Wei Brand Monolith */
+        .dormant-monolith {
+            text-align: center;
+            max-width: 440px;
+            transition: opacity 0.45s ease, transform 0.45s ease;
+            pointer-events: none;
+        }
+
+        .chamber-env.deck-open .dormant-monolith {
+            opacity: 0;
+            transform: scale(0.94);
+            pointer-events: none;
+        }
+
+        .dormant-kicker {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            color: rgba(200, 138, 59, 0.85);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .dormant-title {
+            font-size: clamp(1.85rem, 3.6vw, 2.85rem);
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            line-height: 1.08;
+            color: rgba(232, 242, 246, 0.90);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            text-shadow: 0 8px 26px rgba(0, 0, 0, 0.75);
+        }
+
+        .dormant-sub {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            line-height: 1.65;
+            color: rgba(164, 192, 204, 0.78);
+            margin-bottom: 18px;
+        }
+
+        .dormant-hint {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            letter-spacing: 0.1em;
+            color: rgba(255, 180, 138, 0.78);
+            padding: 6px 12px;
+            border: 1px solid rgba(255, 107, 43, 0.28);
+            border-radius: 2px;
+            background: rgba(6, 13, 18, 0.48);
+        }
+
+        /* Excited State: Matte Leather-Hard Clay Content Deck Inside Excited Glass Chamber */
+        .page-content-deck {
+            position: absolute;
+            inset: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 24px 26px;
+            border-radius: 4px;
+            background: linear-gradient(165deg, rgba(13, 27, 36, 0.92), rgba(7, 15, 20, 0.94));
+            border: 1px solid color-mix(in srgb, var(--active-accent) 45%, rgba(255,255,255,0.12));
+            box-shadow:
+                0 24px 60px rgba(0, 0, 0, 0.82),
+                inset 0 0 36px color-mix(in srgb, var(--active-accent) 10%, transparent);
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
+            opacity: 0;
+            transform: translateY(16px) scale(0.97);
+            pointer-events: none;
+            transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease;
+            user-select: text;
+        }
+
+        .chamber-env.deck-open .page-content-deck {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .deck-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(164, 198, 210, 0.16);
+            padding-bottom: 12px;
+        }
+
+        .deck-kicker {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--active-accent);
+            text-transform: uppercase;
+        }
+
+        .release-stasis-btn {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 6px 11px;
+            border-radius: 2px;
+            border: 1px solid var(--active-accent);
+            background: rgba(8, 18, 24, 0.85);
+            color: #FFF4E8;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .release-stasis-btn:hover {
+            background: var(--active-accent);
+            color: #061016;
+        }
+
+        .deck-heading {
+            font-size: clamp(1.3rem, 2.2vw, 1.72rem);
+            font-weight: 800;
+            line-height: 1.2;
+            color: #F2F8FA;
+            letter-spacing: -0.01em;
+        }
+
+        .deck-summary {
+            font-size: 0.92rem;
+            line-height: 1.62;
+            color: #BFD3DC;
+        }
+
+        .deck-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .deck-metric {
+            padding: 10px 12px;
+            border-radius: 3px;
+            background: rgba(6, 14, 19, 0.72);
+            border: 1px solid rgba(147, 173, 185, 0.18);
+            font-family: var(--font-mono);
+        }
+
+        .deck-metric-label {
+            display: block;
+            font-size: 0.6rem;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .deck-metric-val {
+            display: block;
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--active-accent);
+        }
+
+        .deck-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .deck-list li {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #D2E3EA;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .deck-list li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--active-accent);
+        }
+
+        .deck-actions {
+            margin-top: auto;
+            padding-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .deck-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding: 9px 14px;
+            border-radius: 3px;
+            border: 1px solid var(--active-accent);
+            background: var(--active-accent);
+            color: #061016;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .deck-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 20px color-mix(in srgb, var(--active-accent) 45%, transparent);
+        }
+
+        .deck-cta.ghost {
+            background: rgba(9, 22, 30, 0.78);
+            color: #E6F0F4;
+            border-color: rgba(164, 198, 210, 0.35);
+        }
+
+        .deck-cta.ghost:hover {
+            border-color: var(--active-accent);
+            color: var(--active-accent);
+        }
+
+        /* Layer 5: Subtle Lab Control Dock (Bottom-Right Corner) */
+        .lab-dock {
+            position: fixed;
+            bottom: 14px;
+            right: 16px;
+            z-index: 25;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .lab-btn {
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            padding: 6px 10px;
+            border-radius: 2px;
+            border: 1px solid rgba(200, 138, 59, 0.38);
+            background: rgba(6, 12, 16, 0.84);
+            color: #D9E7EE;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            transition: all 0.2s ease;
+        }
+
+        .lab-btn:hover,
+        .lab-btn.active {
+            border-color: var(--ne-molten);
+            color: #071117;
+            background: var(--ne-molten);
+        }
+
+        .physics-readout {
+            position: fixed;
+            bottom: 14px;
+            left: 16px;
+            z-index: 25;
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            letter-spacing: 0.07em;
+            color: rgba(164, 194, 206, 0.72);
+            background: rgba(5, 10, 14, 0.75);
+            padding: 6px 10px;
+            border: 1px solid rgba(147, 173, 185, 0.18);
+            border-radius: 2px;
+            pointer-events: none;
+        }
+
+        .chamber-env.clean-mode .crown-hud,
+        .chamber-env.clean-mode .physics-readout {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Responsive Mobile & Narrow Tablet Layout */
+        @media (max-width: 980px) {
+            .orb-rail {
+                top: auto;
+                transform: none;
+                flex-direction: row;
+                justify-content: center;
+                gap: 14px;
+            }
+            .orb-rail.left {
+                left: 12px;
+                right: 12px;
+                top: 56px;
+                align-items: center;
+            }
+            .orb-rail.right {
+                left: 12px;
+                right: 12px;
+                bottom: 58px;
+                align-items: center;
+            }
+            .wuwei-orb-wrap,
+            .orb-rail.left .wuwei-orb-wrap {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .wuwei-orb-btn {
+                width: 60px;
+                height: 60px;
+            }
+            .orb-gobo {
+                width: 120px;
+                height: 120px;
+            }
+            .orb-caption,
+            .orb-rail.left .orb-caption {
+                text-align: center;
+            }
+            .orb-sub {
+                display: none;
+            }
+            .orb-title {
+                font-size: 0.62rem;
+            }
+            .chamber-interior {
+                top: 152px;
+                bottom: 146px;
+                width: calc(100vw - 26px);
+                padding: 8px;
+            }
+            .page-content-deck {
+                inset: 6px;
+                padding: 16px;
+            }
+            .physics-readout {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chamber-env" id="chamber-env">
+        <div class="clay-grain"></div>
+        <canvas id="thermo-canvas" aria-label="27.1 K Cryogenic Neon Thermosiphon and Borosilicate Y-Chamber"></canvas>
+
+        <!-- Top Telemetry Crown -->
+        <header class="crown-hud">
+            <div class="crown-badge">
+                <span class="ne-stamp">Ne 10</span>
+                <span>NEVERRENDER LABS // CRYOGENIC THERMOSIPHON v5.0</span>
+            </div>
+            <div class="state-pill" id="state-pill">
+                <span class="state-dot"></span>
+                <span id="state-text">CHAMBER: CLEAR BOROSILICATE (27.1 K IDLE)</span>
+            </div>
+        </header>
+
+        <!-- Left Rail: 3 Large Sculptural Carved Stoneware Nav Spheres -->
+        <nav class="orb-rail left" id="orb-rail-left" aria-label="Primary Studio Wings Left"></nav>
+
+        <!-- Right Rail: 3 Large Sculptural Carved Stoneware Nav Spheres -->
+        <nav class="orb-rail right" id="orb-rail-right" aria-label="Primary Studio Wings Right"></nav>
+
+        <!-- Center Clear Borosilicate Chamber Interior -->
+        <main class="chamber-interior">
+            <!-- Dormant Clear-Glass Identity -->
+            <div class="dormant-monolith">
+                <div class="dormant-kicker">ASTACKWORK NEON // 27.1 K PHASE ENGINE</div>
+                <h1 class="dormant-title">NEVERRENDER<br>LABS</h1>
+                <p class="dormant-sub">
+                    Clear borosilicate glass at rest. Mirror-black liquid Neon at 27.1 K.<br>
+                    Select any carved sphere to freeze the droplets alive and ignite the chamber walls.
+                </p>
+                <span class="dormant-hint">[ CLICK ANY SPHERE TO EXCITE CHAMBER // CLICK CANVAS TO DRIP ]</span>
+            </div>
+
+            <!-- Excited State Page Content Deck -->
+            <section class="page-content-deck" id="page-content-deck" aria-live="polite">
+                <div class="deck-top-row">
+                    <span class="deck-kicker" id="deck-kicker">// WING TELEMETRY</span>
+                    <button type="button" class="release-stasis-btn" id="release-stasis-btn">[&#9654; RELEASE STASIS // CLEAR GLASS]</button>
+                </div>
+                <h2 class="deck-heading" id="deck-heading">Wing Title</h2>
+                <p class="deck-summary" id="deck-summary"></p>
+                <div class="deck-metrics" id="deck-metrics"></div>
+                <ul class="deck-list" id="deck-list"></ul>
+                <div class="deck-actions" id="deck-actions"></div>
+            </section>
+        </main>
+
+        <!-- Live Physics Status Readout -->
+        <div class="physics-readout" id="physics-readout">
+            T: 27.1 K // RHO: 1.207 g/cm3 // F0: 0.00272 // TIMESCALE: 1.00x
+        </div>
+
+        <!-- Lab Tuning Controls -->
+        <div class="lab-dock">
+            <button type="button" class="lab-btn" id="btn-drip">[+ DRIP BEAD]</button>
+            <button type="button" class="lab-btn" id="btn-arc">[&#9889; 15KV SURGE]</button>
+            <button type="button" class="lab-btn" id="btn-stasis">[&#10052; FREEZE FRAME]</button>
+            <button type="button" class="lab-btn" id="btn-clean">[CLEAN VIEW]</button>
+        </div>
+    </div>
+
+    <script>
+    (() => {
+        'use strict';
+
+        /* =====================================================================
+           1. STUDIO WING DATA (LARGE SCULPTURAL WU WEI NAV SPHERES)
+           ===================================================================== */
+        const WINGS = [
+            {
+                id: 'area-33',
+                rail: 'left',
+                code: 'A-33',
+                title: 'Area 33',
+                sub: 'Rindersin, NV',
+                accent: '#FF5522',
+                secondary: '#FFB48A',
+                kicker: 'SECTOR A-33 // RINDERSIN, NEVADA // THE RINDER-FILES',
+                heading: 'Area 33: Declassified AI Physics Anomalies & Fixes',
+                summary: 'The proving ground where broken generative physics gets pinned to the shop wall and solved through deterministic camera geometry, opposed horizon locking, and plain-text optical prompting.',
+                metrics: [
+                    { label: 'LIVE EPISODES', val: '04 PLAYABLE CUTS' },
+                    { label: 'LATEST DROP', val: 'GRANNY THEFT JAX' },
+                    { label: 'OPEN UTILITY', val: 'DRIVE SWEEP KIT' }
+                ],
+                bullets: [
+                    'Episode 04: Granny Theft Jax 21067 (GTA-1 bridge hit-and-run, convertible T-bar, Stargate louver breach).',
+                    'Episode 03: Russian Blair d\'Etat & the 14-second 360-degree Anthropolis eggbeater drift.',
+                    'Episodes 01 & 02: Bassakwards Jaxwards, Jax-Ellington Spiral Hill, and Draft Parade marquee runs.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/area-33/',
+                primaryLabel: 'ENTER AREA 33',
+                secondaryHref: 'https://renderwithoutcode.com/area-33/ep-04-granny-theft-jax/',
+                secondaryLabel: 'OPEN EPISODE 04'
+            },
+            {
+                id: 'club-19',
+                rail: 'left',
+                code: 'C-19',
+                title: 'Club 19',
+                sub: 'Keystone Labs',
+                accent: '#00FF88',
+                secondary: '#7CFFD0',
+                kicker: 'SECTOR KL-19 // KEYSTONE LABS // ZERO-SIN RINDERWINS',
+                heading: 'Club 19: Velvet-Rope Vault of Certified RinderWins',
+                summary: 'Across the midnight highway from Area 33 sits Keystone Labs: strictly first-pass, zero-sin generative cinema victories shipped with C2PA hero plates and one-click open-source prompts.',
+                metrics: [
+                    { label: 'SINS ALLOWED', val: '000 // LOCKED' },
+                    { label: 'HERO STUNT', val: '180-DEG PASS-THRU' },
+                    { label: 'PROMPTS', val: '100% OPEN SOURCE' }
+                ],
+                bullets: [
+                    'Entry #01 ("7 Seconds to Heavom"): unbroken 180-degree interior-to-hood windshield pass-through locking Jax at redline.',
+                    'Zero gatekeeping: steal all 3 verified prompts and plate recipes directly in one click.',
+                    'Directly powers the Fog Bridge saxophone solo climax in the "We Are What You See" music video.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/club-19/',
+                primaryLabel: 'ENTER CLUB 19',
+                secondaryHref: 'https://renderwithoutcode.com/club-19/ep-01-jaxs-keystone-win/',
+                secondaryLabel: 'STEAL ENTRY #01 PROMPTS'
+            },
+            {
+                id: 'in-the-works',
+                rail: 'left',
+                code: 'ITW',
+                title: 'In The Works',
+                sub: 'Outpost Cruise',
+                accent: '#FF6B2B',
+                secondary: '#FFE6CC',
+                kicker: 'LIVE PRODUCTION DEVBLOG // NRL 21067 SD ("SUPER DROSS")',
+                heading: 'Outpost Cruise Night & "We Are What You See" Premiere',
+                summary: 'Hood popped open across Entries #01 through #07: our debut full-length 9:16 vertical music video streaming live with 7 frame-verified chapter cues, 4 lossless synth stems, and 23 C2PA graded plates.',
+                metrics: [
+                    { label: 'PREMIERE CUT', val: '1080x1920 // 24FPS' },
+                    { label: 'MASTER AUDIO', val: '-14.4 LUFS // -2.4 TP' },
+                    { label: 'STUDIO VAULT', val: '23 GRADED PLATES' }
+                ],
+                bullets: [
+                    'Entry #07: Debut vertical music video "We Are What You See" with 7 interactive jump cues.',
+                    'Entry #06: Synced dual-deck RenderSin vs. RenderWin optical-parallax breakdown.',
+                    'Interactive 4-stem studio master deck plus the 6-panel anti-drift Super Dross CAD blueprint.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/in-the-works.html#wawys-music-video',
+                primaryLabel: 'WATCH PREMIERE CUT',
+                secondaryHref: 'https://youtube.com/shorts/MNsWd_qygUo',
+                secondaryLabel: 'OPEN ON YOUTUBE'
+            },
+            {
+                id: 'rendersins',
+                rail: 'right',
+                code: 'SINS',
+                title: 'RenderSins',
+                sub: '*ding!* Archive',
+                accent: '#FF3B30',
+                secondary: '#FF9E96',
+                kicker: 'BLUE TEAM QA // RENDERSINS *DING!* HALL OF SHAME',
+                heading: 'RenderSins *ding!*: Every Physics Crime Caught On Camera',
+                summary: 'Real generative failure forensics scored with an interactive zero-KB Web Audio bell counter. No cherry-picked highlight reel without showing what broke and exactly how we fixed it.',
+                metrics: [
+                    { label: 'AUDIT ENGINE', val: 'BLUE TEAM QA' },
+                    { label: 'BELL SYNTH', val: '0 KB WEB AUDIO' },
+                    { label: 'PROTOCOL', val: 'RINDERFILES 1-4' }
+                ],
+                bullets: [
+                    'Reverse-gear Super Dross under tactical teal smoke screens caused by cropped billboard spelling tokens.',
+                    'Mutant side-pipes, UFO sky cranes, Knights of WEE/NEE typography drift, and Wahl-clipper wind tunnels.',
+                    'Every sin links straight to the verified deterministic prompt fix that killed it.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/rendersins.html',
+                primaryLabel: 'OPEN RENDERSINS',
+                secondaryHref: 'https://renderwithoutcode.com/in-the-works.html#wawys-rendersin',
+                secondaryLabel: 'DUAL-DECK COMPARISON'
+            },
+            {
+                id: 'front-desk',
+                rail: 'right',
+                code: '24/7',
+                title: 'Front Desk',
+                sub: 'AI Concierge',
+                accent: '#2CE5F6',
+                secondary: '#B2F7FF',
+                kicker: 'AUTONOMOUS RECEPTION // ZERO AGENCY LAG',
+                heading: '24/7 Sovereign AI Front Desk & Client Architecture',
+                summary: 'Dual-layer studio reception handling off-hours inquiries, technical dossier lookup, and luxury e-commerce engineering with strict client data sovereignty and air-gapped telemetry.',
+                metrics: [
+                    { label: 'UPTIME', val: '24/7 AUTONOMOUS' },
+                    { label: 'DATA POLICY', val: '100% CLIENT OWNED' },
+                    { label: 'COMPUTE', val: 'TINY HYPERION 6800U' }
+                ],
+                bullets: [
+                    'Zero bloated agency layers: direct architect execution from color science to WooCommerce and Omnisend.',
+                    'Live NotebookLM studio concierge paired with Streamable-HTTP MCP automation.',
+                    'Direct digital executive card (.VCF) and studio contact pipeline.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/front-desk.html',
+                primaryLabel: 'OPEN FRONT DESK',
+                secondaryHref: 'https://renderwithoutcode.com/card/index.html',
+                secondaryLabel: 'DIGITAL CARD (.VCF)'
+            },
+            {
+                id: 'tech-logs',
+                rail: 'right',
+                code: 'LOGS',
+                title: 'Tech Logs',
+                sub: 'Proofs & Specs',
+                accent: '#FFB48A',
+                secondary: '#FFE6CC',
+                kicker: 'SRE KERNEL // PHYSICS BENCHMARKS & TELEMETRY',
+                heading: 'Tech Logs, Physics Proofs & Studio Research Vault',
+                summary: 'Verified Python and KaTeX hardware benchmarks, YouTube Music algorithmic telemetry dossiers, color science XMP calibration recipes, and multi-agent systems documentation.',
+                metrics: [
+                    { label: 'COMPENDIUM', val: '5-PART OMNIBUS' },
+                    { label: 'BENCHMARK', val: '6800U BUS & DSP' },
+                    { label: 'COLOR SPEC', val: 'ASTACKWORK v5.0' }
+                ],
+                bullets: [
+                    'Making Gemini 4 Neon Extra Stop and Think: InGaN vs. AlInGaP decoherence, 75 GB/s bus proofs, and Haas DSP.',
+                    'YouTube Music debut audit: how "From NeverRender; With Sludge, Jackson." mapped into a 51-track mix.',
+                    'Open-source studio toolkit spanning Lightroom XMP LUTs, matting pipelines, and email compilers.'
+                ],
+                primaryHref: 'https://renderwithoutcode.com/tech-logs.html',
+                primaryLabel: 'READ TECH LOGS',
+                secondaryHref: 'https://renderwithoutcode.com/neon-physics-benchmark.html',
+                secondaryLabel: 'PHYSICS BENCHMARK'
+            }
+        ];
+
+        /* Carved Stoneware SVG Pattern Variants (Inspired by WU WEI Orbiting Spheres) */
+        const CARVE_PATHS = [
+            `<path d="M18 32 C30 22, 46 22, 58 34 C68 44, 62 62, 46 66 C30 70, 22 56, 30 44 C36 35, 50 38, 48 49" fill="none" stroke="COLOR" stroke-width="2.7" stroke-linecap="round"/>
+             <path d="M12 52 C20 68, 40 78, 60 72 C74 68, 82 52, 74 34 C68 20, 50 12, 32 16" fill="none" stroke="COLOR" stroke-width="2.1" stroke-linecap="round" opacity="0.82"/>
+             <path d="M24 22 C38 14, 58 18, 68 32" fill="none" stroke="SEC" stroke-width="1.4" stroke-linecap="round" opacity="0.9"/>`,
+            `<path d="M16 44 C26 26, 54 20, 68 36 C78 48, 70 68, 50 72 C32 75, 18 62, 26 48 C34 34, 56 36, 56 50 C56 60, 42 62, 38 54" fill="none" stroke="COLOR" stroke-width="2.6" stroke-linecap="round"/>
+             <path d="M22 24 C40 12, 66 18, 76 38" fill="none" stroke="SEC" stroke-width="1.8" stroke-linecap="round" opacity="0.88"/>
+             <path d="M14 58 C24 76, 52 82, 70 68" fill="none" stroke="COLOR" stroke-width="2.0" stroke-linecap="round" opacity="0.78"/>`,
+            `<path d="M18 28 Q45 14 72 28 M14 45 Q45 30 76 45 M18 62 Q45 48 72 62 M26 75 Q45 66 64 75" fill="none" stroke="COLOR" stroke-width="2.5" stroke-linecap="round"/>
+             <path d="M28 18 C36 34, 34 56, 26 70 M58 18 C52 36, 54 56, 64 70" fill="none" stroke="SEC" stroke-width="1.6" stroke-linecap="round" opacity="0.82"/>`
+        ];
+
+        const chamberEnv = document.getElementById('chamber-env');
+        const stateText = document.getElementById('state-text');
+        const physicsReadout = document.getElementById('physics-readout');
+        const railLeft = document.getElementById('orb-rail-left');
+        const railRight = document.getElementById('orb-rail-right');
+
+        const deckKicker = document.getElementById('deck-kicker');
+        const deckHeading = document.getElementById('deck-heading');
+        const deckSummary = document.getElementById('deck-summary');
+        const deckMetrics = document.getElementById('deck-metrics');
+        const deckList = document.getElementById('deck-list');
+        const deckActions = document.getElementById('deck-actions');
+        const releaseStasisBtn = document.getElementById('release-stasis-btn');
+
+        const btnDrip = document.getElementById('btn-drip');
+        const btnArc = document.getElementById('btn-arc');
+        const btnStasis = document.getElementById('btn-stasis');
+        const btnClean = document.getElementById('btn-clean');
+
+        let activeWing = null;
+        let manualStasis = false;
+        const orbElements = new Map();
+
+        /* Render Large Sculptural WU WEI Orbs */
+        WINGS.forEach((wing, idx) => {
+            const wrap = document.createElement('div');
+            wrap.className = 'wuwei-orb-wrap';
+            wrap.style.setProperty('--orb-glow', wing.accent);
+
+            const svgPaths = CARVE_PATHS[idx % CARVE_PATHS.length]
+                .replace(/COLOR/g, wing.accent)
+                .replace(/SEC/g, wing.secondary);
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'wuwei-orb-btn';
+            btn.setAttribute('aria-label', 'Inspect ' + wing.title);
+            btn.innerHTML =
+                '<span class="orb-gobo"></span>' +
+                '<span class="orb-sphere">' +
+                    '<svg class="orb-carve-svg" viewBox="0 0 90 90" aria-hidden="true">' + svgPaths + '</svg>' +
+                    '<span class="orb-code-center">' + wing.code + '</span>' +
+                '</span>';
+
+            const caption = document.createElement('div');
+            caption.className = 'orb-caption';
+            caption.innerHTML =
+                '<span class="orb-title">' + wing.title + '</span>' +
+                '<span class="orb-sub">' + wing.sub + '</span>';
+
+            const handleSelect = () => {
+                if (activeWing && activeWing.id === wing.id) {
+                    clearSelection();
+                } else {
+                    selectWing(wing, btn);
+                }
+            };
+
+            btn.addEventListener('click', handleSelect);
+            caption.addEventListener('click', handleSelect);
+
+            /* Hover emits a small live droplet from that orb straight toward the pool! */
+            btn.addEventListener('mouseenter', () => {
+                if (isStasisActive()) return;
+                const rect = btn.getBoundingClientRect();
+                spawnDroplet(rect.left + rect.width / 2, rect.bottom - 6, wing.accent, 4.2, true);
+            });
+
+            wrap.appendChild(btn);
+            wrap.appendChild(caption);
+
+            if (wing.rail === 'left') {
+                railLeft.appendChild(wrap);
+            } else {
+                railRight.appendChild(wrap);
+            }
+
+            orbElements.set(wing.id, { wrap, btn });
+        });
+
+        function isStasisActive() {
+            return Boolean(activeWing) || manualStasis;
+        }
+
+        function selectWing(wing, btnEl) {
+            activeWing = wing;
+            manualStasis = false;
+            btnStasis.classList.remove('active');
+
+            /* Emit a hero trigger bead right before cryo freeze-frame catches it mid-flight! */
+            if (btnEl) {
+                const rect = btnEl.getBoundingClientRect();
+                spawnDroplet(rect.left + rect.width / 2, rect.bottom - 4, wing.accent, 6.2, true);
+            }
+            triggerArc(wing.accent, 0.9);
+
+            chamberEnv.style.setProperty('--active-accent', wing.accent);
+            chamberEnv.classList.add('excited', 'deck-open');
+
+            orbElements.forEach((entry, id) => {
+                const match = id === wing.id;
+                entry.wrap.classList.toggle('active', match);
+                entry.btn.classList.toggle('selected', match);
+            });
+
+            stateText.textContent = 'CHAMBER EXCITED (' + wing.code + ') // ALIVE STASIS ENGAGED';
+
+            /* Populate Matte Clay Dossier Inside the Excited Borosilicate Walls */
+            deckKicker.textContent = '// ' + wing.kicker;
+            deckHeading.textContent = wing.heading;
+            deckSummary.textContent = wing.summary;
+
+            deckMetrics.innerHTML = wing.metrics.map(m =>
+                '<div class="deck-metric">' +
+                    '<span class="deck-metric-label">' + m.label + '</span>' +
+                    '<span class="deck-metric-val">' + m.val + '</span>' +
+                '</div>'
+            ).join('');
+
+            deckList.innerHTML = wing.bullets.map(b => '<li>' + b + '</li>').join('');
+
+            deckActions.innerHTML =
+                '<a href="' + wing.primaryHref + '" target="_blank" rel="noopener" class="deck-cta">[&#8599; ' + wing.primaryLabel + ']</a>' +
+                '<a href="' + wing.secondaryHref + '" target="_blank" rel="noopener" class="deck-cta ghost">[&#9654; ' + wing.secondaryLabel + ']</a>';
+        }
+
+        function clearSelection() {
+            activeWing = null;
+            manualStasis = false;
+            btnStasis.classList.remove('active');
+            chamberEnv.classList.remove('excited', 'deck-open');
+            chamberEnv.style.setProperty('--active-accent', '#FF6B2B');
+
+            orbElements.forEach((entry) => {
+                entry.wrap.classList.remove('active');
+                entry.btn.classList.remove('selected');
+            });
+
+            stateText.textContent = 'CHAMBER: CLEAR BOROSILICATE (27.1 K IDLE)';
+        }
+
+        releaseStasisBtn.addEventListener('click', clearSelection);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isStasisActive()) {
+                clearSelection();
+            }
+        });
+
+        /* =====================================================================
+           2. 27.1 K CRYOGENIC NEON THERMOSIPHON PHYSICS ENGINE (60 FPS CANVAS)
+           ===================================================================== */
+        const canvas = document.getElementById('thermo-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let W = 1280;
+        let H = 720;
+        let DPR = 1;
+
+        /* Sharp Double-"Y" Borosilicate Chamber Geometry */
+        let geo = {
+            cx: 640,
+            throatHalfW: 310,
+            flareHalfW: 540,
+            topY: 0,
+            topNeckY: 112,
+            botNeckY: 590,
+            poolY: 635,
+            botFlareY: 668
+        };
+
+        /* 1D Coupled Capillary Wave Heightfield (9.3x Underdamped Liquid Neon) */
+        const WAVE_N = 180;
+        const waveH = new Float32Array(WAVE_N);
+        const waveV = new Float32Array(WAVE_N);
+
+        /* Particle Pools */
+        const droplets = [];      // Falling 1.207 g/cm^3 liquid Neon beads
+        const satellites = [];    // 18.34x Weber shatter low-angle micro-beads
+        const slicks = [];        // Melted pool streaks riding inward current -> Y-chamber base
+        const gasPlumes = [];     // Rising 640.2 nm flash-boiled gas ribbons through center throat
+        const arcs = [];          // 15 kV submerged brass electrode sparks
+        const cryoFog = [];       // Ankle-deep skimming 27.1 K boil-off mist
+        const condensates = [];   // Re-beading droplets at upper Y copper condenser nozzles
+
+        /* Dynamic Time Scale & Chamber Excitation Lerps */
+        let timeScale = 1.0;       // 1.0 live -> 0.024 alive cryo freeze-frame!
+        let excitation = 0.0;      // 0.0 clear glass -> 1.0 ignited high-voltage Y-edges!
+        let activeRgb = { r: 255, g: 107, b: 43 };
+        let targetRgb = { r: 255, g: 107, b: 43 };
+        let simTime = 0;
+        let realTime = 0;
+        let autoDripTimer = 0.4;
+
+        function hexToRgb(hex) {
+            const clean = hex.replace('#', '');
+            return {
+                r: parseInt(clean.slice(0, 2), 16) || 255,
+                g: parseInt(clean.slice(2, 4), 16) || 107,
+                b: parseInt(clean.slice(4, 6), 16) || 43
+            };
+        }
+
+        function computeGeometry() {
+            DPR = Math.min(window.devicePixelRatio || 1, 2);
+            W = window.innerWidth;
+            H = window.innerHeight;
+            canvas.width = Math.floor(W * DPR);
+            canvas.height = Math.floor(H * DPR);
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+            const isNarrow = W <= 980;
+            const throatHalfW = isNarrow ? Math.min(W * 0.44, 300) : Math.min(315, W * 0.28);
+            const flareExtra = isNarrow ? Math.min(W * 0.14, 72) : Math.min(245, W * 0.19);
+
+            geo = {
+                cx: W * 0.5,
+                throatHalfW: throatHalfW,
+                flareHalfW: Math.min(W * 0.485, throatHalfW + flareExtra),
+                topY: -2,
+                topNeckY: isNarrow ? 136 : Math.max(96, H * 0.145),
+                botNeckY: isNarrow ? H - 144 : Math.min(H - 118, H * 0.815),
+                poolY: isNarrow ? H - 72 : H - 84,
+                botFlareY: H + 4
+            };
+        }
+
+        function initAmbientFog() {
+            cryoFog.length = 0;
+            for (let i = 0; i < 24; i++) {
+                cryoFog.push({
+                    x: Math.random() * W,
+                    y: geo.poolY - 8 - Math.random() * 28,
+                    rx: 70 + Math.random() * 140,
+                    ry: 10 + Math.random() * 18,
+                    vx: (Math.random() - 0.5) * 14,
+                    alpha: 0.04 + Math.random() * 0.06,
+                    phase: Math.random() * Math.PI * 2
+                });
+            }
+        }
+
+        function spawnDroplet(x, y, accentHex, radius, fromOrb) {
+            const rgb = hexToRgb(accentHex || '#FF6B2B');
+            /* Slight drift toward outer pool if spawned near top Y flare, or straight down */
+            droplets.push({
+                x: x,
+                y: y,
+                vx: fromOrb ? (geo.cx - x) * 0.08 : (Math.random() - 0.5) * 10,
+                vy: fromOrb ? 30 : 12 + Math.random() * 18,
+                r: radius || (4.2 + Math.random() * 2.4),
+                rgb: rgb,
+                shimmerPhase: Math.random() * Math.PI * 2,
+                trail: []
+            });
+        }
+
+        function spawnCondensate(side) {
+            /* Beads form on the sharp upper Y condenser lip before detaching */
+            const dir = side || (Math.random() < 0.5 ? -1 : 1);
+            const t = 0.25 + Math.random() * 0.65;
+            const x = geo.cx + dir * (geo.throatHalfW + (geo.flareHalfW - geo.throatHalfW) * t);
+            const y = geo.topNeckY * (1 - t) + 18;
+            condensates.push({
+                x: x,
+                y: y,
+                r: 1.4,
+                maxR: 4.5 + Math.random() * 2.0,
+                rgb: { r: 255, g: 107, b: 43 },
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+
+        function disturbWave(x, impulse) {
+            const idx = Math.max(2, Math.min(WAVE_N - 3, Math.floor((x / W) * WAVE_N)));
+            waveV[idx] += impulse;
+            waveV[idx - 1] += impulse * 0.55;
+            waveV[idx + 1] += impulse * 0.55;
+            waveV[idx - 2] += impulse * 0.22;
+            waveV[idx + 2] += impulse * 0.22;
+        }
+
+        function triggerSplash(drop) {
+            disturbWave(drop.x, 11.5 + drop.r * 1.4);
+
+            /* 18.34x Weber Shatter: razor-fine grazing micro-beads (15-35 deg elevation) */
+            const count = 9 + Math.floor(drop.r * 1.4);
+            for (let i = 0; i < count; i++) {
+                const side = (i % 2 === 0 ? -1 : 1);
+                const angleDeg = 14 + Math.random() * 34;
+                const rad = angleDeg * Math.PI / 180;
+                const speed = (65 + Math.random() * 115) * (0.7 + drop.r * 0.08);
+                satellites.push({
+                    x: drop.x + (Math.random() - 0.5) * 6,
+                    y: geo.poolY - 2,
+                    vx: side * Math.cos(rad) * speed + drop.vx * 0.25,
+                    vy: -Math.sin(rad) * speed,
+                    r: Math.max(1.1, drop.r * (0.22 + Math.random() * 0.22)),
+                    life: 1.0,
+                    rgb: drop.rgb,
+                    phase: Math.random() * Math.PI * 2
+                });
+            }
+
+            /* Slow Melt -> Luminous Pool Slick Flowing INWARD Toward Base of Y-Chamber */
+            slicks.push({
+                x: drop.x,
+                y: geo.poolY + 1.5,
+                width: drop.r * 3.4,
+                height: drop.r * 1.15,
+                melt: 0.0,            // 0 = fresh splash bead -> 1 = flattened molten current ribbon
+                energy: 1.0,
+                rgb: drop.rgb,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+
+        function triggerArc(accentHex, intensity) {
+            const rgb = accentHex ? hexToRgb(accentHex) : { r: 44, g: 229, b: 246 };
+            const yBase = geo.poolY - 6;
+            const spread = Math.min(geo.throatHalfW * 0.72, 165);
+            const x1 = geo.cx - spread * (0.45 + Math.random() * 0.55);
+            const x2 = geo.cx + spread * (0.45 + Math.random() * 0.55);
+            const pts = [];
+            const segs = 10;
+            for (let i = 0; i <= segs; i++) {
+                const t = i / segs;
+                const px = x1 + (x2 - x1) * t;
+                const jitter = (i === 0 || i === segs) ? 0 : (Math.random() - 0.5) * 24;
+                const arch = -Math.sin(t * Math.PI) * (14 + Math.random() * 14);
+                pts.push({ x: px, y: yBase + arch + jitter });
+            }
+            arcs.push({
+                pts: pts,
+                life: 1.0,
+                rgb: rgb,
+                intensity: intensity || 0.85
+            });
+
+            /* Flash-Boil Rising 640.2 nm Gas Plumes Up the Center Glass Chamber */
+            const plumes = 7 + Math.floor((intensity || 0.8) * 6);
+            for (let i = 0; i < plumes; i++) {
+                const spawnX = geo.cx + (Math.random() - 0.5) * (geo.throatHalfW * 1.45);
+                gasPlumes.push({
+                    x: spawnX,
+                    y: geo.poolY - 4 - Math.random() * 18,
+                    vx: (geo.cx - spawnX) * 0.14 + (Math.random() - 0.5) * 18,
+                    vy: -(68 + Math.random() * 95),
+                    r: 12 + Math.random() * 24,
+                    curlPhase: Math.random() * Math.PI * 2,
+                    curlFreq: 1.8 + Math.random() * 2.2,
+                    life: 1.0,
+                    rgb: Math.random() < 0.72 ? { r: 232, g: 69, b: 30 } : rgb
+                });
+            }
+        }
+
+        /* =====================================================================
+           3. SIMULATION UPDATE (WITH ALIVE CRYO FREEZE-FRAME BULLET TIME)
+           ===================================================================== */
+        function stepPhysics(dtReal) {
+            realTime += dtReal;
+
+            const stasisOn = isStasisActive();
+            const targetTimeScale = stasisOn ? 0.022 : 1.0;
+            timeScale += (targetTimeScale - timeScale) * Math.min(1, dtReal * 6.5);
+
+            const targetExcite = stasisOn ? 1.0 : 0.0;
+            excitation += (targetExcite - excitation) * Math.min(1, dtReal * 5.2);
+
+            if (activeWing) {
+                targetRgb = hexToRgb(activeWing.accent);
+            } else {
+                targetRgb = { r: 255, g: 107, b: 43 };
+            }
+            activeRgb.r += (targetRgb.r - activeRgb.r) * Math.min(1, dtReal * 6);
+            activeRgb.g += (targetRgb.g - activeRgb.g) * Math.min(1, dtReal * 6);
+            activeRgb.b += (targetRgb.b - activeRgb.b) * Math.min(1, dtReal * 6);
+
+            const dt = dtReal * timeScale;
+            simTime += dt;
+
+            /* Auto-Condense & Drip Rhythm (Slows gracefully in stasis) */
+            autoDripTimer -= dt;
+            if (autoDripTimer <= 0) {
+                autoDripTimer = 0.85 + Math.random() * 0.95;
+                spawnCondensate();
+            }
+
+            /* 1. Upper Y Condenser Beads Growing & Detaching */
+            for (let i = condensates.length - 1; i >= 0; i--) {
+                const c = condensates[i];
+                c.r += dt * 2.1;
+                if (c.r >= c.maxR) {
+                    spawnDroplet(c.x, c.y + c.r, '#FF6B2B', c.r, false);
+                    condensates.splice(i, 1);
+                }
+            }
+
+            /* 2. Falling Dense 27.1 K Liquid Neon Droplets */
+            const gravity = 390;
+            for (let i = droplets.length - 1; i >= 0; i--) {
+                const d = droplets[i];
+                d.trail.push({ x: d.x, y: d.y });
+                if (d.trail.length > 7) d.trail.shift();
+
+                d.vy += gravity * dt;
+                d.x += d.vx * dt;
+                d.y += d.vy * dt;
+
+                if (d.y >= geo.poolY - d.r * 0.5) {
+                    triggerSplash(d);
+                    droplets.splice(i, 1);
+                }
+            }
+
+            /* 3. Weber Shatter Satellite Micro-Beads */
+            for (let i = satellites.length - 1; i >= 0; i--) {
+                const s = satellites[i];
+                s.vy += gravity * 0.85 * dt;
+                s.x += s.vx * dt;
+                s.y += s.vy * dt;
+                s.life -= dt * 0.95;
+                if (s.y >= geo.poolY && s.vy > 0) {
+                    disturbWave(s.x, 1.8);
+                    satellites.splice(i, 1);
+                } else if (s.life <= 0) {
+                    satellites.splice(i, 1);
+                }
+            }
+
+            /* 4. Slow Melt + Inward Pool Current Flowing Toward Base of Y-Chamber */
+            for (let i = slicks.length - 1; i >= 0; i--) {
+                const sk = slicks[i];
+                sk.melt = Math.min(1.0, sk.melt + dt * 0.65);
+
+                /* Slowly flattens & widens as droplet melts into liquid Neon pool */
+                sk.width += dt * (18 * (1 - sk.melt * 0.45));
+                sk.height = Math.max(2.2, sk.height - dt * 1.4);
+
+                /* Current pulls melted liquid Neon inward toward center chamber base */
+                const dx = geo.cx - sk.x;
+                const dist = Math.abs(dx);
+                const dir = dx >= 0 ? 1 : -1;
+                const currentSpeed = 48 + Math.min(90, dist * 0.34);
+                sk.x += dir * currentSpeed * dt * (0.35 + sk.melt * 0.85);
+
+                /* Subtle capillary wake behind flowing molten ribbon */
+                if (Math.random() < dt * 9) {
+                    disturbWave(sk.x, 0.7);
+                }
+
+                /* Reaches submerged 15 kV brass electrode collar -> flash-boils into rising gas! */
+                if (dist < Math.max(36, geo.throatHalfW * 0.16)) {
+                    const hex = '#' +
+                        sk.rgb.r.toString(16).padStart(2, '0') +
+                        sk.rgb.g.toString(16).padStart(2, '0') +
+                        sk.rgb.b.toString(16).padStart(2, '0');
+                    triggerArc(hex, 0.72);
+                    slicks.splice(i, 1);
+                }
+            }
+
+            /* 5. Rising 640.2 nm Flash-Boiled Gas Column (Contained Inside Sharp Y Walls!) */
+            for (let i = gasPlumes.length - 1; i >= 0; i--) {
+                const g = gasPlumes[i];
+                g.curlPhase += g.curlFreq * dt;
+                const swirl = Math.sin(g.curlPhase + g.y * 0.012) * 26;
+                g.x += (g.vx + swirl) * dt;
+                g.y += g.vy * dt;
+                g.r += dt * 9.5;
+
+                /* Confine rising gas cleanly inside the sharp Y -> throat -> Y chamber geometry */
+                const wallHalf = getChamberHalfWidthAtY(g.y) - 18;
+                const offset = g.x - geo.cx;
+                if (Math.abs(offset) > wallHalf) {
+                    g.x = geo.cx + Math.sign(offset) * wallHalf;
+                    g.vx *= -0.45;
+                }
+
+                /* At top Y flare: cools past 27.1 K -> re-condenses into a new falling bead! */
+                if (g.y < geo.topNeckY * 0.55) {
+                    g.life -= dt * 1.4;
+                    if (g.life <= 0.15 && condensates.length < 5 && Math.random() < 0.25) {
+                        spawnCondensate(g.x < geo.cx ? -1 : 1);
+                    }
+                } else {
+                    g.life -= dt * 0.16;
+                }
+
+                if (g.life <= 0 || g.y < -40) {
+                    gasPlumes.splice(i, 1);
+                }
+            }
+
+            /* 6. 15 kV Electrode Arcs */
+            for (let i = arcs.length - 1; i >= 0; i--) {
+                arcs[i].life -= dt * 3.4;
+                if (arcs[i].life <= 0) arcs.splice(i, 1);
+            }
+
+            /* 7. 1D Coupled Capillary Wave Equation (9.30x Underdamped Liquid Neon) */
+            const steps = stasisOn ? 1 : 2;
+            const c2 = 0.24 * timeScale;
+            const biharmonic = 0.012 * timeScale;
+            const damping = stasisOn ? 0.9985 : 0.994;
+            for (let s = 0; s < steps; s++) {
+                for (let i = 2; i < WAVE_N - 2; i++) {
+                    const lap = waveH[i - 1] - 2 * waveH[i] + waveH[i + 1];
+                    const bi = waveH[i - 2] - 4 * waveH[i - 1] + 6 * waveH[i] - 4 * waveH[i + 1] + waveH[i + 2];
+                    waveV[i] += c2 * lap - biharmonic * bi;
+                    waveV[i] *= damping;
+                }
+                for (let i = 2; i < WAVE_N - 2; i++) {
+                    waveH[i] += waveV[i];
+                }
+            }
+
+            /* 8. Ankle-Deep Skimming Cryogenic Fog */
+            for (let i = 0; i < cryoFog.length; i++) {
+                const f = cryoFog[i];
+                const driftPull = (geo.cx - f.x) * 0.025;
+                f.x += (f.vx + driftPull) * dt;
+                if (f.x < -160) f.x = W + 150;
+                if (f.x > W + 160) f.x = -150;
+            }
+
+            /* Live HUD Readout */
+            physicsReadout.textContent =
+                'T: 27.1 K // RHO: 1.207 g/cm3 // TIMESCALE: ' +
+                timeScale.toFixed(2) + 'x' +
+                (stasisOn ? ' [ALIVE STASIS]' : ' [FLOW ACTIVE]');
+        }
+
+        function getChamberHalfWidthAtY(y) {
+            if (y < geo.topNeckY) {
+                const t = Math.max(0, Math.min(1, 1 - y / geo.topNeckY));
+                return geo.throatHalfW + (geo.flareHalfW - geo.throatHalfW) * t;
+            }
+            if (y > geo.botNeckY) {
+                const span = Math.max(1, geo.botFlareY - geo.botNeckY);
+                const t = Math.max(0, Math.min(1, (y - geo.botNeckY) / span));
+                return geo.throatHalfW + (geo.flareHalfW - geo.throatHalfW) * t;
+            }
+            return geo.throatHalfW;
+        }
+
+        /* =====================================================================
+           4. RENDERING PIPELINE (CLEAR GLASS -> EXCITED PLASMA WALLS + 27.1 K POOL)
+           ===================================================================== */
+        function traceWallPath(side) {
+            ctx.beginPath();
+            ctx.moveTo(geo.cx + side * geo.flareHalfW, geo.topY);
+            ctx.lineTo(geo.cx + side * geo.throatHalfW, geo.topNeckY);
+            ctx.lineTo(geo.cx + side * geo.throatHalfW, geo.botNeckY);
+            ctx.lineTo(geo.cx + side * geo.flareHalfW, geo.botFlareY);
+        }
+
+        function drawChamberInteriorTint() {
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(geo.cx - geo.flareHalfW, geo.topY);
+            ctx.lineTo(geo.cx - geo.throatHalfW, geo.topNeckY);
+            ctx.lineTo(geo.cx - geo.throatHalfW, geo.botNeckY);
+            ctx.lineTo(geo.cx - geo.flareHalfW, geo.botFlareY);
+            ctx.lineTo(geo.cx + geo.flareHalfW, geo.botFlareY);
+            ctx.lineTo(geo.cx + geo.throatHalfW, geo.botNeckY);
+            ctx.lineTo(geo.cx + geo.throatHalfW, geo.topNeckY);
+            ctx.lineTo(geo.cx + geo.flareHalfW, geo.topY);
+            ctx.closePath();
+
+            /* Clear Borosilicate Optical Tint (Barely Visible Glass Depth Until Excited) */
+            const grad = ctx.createLinearGradient(geo.cx - geo.throatHalfW, 0, geo.cx + geo.throatHalfW, 0);
+            const ex = excitation;
+            grad.addColorStop(0.0, `rgba(${Math.round(140 + activeRgb.r * 0.45 * ex)}, ${Math.round(195 + activeRgb.g * 0.25 * ex)}, ${Math.round(215 + activeRgb.b * 0.2 * ex)}, ${0.045 + ex * 0.085})`);
+            grad.addColorStop(0.12, `rgba(14, 34, 44, ${0.14 + ex * 0.06})`);
+            grad.addColorStop(0.5, `rgba(6, 15, 21, ${0.22 + ex * 0.14})`);
+            grad.addColorStop(0.88, `rgba(14, 34, 44, ${0.14 + ex * 0.06})`);
+            grad.addColorStop(1.0, `rgba(${Math.round(140 + activeRgb.r * 0.45 * ex)}, ${Math.round(195 + activeRgb.g * 0.25 * ex)}, ${Math.round(215 + activeRgb.b * 0.2 * ex)}, ${0.045 + ex * 0.085})`);
+            ctx.fillStyle = grad;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawRisingGas() {
+            ctx.save();
+            ctx.globalCompositeOperation = 'lighter';
+            for (let i = 0; i < gasPlumes.length; i++) {
+                const g = gasPlumes[i];
+                const breath = isStasisActive()
+                    ? 1 + 0.12 * Math.sin(realTime * 3.8 + g.curlPhase)
+                    : 1;
+                const rad = g.r * breath;
+                const alpha = Math.max(0, g.life * (0.17 + excitation * 0.08));
+                const grad = ctx.createRadialGradient(g.x, g.y, 0, g.x, g.y, rad);
+                grad.addColorStop(0, `rgba(255, 224, 190, ${alpha * 0.85})`);
+                grad.addColorStop(0.38, `rgba(${g.rgb.r}, ${g.rgb.g}, ${g.rgb.b}, ${alpha})`);
+                grad.addColorStop(1, `rgba(${g.rgb.r}, ${g.rgb.g}, ${g.rgb.b}, 0)`);
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(g.x, g.y, rad, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
+        }
+
+        function drawPoolAndCurrent() {
+            /* Mirror-Black 27.1 K Liquid Neon Pool (F0 = 0.00272 straight-on obsidian) */
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(0, H);
+            for (let i = 0; i < WAVE_N; i++) {
+                const x = (i / (WAVE_N - 1)) * W;
+                /* Alive micro-shimmer in stasis */
+                const shimmer = isStasisActive()
+                    ? Math.sin(realTime * 6.5 + i * 0.45) * 0.55
+                    : 0;
+                const y = geo.poolY + waveH[i] + shimmer;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(W, H);
+            ctx.closePath();
+
+            const poolGrad = ctx.createLinearGradient(0, geo.poolY - 6, 0, H);
+            poolGrad.addColorStop(0, '#04090D');
+            poolGrad.addColorStop(0.25, '#020507');
+            poolGrad.addColorStop(1, '#000000');
+            ctx.fillStyle = poolGrad;
+            ctx.fill();
+
+            /* Subtle Current Flow Guide Lines Moving Inward Toward Base of Chamber */
+            ctx.globalCompositeOperation = 'lighter';
+            const flowPulse = (simTime * 52) % 80;
+            for (let side of [-1, 1]) {
+                for (let k = 0; k < 5; k++) {
+                    const dist = ((k * 80 + (80 - flowPulse)) % 400) + 45;
+                    const xStart = geo.cx + side * dist;
+                    const xEnd = geo.cx + side * Math.max(20, dist - 34);
+                    if (xStart < 0 || xStart > W) continue;
+                    const alpha = Math.max(0, (1 - dist / 440) * (0.14 + excitation * 0.16));
+                    ctx.strokeStyle = `rgba(${Math.round(activeRgb.r)}, ${Math.round(activeRgb.g)}, ${Math.round(activeRgb.b)}, ${alpha})`;
+                    ctx.lineWidth = 1.2;
+                    ctx.beginPath();
+                    ctx.moveTo(xStart, geo.poolY + 7 + (k % 2) * 5);
+                    ctx.lineTo(xEnd, geo.poolY + 7 + (k % 2) * 5);
+                    ctx.stroke();
+                }
+            }
+
+            /* Curvature-Lit Excimer Rim Along Wave Surface (Fresnel + |d2h/dx2|) */
+            ctx.beginPath();
+            for (let i = 1; i < WAVE_N - 1; i++) {
+                const x = (i / (WAVE_N - 1)) * W;
+                const shimmer = isStasisActive() ? Math.sin(realTime * 6.5 + i * 0.45) * 0.55 : 0;
+                const y = geo.poolY + waveH[i] + shimmer;
+                if (i === 1) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = `rgba(140, 198, 214, ${0.18 + excitation * 0.16})`;
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+
+            /* Highlight Steep Capillary Crests in 640.2 nm Molten Orange */
+            for (let i = 2; i < WAVE_N - 2; i++) {
+                const curv = Math.abs(waveH[i - 1] - 2 * waveH[i] + waveH[i + 1]);
+                if (curv > 0.14) {
+                    const x = (i / (WAVE_N - 1)) * W;
+                    const y = geo.poolY + waveH[i];
+                    const a = Math.min(0.92, curv * 1.45);
+                    ctx.fillStyle = `rgba(${Math.round(activeRgb.r)}, ${Math.round(activeRgb.g)}, ${Math.round(activeRgb.b)}, ${a})`;
+                    ctx.fillRect(x - 2, y - 1.2, 5, 2.4);
+                }
+            }
+
+            /* Melted Luminous Liquid Neon Slicks Flowing Inward Toward Chamber Base */
+            for (let i = 0; i < slicks.length; i++) {
+                const sk = slicks[i];
+                const breath = isStasisActive() ? (0.85 + 0.25 * Math.sin(realTime * 5.2 + sk.phase)) : 1.0;
+                const grad = ctx.createRadialGradient(sk.x, sk.y, 0, sk.x, sk.y, sk.width);
+                grad.addColorStop(0, `rgba(255, 232, 206, ${0.9 * breath})`);
+                grad.addColorStop(0.35, `rgba(${sk.rgb.r}, ${sk.rgb.g}, ${sk.rgb.b}, ${0.78 * breath})`);
+                grad.addColorStop(1, `rgba(${sk.rgb.r}, ${sk.rgb.g}, ${sk.rgb.b}, 0)`);
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.ellipse(sk.x, sk.y + 1, sk.width, Math.max(2.4, sk.height * 2.2), 0, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            /* Submerged Knurled Antique-Brass 15 kV Electrode Collars at Base of Chamber */
+            ctx.globalCompositeOperation = 'source-over';
+            const collarOffset = Math.min(geo.throatHalfW * 0.58, 155);
+            for (let side of [-1, 1]) {
+                const bx = geo.cx + side * collarOffset;
+                const by = geo.poolY + 4;
+                const bGrad = ctx.createLinearGradient(bx - 16, by - 8, bx + 16, by + 10);
+                bGrad.addColorStop(0, '#5A3B17');
+                bGrad.addColorStop(0.45, '#C88A3B');
+                bGrad.addColorStop(0.75, '#8F5824');
+                bGrad.addColorStop(1, '#3B230D');
+                ctx.fillStyle = bGrad;
+                ctx.fillRect(bx - 14, by - 5, 28, 10);
+                ctx.strokeStyle = 'rgba(255, 226, 178, 0.35)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(bx - 14, by - 5, 28, 10);
+
+                /* Electrode Spark Tip Glow */
+                const tipGlow = 0.22 + excitation * 0.65 + 0.1 * Math.sin(realTime * 8 + side);
+                ctx.fillStyle = `rgba(44, 229, 246, ${tipGlow})`;
+                ctx.beginPath();
+                ctx.arc(bx - side * 14, by, 3.2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
+
+            /* Skimming Ankle-Deep Cryogenic Boil-Off Fog */
+            ctx.save();
+            for (let i = 0; i < cryoFog.length; i++) {
+                const f = cryoFog[i];
+                const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.rx);
+                grad.addColorStop(0, `rgba(170, 212, 228, ${f.alpha})`);
+                grad.addColorStop(1, 'rgba(170, 212, 228, 0)');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.ellipse(f.x, f.y, f.rx, f.ry, 0, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
+        }
+
+        function drawDropletsAndArcs() {
+            ctx.save();
+            ctx.globalCompositeOperation = 'lighter';
+
+            /* Condensing Droplets on Upper Y Lip */
+            for (let i = 0; i < condensates.length; i++) {
+                const c = condensates[i];
+                const j = isStasisActive() ? Math.sin(realTime * 9 + c.phase) * 0.9 : 0;
+                const grad = ctx.createRadialGradient(c.x, c.y + j, 0, c.x, c.y + j, c.r * 3.2);
+                grad.addColorStop(0, 'rgba(255, 236, 214, 0.95)');
+                grad.addColorStop(0.4, `rgba(${c.rgb.r}, ${c.rgb.g}, ${c.rgb.b}, 0.72)`);
+                grad.addColorStop(1, `rgba(${c.rgb.r}, ${c.rgb.g}, ${c.rgb.b}, 0)`);
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(c.x, c.y + j, c.r * 3.2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            /* Falling Liquid Neon Droplets (Alive Micro-Oscillation During Freeze-Frame!) */
+            for (let i = 0; i < droplets.length; i++) {
+                const d = droplets[i];
+                const aliveOscX = isStasisActive() ? Math.sin(realTime * 11.5 + d.shimmerPhase) * 1.1 : 0;
+                const aliveOscY = isStasisActive() ? Math.cos(realTime * 7.2 + d.shimmerPhase) * 1.4 : 0;
+                const pulse = isStasisActive() ? (1.0 + 0.18 * Math.sin(realTime * 6.0 + d.shimmerPhase)) : 1.0;
+
+                const px = d.x + aliveOscX;
+                const py = d.y + aliveOscY;
+
+                /* Faint Velocity Tail */
+                if (d.trail.length > 1) {
+                    ctx.beginPath();
+                    for (let t = 0; t < d.trail.length; t++) {
+                        const pt = d.trail[t];
+                        if (t === 0) ctx.moveTo(pt.x, pt.y);
+                        else ctx.lineTo(pt.x, pt.y);
+                    }
+                    ctx.strokeStyle = `rgba(${d.rgb.r}, ${d.rgb.g}, ${d.rgb.b}, ${isStasisActive() ? 0.42 : 0.28})`;
+                    ctx.lineWidth = d.r * 0.65;
+                    ctx.lineCap = 'round';
+                    ctx.stroke();
+                }
+
+                /* Outer Excimer Halo */
+                const haloR = d.r * 3.8 * pulse;
+                const hGrad = ctx.createRadialGradient(px, py, 0, px, py, haloR);
+                hGrad.addColorStop(0, 'rgba(255, 238, 218, 0.96)');
+                hGrad.addColorStop(0.28, `rgba(${d.rgb.r}, ${d.rgb.g}, ${d.rgb.b}, 0.82)`);
+                hGrad.addColorStop(1, `rgba(${d.rgb.r}, ${d.rgb.g}, ${d.rgb.b}, 0)`);
+                ctx.fillStyle = hGrad;
+                ctx.beginPath();
+                ctx.ellipse(px, py, haloR * 0.72, haloR * 1.12, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                /* Suspended Cryo Ring Halo Around Alive Frozen Droplets */
+                if (excitation > 0.15) {
+                    ctx.strokeStyle = `rgba(${d.rgb.r}, ${d.rgb.g}, ${d.rgb.b}, ${excitation * 0.55 * pulse})`;
+                    ctx.lineWidth = 1.0;
+                    ctx.beginPath();
+                    ctx.arc(px, py, d.r * (2.2 + 0.4 * Math.sin(realTime * 4.5 + d.shimmerPhase)), 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+            }
+
+            /* Weber Shatter Micro-Beads (Suspended & Twinkling in Freeze-Frame) */
+            for (let i = 0; i < satellites.length; i++) {
+                const s = satellites[i];
+                const jitter = isStasisActive() ? Math.sin(realTime * 14 + s.phase) * 0.9 : 0;
+                const alpha = Math.max(0, s.life * (isStasisActive() ? 0.95 : 0.85));
+                ctx.fillStyle = `rgba(255, 230, 204, ${alpha})`;
+                ctx.beginPath();
+                ctx.arc(s.x + jitter, s.y - jitter * 0.6, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            /* 15 kV Submerged Electrode Electric Arcs */
+            for (let i = 0; i < arcs.length; i++) {
+                const a = arcs[i];
+                ctx.beginPath();
+                for (let p = 0; p < a.pts.length; p++) {
+                    const pt = a.pts[p];
+                    if (p === 0) ctx.moveTo(pt.x, pt.y);
+                    else ctx.lineTo(pt.x, pt.y);
+                }
+                ctx.strokeStyle = `rgba(44, 229, 246, ${a.life * 0.9})`;
+                ctx.lineWidth = 2.6;
+                ctx.shadowColor = '#2CE5F6';
+                ctx.shadowBlur = 16;
+                ctx.stroke();
+
+                ctx.strokeStyle = `rgba(255, 245, 235, ${a.life})`;
+                ctx.lineWidth = 1.1;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            }
+            ctx.restore();
+        }
+
+        function drawBorosilicateYChamberWalls() {
+            ctx.save();
+            const ex = excitation;
+            const pulse = 0.88 + 0.12 * Math.sin(realTime * 7.4);
+
+            for (let side of [-1, 1]) {
+                /* 1. Dormant Clear Borosilicate Glass Wall (Subtle Optical Specular Edge) */
+                traceWallPath(side);
+                ctx.strokeStyle = `rgba(176, 222, 236, ${0.22 + (1 - ex) * 0.08})`;
+                ctx.lineWidth = 2.2;
+                ctx.lineJoin = 'miter';
+                ctx.stroke();
+
+                /* Inner Glass Wall Refraction Line (6px thick borosilicate tube silhouette) */
+                ctx.beginPath();
+                ctx.moveTo(geo.cx + side * (geo.flareHalfW - 6), geo.topY);
+                ctx.lineTo(geo.cx + side * (geo.throatHalfW - 6), geo.topNeckY + 2);
+                ctx.lineTo(geo.cx + side * (geo.throatHalfW - 6), geo.botNeckY - 2);
+                ctx.lineTo(geo.cx + side * (geo.flareHalfW - 6), geo.botFlareY);
+                ctx.strokeStyle = `rgba(140, 195, 214, ${0.10 + ex * 0.18})`;
+                ctx.lineWidth = 1.0;
+                ctx.stroke();
+
+                /* 2. EXCITED STATE: High-Voltage Ignited Plasma Edges Along the Sharp Y Contour! */
+                if (ex > 0.02) {
+                    ctx.save();
+                    ctx.globalCompositeOperation = 'lighter';
+
+                    /* Broad Atmospheric Glass Bloom */
+                    traceWallPath(side);
+                    ctx.strokeStyle = `rgba(${Math.round(activeRgb.r)}, ${Math.round(activeRgb.g)}, ${Math.round(activeRgb.b)}, ${ex * 0.24 * pulse})`;
+                    ctx.lineWidth = 24;
+                    ctx.lineJoin = 'round';
+                    ctx.stroke();
+
+                    /* Mid-Voltage Neon Plasma Jacket */
+                    traceWallPath(side);
+                    ctx.strokeStyle = `rgba(${Math.round(activeRgb.r)}, ${Math.round(activeRgb.g)}, ${Math.round(activeRgb.b)}, ${ex * 0.72 * pulse})`;
+                    ctx.lineWidth = 6.5;
+                    ctx.shadowColor = `rgb(${Math.round(activeRgb.r)}, ${Math.round(activeRgb.g)}, ${Math.round(activeRgb.b)})`;
+                    ctx.shadowBlur = 22 * ex;
+                    ctx.stroke();
+
+                    /* Razor-Sharp White-Hot Excimer Filament Core */
+                    traceWallPath(side);
+                    ctx.strokeStyle = `rgba(255, 240, 224, ${ex * 0.92 * pulse})`;
+                    ctx.lineWidth = 1.8;
+                    ctx.shadowBlur = 0;
+                    ctx.stroke();
+
+                    /* Living Traveling Voltage Ripple Climbing Both Y-Walls */
+                    const travelY = geo.botFlareY - ((realTime * 220 + (side === 1 ? 190 : 0)) % (geo.botFlareY + 80));
+                    const wx = geo.cx + side * getChamberHalfWidthAtY(travelY);
+                    const sGrad = ctx.createRadialGradient(wx, travelY, 0, wx, travelY, 34);
+                    sGrad.addColorStop(0, `rgba(255, 250, 242, ${ex * 0.9})`);
+                    sGrad.addColorStop(0.35, `rgba(44, 229, 246, ${ex * 0.55})`);
+                    sGrad.addColorStop(1, 'rgba(44, 229, 246, 0)');
+                    ctx.fillStyle = sGrad;
+                    ctx.beginPath();
+                    ctx.arc(wx, travelY, 34, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.restore();
+                }
+
+                /* 3. Antique Brass Clamping Standoffs at Sharp Y-Shoulder & Base Knees */
+                const joints = [
+                    { x: geo.cx + side * geo.throatHalfW, y: geo.topNeckY },
+                    { x: geo.cx + side * geo.throatHalfW, y: geo.botNeckY }
+                ];
+                joints.forEach((pt) => {
+                    ctx.fillStyle = '#B87B32';
+                    ctx.beginPath();
+                    ctx.arc(pt.x, pt.y, 4.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.strokeStyle = 'rgba(255, 224, 174, 0.55)';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+
+                    /* Machined Outer Standoff Bracket Extending Slightly Into Void */
+                    ctx.strokeStyle = 'rgba(200, 138, 59, 0.42)';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(pt.x + side * 4.5, pt.y);
+                    ctx.lineTo(pt.x + side * 16, pt.y);
+                    ctx.stroke();
+                });
+            }
+
+            /* Coiled Copper Cryo-Condenser Accent Bars at Open Top Y Crown */
+            ctx.strokeStyle = 'rgba(184, 107, 53, 0.45)';
+            ctx.lineWidth = 2;
+            for (let side of [-1, 1]) {
+                const startX = geo.cx + side * (geo.flareHalfW - 8);
+                const endX = geo.cx + side * (geo.throatHalfW + 26);
+                ctx.beginPath();
+                ctx.moveTo(startX, 8);
+                ctx.lineTo(endX, 8);
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        function renderFrame(nowMs) {
+            requestAnimationFrame(renderFrame);
+            if (document.hidden) return;
+
+            const dtReal = Math.min(0.05, Math.max(0.001, (nowMs - lastMs) / 1000));
+            lastMs = nowMs;
+
+            stepPhysics(dtReal);
+
+            ctx.clearRect(0, 0, W, H);
+            drawChamberInteriorTint();
+            drawRisingGas();
+            drawPoolAndCurrent();
+            drawDropletsAndArcs();
+            drawBorosilicateYChamberWalls();
+        }
+
+        /* Interactive Canvas Click -> Inject Liquid Neon Droplet Anywhere */
+        canvas.addEventListener('click', (e) => {
+            if (e.target !== canvas) return;
+            const hex = activeWing ? activeWing.accent : '#FF6B2B';
+            spawnDroplet(e.clientX, Math.min(e.clientY, geo.poolY - 24), hex, 5.4, false);
+        });
+
+        /* Lab Tuning Buttons */
+        btnDrip.addEventListener('click', () => {
+            const side = Math.random() < 0.5 ? -1 : 1;
+            const x = geo.cx + side * (geo.throatHalfW * (0.4 + Math.random() * 0.95));
+            spawnDroplet(x, 26, activeWing ? activeWing.accent : '#FF6B2B', 5.8, false);
+        });
+
+        btnArc.addEventListener('click', () => {
+            triggerArc(activeWing ? activeWing.accent : '#2CE5F6', 1.0);
+        });
+
+        btnStasis.addEventListener('click', () => {
+            if (activeWing) {
+                clearSelection();
+                return;
+            }
+            manualStasis = !manualStasis;
+            btnStasis.classList.toggle('active', manualStasis);
+            chamberEnv.classList.toggle('excited', manualStasis);
+            stateText.textContent = manualStasis
+                ? 'CHAMBER EXCITED // ALIVE CRYO FREEZE-FRAME (DEMO)'
+                : 'CHAMBER: CLEAR BOROSILICATE (27.1 K IDLE)';
+            if (manualStasis) {
+                triggerArc('#FF6B2B', 0.9);
+            }
+        });
+
+        btnClean.addEventListener('click', () => {
+            const on = chamberEnv.classList.toggle('clean-mode');
+            btnClean.classList.toggle('active', on);
+            btnClean.textContent = on ? '[SHOW HUD]' : '[CLEAN VIEW]';
+        });
+
+        /* Boot Simulation */
+        window.addEventListener('resize', () => {
+            computeGeometry();
+            initAmbientFog();
+        });
+
+        computeGeometry();
+        initAmbientFog();
+
+        /* Seed Initial Live Droplets So Motion Starts Immediately */
+        spawnDroplet(geo.cx - geo.throatHalfW * 0.85, 65, '#FF6B2B', 5.2, false);
+        spawnDroplet(geo.cx + geo.throatHalfW * 0.92, 180, '#FF6B2B', 4.8, false);
+        spawnCondensate(-1);
+        spawnCondensate(1);
+
+        let lastMs = performance.now();
+        requestAnimationFrame(renderFrame);
+    })();
+    </script>
+</body>
+</html>
