@@ -165,12 +165,12 @@
         }
 
         .orb-rail.left {
-            left: max(22px, calc(50% - 470px));
+            right: calc(50% + 348px);
             align-items: flex-end;
         }
 
         .orb-rail.right {
-            right: max(22px, calc(50% - 470px));
+            left: calc(50% + 348px);
             align-items: flex-start;
         }
 
@@ -215,8 +215,10 @@
         .wuwei-orb-btn {
             position: relative;
             z-index: 2;
-            width: 82px;
-            height: 82px;
+            display: block;
+            flex-shrink: 0;
+            width: 88px;
+            height: 88px;
             border-radius: 50%;
             border: none;
             padding: 0;
@@ -227,33 +229,35 @@
         }
 
         .wuwei-orb-btn:hover {
-            transform: scale(1.11) translateY(-2px);
+            transform: scale(1.12) translateY(-2px);
         }
 
         .wuwei-orb-btn.selected {
-            transform: scale(1.16);
+            transform: scale(1.18);
         }
 
         .wuwei-orb-btn:hover .orb-gobo,
         .wuwei-orb-btn.selected .orb-gobo {
-            opacity: 0.72;
-            transform: translate(-50%, -50%) scale(1.18) rotate(28deg);
+            opacity: 0.85;
+            transform: translate(-50%, -50%) scale(1.26) rotate(28deg);
         }
 
         /* Matte Unfired Stoneware Shell + Glowing Carved Inner Core */
         .orb-sphere {
             position: relative;
+            display: block;
             width: 100%;
             height: 100%;
             border-radius: 50%;
             overflow: hidden;
             background:
-                radial-gradient(circle at 34% 28%, #776E64 0%, #4E4943 38%, #282726 74%, #111214 100%);
+                radial-gradient(circle at 32% 26%, #948678 0%, #685D52 34%, #38332E 68%, #161413 100%);
             box-shadow:
-                inset 2px 3px 8px rgba(255, 240, 224, 0.18),
-                inset -8px -10px 18px rgba(0, 0, 0, 0.85),
-                0 14px 28px rgba(0, 0, 0, 0.78),
-                0 0 0 1px rgba(200, 138, 59, 0.24);
+                inset 3px 4px 10px rgba(255, 240, 224, 0.24),
+                inset -10px -12px 22px rgba(0, 0, 0, 0.88),
+                0 16px 34px rgba(0, 0, 0, 0.82),
+                0 0 18px color-mix(in srgb, var(--orb-glow, #FF6B2B) 22%, transparent),
+                0 0 0 1px rgba(200, 138, 59, 0.34);
             transition: box-shadow 0.35s ease;
         }
 
@@ -1536,15 +1540,24 @@
                     ? 1 + 0.12 * Math.sin(realTime * 3.8 + g.curlPhase)
                     : 1;
                 const rad = g.r * breath;
-                const alpha = Math.max(0, g.life * (0.17 + excitation * 0.08));
-                const grad = ctx.createRadialGradient(g.x, g.y, 0, g.x, g.y, rad);
-                grad.addColorStop(0, `rgba(255, 224, 190, ${alpha * 0.85})`);
-                grad.addColorStop(0.38, `rgba(${g.rgb.r}, ${g.rgb.g}, ${g.rgb.b}, ${alpha})`);
+                const alpha = Math.max(0, g.life * (0.14 + excitation * 0.08));
+                const tilt = Math.sin(g.curlPhase + g.y * 0.015) * 0.28;
+
+                /* Stretched Pressurized Vapor Ribbon Instead of Round Bokeh Balls */
+                ctx.save();
+                ctx.translate(g.x, g.y);
+                ctx.rotate(tilt);
+                ctx.scale(0.62, 1.85);
+                const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, rad);
+                grad.addColorStop(0, `rgba(255, 226, 194, ${alpha * 0.65})`);
+                grad.addColorStop(0.32, `rgba(${g.rgb.r}, ${g.rgb.g}, ${g.rgb.b}, ${alpha * 0.85})`);
+                grad.addColorStop(0.7, `rgba(${g.rgb.r}, ${g.rgb.g}, ${g.rgb.b}, ${alpha * 0.25})`);
                 grad.addColorStop(1, `rgba(${g.rgb.r}, ${g.rgb.g}, ${g.rgb.b}, 0)`);
                 ctx.fillStyle = grad;
                 ctx.beginPath();
-                ctx.arc(g.x, g.y, rad, 0, Math.PI * 2);
+                ctx.arc(0, 0, rad, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.restore();
             }
             ctx.restore();
         }
